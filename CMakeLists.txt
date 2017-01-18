@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.6)
+project(Bolletta)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+set(SOURCE_FILES main.cpp)
+find_package(Qt5Widgets REQUIRED)
+add_executable(inkmark ${SOURCE_FILES})
+
+include_directories(src)
+
+add_subdirectory(src)
+add_subdirectory(tests)
+
+target_link_libraries(inkmark src)
+target_link_libraries(inkmark Qt5::Widgets)
