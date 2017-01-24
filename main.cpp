@@ -1,9 +1,24 @@
 #include <iostream>
 #include <QApplication>
-#include <QDebug>
+#include <QWidget>
+#include <QPushButton>
+#include <QStringList>
+#include <QStringListModel>
+#include <QListView>
 
-int main() {
-  std::cout << "Hello, World!" << std::endl;
-  qDebug() << QT_VERSION_STR;
-  return 0;
+int main(int argc, char* argv[]) {
+  QApplication app(argc, argv);
+  QWidget window;
+  window.setWindowTitle("I'm a QWidget");
+  window.resize(300, 300);
+
+  QStringList numbers;
+  numbers << "One" << "Two" << "Three" << "Four" << "Five";
+  QAbstractItemModel *model = new QStringListModel(numbers);
+
+  QListView *view = new QListView(&window);
+  view->setModel(model);
+
+  window.show();
+  return app.exec();
 }
