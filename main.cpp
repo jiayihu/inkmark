@@ -2,11 +2,12 @@
 #include <QApplication>
 #include <QWidget>
 #include <QPushButton>
-#include <QStringList>
 #include <QStringListModel>
 #include <QListView>
+#include "src/model/model.h"
 
 int main(int argc, char* argv[]) {
+  Model model;
   QApplication app(argc, argv);
   QWidget window;
   window.setWindowTitle("I'm a QWidget");
