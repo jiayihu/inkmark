@@ -2,14 +2,15 @@
 #include "model/bookmark-model.h"
 
 TEST(Bookmark, Getters) {
-  Bookmark google("https://www.google.it/", "Google", "Google's homepage");
+  BookmarkModel google("https://www.google.it/", "Google", "Google's homepage");
   EXPECT_EQ(google.getLink().toString(), "https://www.google.it/");
   EXPECT_EQ(google.getName(), "Google");
   EXPECT_EQ(google.getDescription(), "Google's homepage");
+  EXPECT_FALSE(google.getIsImportant());
 }
 
 TEST(Bookmark, EditFunctions) {
-  Bookmark bookmark("https://www.google.it/", "Google", "Google's homepage");
+  BookmarkModel bookmark("https://www.google.it/", "Google", "Google's homepage");
   bookmark.editLink(QUrl("https://www.microsoft.com/it-it/"));
   bookmark.editName("Microsoft");
   bookmark.editDescription("Microsoft Italian homepage");
@@ -20,8 +21,8 @@ TEST(Bookmark, EditFunctions) {
 }
 
 TEST(Bookmark, IsLinkValid) {
-  Bookmark invalid("<abc>");
-  Bookmark valid("google.com");
+  BookmarkModel invalid("<abc>");
+  BookmarkModel valid("google.com");
   EXPECT_FALSE(invalid.isLinkValid());
   EXPECT_TRUE(valid.isLinkValid());
 }

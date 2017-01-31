@@ -7,7 +7,7 @@
 #include <QUrl>
 #include <QVector>
 
-class Bookmark {
+class BookmarkModel {
  private:
   QUrl link;
   QString name;
@@ -15,9 +15,9 @@ class Bookmark {
   bool isImportant;
 
  public:
-  Bookmark();
-  Bookmark(QString l, QString n = "", QString d = "");
-  virtual ~Bookmark() {}
+  BookmarkModel();
+  BookmarkModel(QString l, QString n = "", QString d = "");
+  virtual ~BookmarkModel() {}
 
   QUrl getLink() const;
   QString getName() const;
@@ -26,10 +26,11 @@ class Bookmark {
   void editName(const QString &newName);
   void editDescription(const QString &newDescription);
   bool isLinkValid() const;
+  bool getIsImportant() const;
   void setImportance(bool newValue);
 };
 
-class Article: public Bookmark {
+class Article: public BookmarkModel {
  private:
   QDateTime publication;
   QVector<QString> authors;
@@ -47,7 +48,7 @@ class Article: public Bookmark {
 
 enum VideoPlatform { youtube, vimeo, twitch, noPlatform };
 
-class Video: public Bookmark {
+class Video: public BookmarkModel {
  private:
   QTime duration;
   VideoPlatform platform;

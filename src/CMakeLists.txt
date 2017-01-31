@@ -1,8 +1,8 @@
 project(src)
 
-set(HEADER_FILES model/bookmark-model.cpp model/bookmark-model.h model/model.cpp model/model.h)
+set(HEADER_FILES models/bookmark-model.cpp models/bookmark-model.h models/application-model.cpp models/application-model.h views/application-view.cpp views/application-view.h)
 
-set(SOURCE_FILES model/bookmark-model.cpp model/bookmark-model.h model/model.cpp model/model.h)
+set(SOURCE_FILES models/bookmark-model.cpp models/bookmark-model.h models/application-model.cpp models/application-model.h views/application-view.cpp views/application-view.h)
 
 add_library(src STATIC ${SOURCE_FILES} ${HEADER_FILES})
 target_link_libraries(src Qt5::Widgets)
