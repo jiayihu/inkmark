@@ -4,6 +4,8 @@
 #include "bookmark_model.h"
 #include <QVector>
 #include <QObject>
+#include <QJsonObject>
+#include <QJsonArray>
 
 class ApplicationModel: public QObject {
   Q_OBJECT
@@ -14,6 +16,8 @@ class ApplicationModel: public QObject {
  public:
   QVector<BookmarkModel*> getBookmarks() const;
   ~ApplicationModel();
+
+  QJsonObject* toJSON() const;
 
  public slots:
     void addBookmark(BookmarkModel *bookmark);

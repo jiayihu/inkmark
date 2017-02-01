@@ -3,6 +3,7 @@
 
 ApplicationView::ApplicationView(QWidget *parent): QWidget(parent) {
   setWindowTitle("Inkmark");
+  setStyleSheet("background-color: #FFFFFF;");
 
   QHBoxLayout *twoColumns = new QHBoxLayout;
   addBookmarkView = new AddBookmarkView;
@@ -20,4 +21,9 @@ AddBookmarkView* ApplicationView::getAddBookmarkView() const {
 
 BookmarksListView* ApplicationView::getBookmarkListView() const {
   return bookmarksListView;
+}
+
+void ApplicationView::closeEvent(QCloseEvent *event) {
+  emit applicationClosed();
+  event->accept();
 }

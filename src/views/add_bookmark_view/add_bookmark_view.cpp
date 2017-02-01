@@ -14,7 +14,9 @@ void AddBookmarkView::handleSubmitClick() {
 AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
   QFormLayout *formLayout = new QFormLayout;
   nameInput = new QLineEdit;
+  nameInput->setMinimumWidth(200);
   linkInput = new QLineEdit;
+  linkInput->setMinimumWidth(200);
   descriptionTextArea = new QTextEdit;
   descriptionTextArea->setMinimumWidth(300);
   // Al copy-paste incolla il testo senza formattazione

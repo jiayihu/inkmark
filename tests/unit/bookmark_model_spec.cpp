@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
-#include "model/bookmark-model.h"
+#include <QJsonDocument>
+#include <QString>
+#include "models/bookmark_model.h"
 
 TEST(Bookmark, Getters) {
   BookmarkModel google("https://www.google.it/", "Google", "Google's homepage");
@@ -27,10 +29,24 @@ TEST(Bookmark, IsLinkValid) {
   EXPECT_TRUE(valid.isLinkValid());
 }
 
+TEST(Bookmark, ToJSON) {
+  BookmarkModel google("https://www.google.it/", "Google", "Google's homepage");
+  QJsonObject *googleJSON = google.toJSON();
+  QJsonDocument jsonDoc(*googleJSON);
+  QString jsonString = jsonDoc.toJson(QJsonDocument::Compact);
+  QString expectedString = "{\"description\":\"Google's homepage\",\"isImportant\":false,\"link\":\"https://www.google.it/\",\"name\":\"Google\"}";
+  EXPECT_EQ(jsonString.toStdString(), expectedString.toStdString());
+}
+
 TEST(Article, GetAuthors) {
   QDateTime now(QDateTime::currentDateTime());
-  Article jarvisAI(now, 15);
-
+  ArticleModel jarvisAI(
+      "https://www.facebook.com/notes/mark-zuckerberg/building-jarvis/10154361492931634/",
+      "Facebook",
+      "Building Jarvis - Facebook",
+      now,
+      15
+  );
   jarvisAI.addAuthor("Mark Zuckerberg0");
   jarvisAI.addAuthor("Mark Zuckerberg1");
 

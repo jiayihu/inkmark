@@ -7,6 +7,8 @@
 #include <QTime>
 #include <QUrl>
 #include <QVector>
+#include <QJsonObject>
+#include <QJsonArray>
 
 class BookmarkModel {
  private:
@@ -29,41 +31,46 @@ class BookmarkModel {
   bool isLinkValid() const;
   bool getIsImportant() const;
   void setImportance(bool newValue);
+  virtual QJsonObject* toJSON() const;
 
   // Conversione a QString per poter usare `qDebug() << bookmark`
   operator QString() const { return name + " " + link.toString() + description; }
 };
 std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark);
 
-class Article: public BookmarkModel {
+class ArticleModel: public BookmarkModel {
  private:
   QDateTime publication;
   QVector<QString> authors;
   int minRead;
 
  public:
-  Article();
-  Article(QDateTime p, int mr = 0);
+  ArticleModel();
+  ArticleModel(QString l, QString n, QString d, QDateTime p, int mr = 0);
 
   void addAuthor(QString fullname = "");
   QDateTime getPublication() const;
   QVector<QString> getAuthors() const;
   int getMinRead() const;
+  QJsonObject* toJSON() const override;
 };
 
 enum VideoPlatform { youtube, vimeo, twitch, noPlatform };
 
-class Video: public BookmarkModel {
+extern QString platformToString(VideoPlatform platform);
+
+class VideoModel: public BookmarkModel {
  private:
   QTime duration;
   VideoPlatform platform;
 
  public:
-  Video();
-  Video(QTime d, VideoPlatform p = VideoPlatform::noPlatform);
+  VideoModel();
+  VideoModel(QString l, QString n, QString d, QTime dur, VideoPlatform p = VideoPlatform::noPlatform);
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
+  QJsonObject* toJSON() const override;
 };
 
 // TODO SocialPost
