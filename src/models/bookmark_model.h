@@ -1,6 +1,7 @@
 #ifndef INKMARK_BOOKMARK_H
 #define INKMARK_BOOKMARK_H
 
+#include <iostream>
 #include <QString>
 #include <QDateTime>
 #include <QTime>
@@ -28,7 +29,11 @@ class BookmarkModel {
   bool isLinkValid() const;
   bool getIsImportant() const;
   void setImportance(bool newValue);
+
+  // Conversione a QString per poter usare `qDebug() << bookmark`
+  operator QString() const { return name + " " + link.toString() + description; }
 };
+std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark);
 
 class Article: public BookmarkModel {
  private:

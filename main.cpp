@@ -1,7 +1,9 @@
 #include <iostream>
 #include <QApplication>
-#include "models/application-model.h"
-#include "views/application-view.h"
+#include "models/application_model.h"
+#include "controllers/add_bookmark_controller.h"
+#include "controllers/bookmarks_list_controller.h"
+#include "views/application_view/application_view.h"
 
 class Inkmark {
  private:
@@ -12,8 +14,12 @@ class Inkmark {
   Inkmark() {}
 
   void init() {
+    AddBookmarkView *addBookmarkView = appView.getAddBookmarkView();
+    AddBookmarkController *addBookmarkController = new AddBookmarkController(&appModel, addBookmarkView);
+    BookmarksListView *bookmarksListView = appView.getBookmarkListView();
+    BookmarksListController *bookmarksListController = new BookmarksListController(&appModel, bookmarksListView);
+
     appView.show();
-    QObject::connect(&appView, SIGNAL(clickedQuit()), qApp, SLOT(quit()));
   }
 };
 

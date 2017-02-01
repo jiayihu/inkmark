@@ -1,4 +1,4 @@
-#include "bookmark-model.h"
+#include "bookmark_model.h"
 
 BookmarkModel::BookmarkModel() {}
 BookmarkModel::BookmarkModel(QString l, QString n, QString d):
@@ -12,6 +12,11 @@ void BookmarkModel::editDescription(const QString &newDescription) { description
 bool BookmarkModel::isLinkValid() const { return link.isValid(); }
 bool BookmarkModel::getIsImportant() const { return isImportant; }
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
+
+std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
+  os << bookmark.getName() << " " << bookmark.getLink().toString();
+  return os;
+}
 
 Article::Article() {}
 Article::Article(QDateTime p, int mr): publication(p), minRead(mr) {}
