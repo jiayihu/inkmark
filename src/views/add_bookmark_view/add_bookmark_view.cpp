@@ -16,6 +16,7 @@ AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
   nameInput = new QLineEdit;
   linkInput = new QLineEdit;
   descriptionTextArea = new QTextEdit;
+  descriptionTextArea->setMinimumWidth(300);
   // Al copy-paste incolla il testo senza formattazione
   descriptionTextArea->setAcceptRichText(false);
   QPushButton *submit = new QPushButton("Add bookmark");

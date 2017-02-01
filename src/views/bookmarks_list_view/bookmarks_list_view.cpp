@@ -2,6 +2,7 @@
 #include "../bookmark_view/bookmark_view.h"
 
 BookmarksListView::BookmarksListView(): layout(new QVBoxLayout()) {
+  layout->setAlignment(Qt::AlignTop);
   setLayout(layout);
 }
 
