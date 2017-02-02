@@ -18,12 +18,14 @@ void Inkmark::init() {
 }
 
 void Inkmark::saveModel() const {
-  QJsonObject *modelJSON = appModel->toJSON();
-  QJsonDocument jsonDoc(*modelJSON);
+  QJsonObject modelJSON;
+  appModel->writeToJSON(modelJSON);
+  QJsonDocument jsonDoc(modelJSON);
+
   QFile saveFile("model.json");
 
   if (!saveFile.open(QIODevice::WriteOnly)) {
-    qWarning("Couldn't open save file.");
+    qWarning("Couldn't open JSON file to write to.");
     return;
   }
 

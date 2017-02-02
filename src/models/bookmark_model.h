@@ -31,7 +31,7 @@ class BookmarkModel {
   bool isLinkValid() const;
   bool getIsImportant() const;
   void setImportance(bool newValue);
-  virtual QJsonObject* toJSON() const;
+  virtual void writeToJSON(QJsonObject &json) const;
 
   // Conversione a QString per poter usare `qDebug() << bookmark`
   operator QString() const { return name + " " + link.toString() + description; }
@@ -52,11 +52,13 @@ class ArticleModel: public BookmarkModel {
   QDateTime getPublication() const;
   QVector<QString> getAuthors() const;
   int getMinRead() const;
-  QJsonObject* toJSON() const override;
+  void writeToJSON(QJsonObject &json) const override;
+  static QString format;
 };
 
 enum VideoPlatform { youtube, vimeo, twitch, noPlatform };
 
+extern VideoPlatform stringToPlatform(QString platform);
 extern QString platformToString(VideoPlatform platform);
 
 class VideoModel: public BookmarkModel {
@@ -70,7 +72,8 @@ class VideoModel: public BookmarkModel {
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
-  QJsonObject* toJSON() const override;
+  void writeToJSON(QJsonObject &json) const override;
+  static QString format;
 };
 
 // TODO SocialPost

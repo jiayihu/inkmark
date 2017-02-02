@@ -1,4 +1,6 @@
 #include "bookmark_model.h"
+#include <QMap>
+#include <QDebug>
 
 BookmarkModel::BookmarkModel() {}
 
@@ -23,14 +25,11 @@ bool BookmarkModel::getIsImportant() const { return isImportant; }
 
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 
-QJsonObject* BookmarkModel::toJSON() const {
-  QJsonObject *json = new QJsonObject();
-  json->insert("link", link.toString());
-  json->insert("name", name);
-  json->insert("description", description);
-  json->insert("isImportant", isImportant);
-
-  return json;
+void BookmarkModel::writeToJSON(QJsonObject &json) const {
+  json.insert("link", link.toString());
+  json.insert("name", name);
+  json.insert("description", description);
+  json.insert("isImportant", isImportant);
 }
 
 std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
@@ -58,25 +57,35 @@ QVector<QString> ArticleModel::getAuthors() const { return authors; }
 
 int ArticleModel::getMinRead() const { return minRead; }
 
-QJsonObject* ArticleModel::toJSON() const {
-  QJsonObject *json = BookmarkModel::toJSON();
-  json->insert("publication", publication.toString("dd MMMM yyyy hh:mm:ss"));
+void ArticleModel::writeToJSON(QJsonObject &json) const {
+  json.insert("publication", publication.toString(ArticleModel::format));
 
   QJsonArray authorsJSON;
   for (int i = 0; i < authors.size(); i++) {
     QJsonValue authorJSON(authors[i]);
     authorsJSON.append(authorJSON);
   }
-  json->insert("authors", authorsJSON);
+  json.insert("authors", authorsJSON);
 
-  json->insert("minRead", minRead);
-
-  return json;
+  json.insert("minRead", minRead);
 }
+
+QString ArticleModel::format = "dd MMM yyyy hh:mm:ss";
 
 /**
  * Video
  */
+
+VideoPlatform stringToPlatform(QString platformString) {
+  QMap<QString, VideoPlatform> platformMap = {
+      { "youtube", VideoPlatform ::youtube },
+      { "video", VideoPlatform::vimeo },
+      { "twitch", VideoPlatform::twitch },
+      { "no platform", VideoPlatform::noPlatform },
+  };
+
+  return platformMap[platformString];
+}
 
 QString platformToString(VideoPlatform platform) {
   switch (platform) {
@@ -101,10 +110,9 @@ QTime VideoModel::getDuration() const { return duration; }
 
 VideoPlatform VideoModel::getPlatform() const { return platform; }
 
-QJsonObject* VideoModel::toJSON() const {
-  QJsonObject *json = BookmarkModel::toJSON();
-  json->insert("duration", duration.toString("hh:mm:ss"));
-  json->insert("platform", platformToString(platform));
 
-  return json;
+void VideoModel::writeToJSON(QJsonObject &json) const {
+  json.insert("duration", duration.toString(VideoModel::format));
+  json.insert("platform", platformToString(platform));
 }
+QString VideoModel::format = "hh:mm:ss";

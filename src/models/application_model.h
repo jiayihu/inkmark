@@ -17,7 +17,7 @@ class ApplicationModel: public QObject {
   QVector<BookmarkModel*> getBookmarks() const;
   ~ApplicationModel();
 
-  QJsonObject* toJSON() const;
+  void writeToJSON(QJsonObject &json) const;
 
  public slots:
     void addBookmark(BookmarkModel *bookmark);

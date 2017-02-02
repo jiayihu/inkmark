@@ -6,18 +6,16 @@ ApplicationModel::~ApplicationModel() {
   for (int i = 0; i < bookmarks.size(); i++) delete bookmarks[i];
 }
 
-QJsonObject* ApplicationModel::toJSON() const {
-  QJsonObject *json = new QJsonObject();
+void ApplicationModel::writeToJSON(QJsonObject &json) const {
   QJsonArray bookmarksJSON;
 
   for (int i = 0; i < bookmarks.size(); i++) {
-    QJsonObject *bookmarkJSON = bookmarks[i]->toJSON();
-    bookmarksJSON.append(*bookmarkJSON);
+    QJsonObject bookmarkJSON;
+    bookmarks[i]->writeToJSON(bookmarkJSON);
+    bookmarksJSON.append(bookmarkJSON);
   }
 
-  json->insert("bookmarks", bookmarksJSON);
-
-  return json;
+  json.insert("bookmarks", bookmarksJSON);
 }
 
 void ApplicationModel::addBookmark(BookmarkModel *bookmark) {
