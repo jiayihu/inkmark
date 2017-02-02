@@ -18,9 +18,8 @@ class Inkmark: public QObject {
   Inkmark();
   ~Inkmark();
 
+  bool loadModel();
   void init();
-
-  bool loadModel() const;
 
   public slots:
     void saveModel() const;

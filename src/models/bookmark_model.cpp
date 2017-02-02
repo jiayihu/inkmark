@@ -25,6 +25,13 @@ bool BookmarkModel::getIsImportant() const { return isImportant; }
 
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 
+void BookmarkModel::readFromJSON(const QJsonObject &json) {
+ name = json.value("name").toString();
+ link = QUrl(json.value("link").toString());
+ description = json.value("description").toString();
+ isImportant = json.value("isImportant").toBool();
+}
+
 void BookmarkModel::writeToJSON(QJsonObject &json) const {
   json.insert("link", link.toString());
   json.insert("name", name);
@@ -56,6 +63,19 @@ QDateTime ArticleModel::getPublication() const { return publication; }
 QVector<QString> ArticleModel::getAuthors() const { return authors; }
 
 int ArticleModel::getMinRead() const { return minRead; }
+
+void ArticleModel::readFromJSON(const QJsonObject &json) {
+  BookmarkModel::readFromJSON(json);
+  QString publicationString = json.value("publication").toString();
+  publication = QDateTime::fromString(publicationString, ArticleModel::format);
+
+  QJsonArray authorsJSON = json.value("authors").toArray();
+  for (int i = 0; i < authorsJSON.size(); i++) {
+    authors.push_back(authorsJSON[i].toString());
+  }
+
+  minRead = json.value("minRead").toInt();
+}
 
 void ArticleModel::writeToJSON(QJsonObject &json) const {
   json.insert("publication", publication.toString(ArticleModel::format));
@@ -98,6 +118,7 @@ QString platformToString(VideoPlatform platform) {
     case VideoPlatform::noPlatform :
       return "no platform";
     default:
+      qWarning() << "Could not convert VideoPlatform to string";
       return "";
   }
 }
@@ -110,9 +131,16 @@ QTime VideoModel::getDuration() const { return duration; }
 
 VideoPlatform VideoModel::getPlatform() const { return platform; }
 
+void VideoModel::readFromJSON(const QJsonObject &json) {
+  BookmarkModel::readFromJSON(json);
+  QString durationString = json.value("duration").toString();
+  duration = QTime::fromString(durationString, VideoModel::format);
+  platform = stringToPlatform(json.value("platform").toString());
+}
 
 void VideoModel::writeToJSON(QJsonObject &json) const {
   json.insert("duration", duration.toString(VideoModel::format));
   json.insert("platform", platformToString(platform));
 }
+
 QString VideoModel::format = "hh:mm:ss";

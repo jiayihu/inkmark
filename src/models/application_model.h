@@ -13,10 +13,13 @@ class ApplicationModel: public QObject {
  private:
   QVector<BookmarkModel*> bookmarks;
 
+  void clean();
+
  public:
   QVector<BookmarkModel*> getBookmarks() const;
   ~ApplicationModel();
 
+  void readFromJSON(const QJsonObject &json);
   void writeToJSON(QJsonObject &json) const;
 
  public slots:

@@ -31,6 +31,7 @@ class BookmarkModel {
   bool isLinkValid() const;
   bool getIsImportant() const;
   void setImportance(bool newValue);
+  virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 
   // Conversione a QString per poter usare `qDebug() << bookmark`
@@ -52,7 +53,9 @@ class ArticleModel: public BookmarkModel {
   QDateTime getPublication() const;
   QVector<QString> getAuthors() const;
   int getMinRead() const;
+  void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
+
   static QString format;
 };
 
@@ -72,7 +75,9 @@ class VideoModel: public BookmarkModel {
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
+  void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
+
   static QString format;
 };
 
