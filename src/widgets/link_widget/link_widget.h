@@ -7,11 +7,12 @@
 
 class LinkWidget: public QLabel {
  private:
-  QString text;
   QUrl url;
 
  public:
   LinkWidget(QString t = "", QUrl u = QUrl());
+
+  void setUrl(QUrl newUrl);
 };
 
 #endif //INKMARK_LINK_WIDGET_H

@@ -2,28 +2,34 @@
 #define INKMARK_BOOKMARK_VIEW_H
 
 #include <QWidget>
-#include <QHBoxLayout>
+#include <QLabel>
 #include "models/bookmark_model.h"
+#include "widgets/link_widget/link_widget.h"
 
 class BookmarkView: public QWidget {
   Q_OBJECT
 
  private:
-  // TODO Create Interface per Bookmark
   BookmarkModel *model;
-  QHBoxLayout *layout;
+  LinkWidget *nameLink;
+  QLabel *hostLabel;
 
-  private slots:
-    /**
-     * Emette il signal clickedDelete con il proprio model
-     */
-    void handleDeleteClick();
+ private slots:
+  /**
+   * Emette il signal clickedDelete con il proprio model
+   */
+  void handleDeleteClick();
+  void handleEditClick();
 
  public:
   BookmarkView(BookmarkModel *m = nullptr);
 
-  signals:
-    void clickedDelete(BookmarkModel*);
+ public slots:
+  void setModel(BookmarkModel *newModel);
+
+ signals:
+  void clickedDelete(BookmarkModel*);
+  void clickedEdit(BookmarkModel*);
 };
 
 #endif //INKMARK_BOOKMARK_VIEW_H

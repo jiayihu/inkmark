@@ -13,11 +13,11 @@ QString BookmarkModel::getName() const { return name; }
 
 QString BookmarkModel::getDescription() const { return description; }
 
-void BookmarkModel::editLink(const QUrl &newLink) { link = newLink; }
+void BookmarkModel::editLink(QString newLink) { link = QUrl::fromUserInput(newLink); }
 
-void BookmarkModel::editName(const QString &newName) { name = newName; }
+void BookmarkModel::editName(QString newName) { name = newName; }
 
-void BookmarkModel::editDescription(const QString &newDescription) { description = newDescription; }
+void BookmarkModel::editDescription(QString newDescription) { description = newDescription; }
 
 bool BookmarkModel::isLinkValid() const { return link.isValid(); }
 

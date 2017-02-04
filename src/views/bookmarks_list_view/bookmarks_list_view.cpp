@@ -1,21 +1,58 @@
+#include <QString>
 #include "bookmarks_list_view.h"
 
 void BookmarksListView::handleDeleteClicked(BookmarkModel *bookmark) {
-  layout->removeWidget(viewsMap[bookmark]);
+  listLayout->removeWidget(viewsMap[bookmark]);
   viewsMap.remove(bookmark);
 
   emit clickedDelete(bookmark);
 }
 
-BookmarksListView::BookmarksListView(): layout(new QVBoxLayout()) {
-  layout->setAlignment(Qt::AlignTop);
-  setLayout(layout);
+void BookmarksListView::handleSaveClicked() {
+  editBookmarkView->setVisible(false);
 }
 
-void BookmarksListView::addBookmark(BookmarkModel *bookmark) {
+void BookmarksListView::handleEditClicked(BookmarkModel *bookmark) {
+  editBookmarkView->setModel(bookmark);
+  editBookmarkView->setVisible(true);
+}
+
+BookmarksListView::BookmarksListView() {
+  containerLayout = new QHBoxLayout();
+  containerLayout->setAlignment(Qt::AlignTop);
+
+  QWidget *listContainer = new QWidget();
+  listLayout = new QVBoxLayout(listContainer);
+  listLayout->setAlignment(Qt::AlignTop);
+
+  editBookmarkView = new EditBookmarkView(this);
+  editBookmarkView->setVisible(false);
+  // Chiudi il widget per la modifica
+  QObject::connect(editBookmarkView, SIGNAL(saveClicked(BookmarkModel*, QString, QString, QString)), this, SLOT(handleSaveClicked()));
+  // Propaga il signal all'esterno
+  QObject::connect(
+      editBookmarkView,
+      SIGNAL(saveClicked(BookmarkModel*, QString, QString, QString)),
+      this,
+      SIGNAL(editedBookmark(BookmarkModel*, QString, QString, QString))
+  );
+
+  containerLayout->addWidget(listContainer);
+  containerLayout->addWidget(editBookmarkView);
+
+  setLayout(containerLayout);
+}
+
+void BookmarksListView::addBookmarkView(BookmarkModel *bookmark) {
   BookmarkView *bookmarkView = new BookmarkView(bookmark);
   viewsMap[bookmark] = bookmarkView;
   QObject::connect(bookmarkView, SIGNAL(clickedDelete(BookmarkModel*)), this, SLOT(handleDeleteClicked(BookmarkModel*)));
+  QObject::connect(bookmarkView, SIGNAL(clickedEdit(BookmarkModel*)), this, SLOT(handleEditClicked(BookmarkModel*)));
 
-  layout->addWidget(bookmarkView);
+  listLayout->addWidget(bookmarkView);
+}
+
+void BookmarksListView::updateBookmarkView(BookmarkModel *bookmark) {
+  BookmarkView *bookmarkView = viewsMap[bookmark];
+  bookmarkView->setModel(bookmark);
 }

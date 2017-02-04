@@ -54,3 +54,16 @@ void ApplicationModel::deleteBookmark(BookmarkModel *bookmark) {
   // Cancella il bookmark dallo heap dopo il signal
   delete bookmark;
 }
+
+void ApplicationModel::editBookmark(BookmarkModel *bookmark, QString newName, QString newLink, QString newDesc) {
+  int bookmarkIndex = bookmarks.indexOf(bookmark);
+
+  if (bookmarkIndex == -1) return;
+
+  BookmarkModel *foundBookmark = bookmarks[bookmarkIndex];
+  foundBookmark->editName(newName);
+  foundBookmark->editLink(newLink);
+  foundBookmark->editDescription(newDesc);
+
+  emit updatedBookmark(bookmark);
+}

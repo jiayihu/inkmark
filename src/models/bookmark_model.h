@@ -25,9 +25,9 @@ class BookmarkModel {
   QUrl getLink() const;
   QString getName() const;
   QString getDescription() const;
-  void editLink(const QUrl &newLink);
-  void editName(const QString &newName);
-  void editDescription(const QString &newDescription);
+  void editName(QString newName);
+  void editLink(QString newLink);
+  void editDescription(QString newDescription);
   bool isLinkValid() const;
   bool getIsImportant() const;
   void setImportance(bool newValue);
