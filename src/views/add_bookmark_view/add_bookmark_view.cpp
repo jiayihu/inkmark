@@ -2,6 +2,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include "add_bookmark_view.h"
+#include "widgets/button_widget/button_widget.h"
 
 void AddBookmarkView::handleSubmitClick() {
   QString name = nameInput->text();
@@ -21,7 +22,7 @@ AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
   descriptionTextArea->setMinimumWidth(300);
   // Al copy-paste incolla il testo senza formattazione
   descriptionTextArea->setAcceptRichText(false);
-  QPushButton *submit = new QPushButton("Add bookmark");
+  ButtonWidget *submit = new ButtonWidget("Add bookmark");
 
   formLayout->addRow("Name: ", nameInput);
   formLayout->addRow("Link: ", linkInput);

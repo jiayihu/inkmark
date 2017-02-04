@@ -13,6 +13,9 @@ class ApplicationView: public QWidget {
   AddBookmarkView *addBookmarkView;
   BookmarksListView *bookmarksListView;
 
+ private slots:
+  void toggleAddViewVisibility();
+
  public:
   ApplicationView(QWidget *parent = nullptr);
   AddBookmarkView* getAddBookmarkView() const;
