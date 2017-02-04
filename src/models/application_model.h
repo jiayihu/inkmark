@@ -20,7 +20,6 @@ class ApplicationModel: public QObject {
   QVector<BookmarkModel*> getBookmarks() const;
   ~ApplicationModel();
 
-  QVector<BookmarkModel*> search(QString searchText) const;
   void readFromJSON(const QJsonObject &json);
   void writeToJSON(QJsonObject &json) const;
 
@@ -28,11 +27,13 @@ class ApplicationModel: public QObject {
   void addBookmark(BookmarkModel *bookmark);
   void deleteBookmark(BookmarkModel *bookmark);
   void editBookmark(BookmarkModel *bookmark, QString newName, QString newLink, QString newDesc);
+  QVector<BookmarkModel*> search(QString searchText) const;
 
  signals:
   void addedBookmark(BookmarkModel *bookmark);
   void deletedBookmark(BookmarkModel *bookmark);
   void updatedBookmark(BookmarkModel *bookmark);
+  void finishedSearch(QVector<BookmarkModel*>) const;
 };
 
 #endif //INKMARK_MODEL_H

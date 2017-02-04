@@ -19,6 +19,7 @@ class SearchBookmarkView: public QWidget {
 
  signals:
   void clickedSearch(QString searchText);
+  void clickedCancel();
 };
 
 #endif //INKMARK_SEARCH_BOOKMARK_VIEW_H

@@ -58,8 +58,8 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
 void BookmarksListView::setModel(const QVector<BookmarkModel *> &newModel) {
   if (model.size()) clean();
 
+  // TODO Non fare nulla se è lo stesso model
   model = newModel;
-
   for (int i = 0; i < model.size(); i++) addBookmarkView(model[i]);
 }
 

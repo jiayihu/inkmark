@@ -29,7 +29,7 @@ class ApplicationView: public QWidget {
   BookmarksListView* getBookmarkListView() const;
 
   void closeEvent(QCloseEvent *event);
-  void showSearchResults(const QVector<BookmarkModel*> &results);
+  void showBookmarks(const QVector<BookmarkModel *> &results);
 
   signals:
     void applicationClosed();

@@ -1,6 +1,10 @@
 #include <QString>
 #include "bookmarks_list_controller.h"
 
+void BookmarksListController::handleFinishedSearch(QVector<BookmarkModel *> results) {
+  view->setModel(results);
+}
+
 BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksListView *v)
     : model(m), view(v) {
   /**
@@ -8,6 +12,7 @@ BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksL
    */
   QObject::connect(model, SIGNAL(addedBookmark(BookmarkModel*)), view, SLOT(addBookmarkView(BookmarkModel*)));
   QObject::connect(model, SIGNAL(updatedBookmark(BookmarkModel*)), view, SLOT(updateBookmarkView(BookmarkModel*)));
+  QObject::connect(model, SIGNAL(finishedSearch(QVector<BookmarkModel*>)), this, SLOT(handleFinishedSearch(QVector<BookmarkModel*>)));
 
   /**
    * Connessioni View => Model

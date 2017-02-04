@@ -38,7 +38,7 @@ ApplicationView::ApplicationView(QWidget *parent): QWidget(parent) {
 
   searchBookmarkView = new SearchBookmarkView;
   searchBookmarkView->setVisible(false);
-  QObject::connect(searchBookmarkView, SIGNAL(clickedSearch(QString)), this, SLOT(toggleSearchViewVisibility()));
+  QObject::connect(searchBookmarkView, SIGNAL(clickedCancel()), this, SLOT(toggleSearchViewVisibility()));
 
   bookmarksListView = new BookmarksListView;
   contentLayout->addWidget(addBookmarkView);
@@ -61,10 +61,6 @@ BookmarksListView* ApplicationView::getBookmarkListView() const {
 
 SearchBookmarkView* ApplicationView::getSearchBookmarkView() const {
   return searchBookmarkView;
-}
-
-void ApplicationView::showSearchResults(const QVector<BookmarkModel*> &results) {
-  bookmarksListView->setModel(results);
 }
 
 void ApplicationView::closeEvent(QCloseEvent *event) {

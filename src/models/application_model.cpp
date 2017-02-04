@@ -15,6 +15,7 @@ QVector<BookmarkModel*> ApplicationModel::search(QString searchText) const {
     if (bookmarks[i]->hasWord(searchText)) found.push_back(bookmarks[i]);
   }
 
+  emit finishedSearch(found);
   return found;
 }
 
