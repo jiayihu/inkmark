@@ -14,4 +14,8 @@ add_subdirectory(src)
 add_subdirectory(tests)
 
 target_link_libraries(inkmark src)
-target_link_libraries(inkmark Qt5::Widgets)
+
+find_package(Qt5Svg REQUIRED)
+target_link_libraries(inkmark Qt5::Widgets Qt5::Svg)
+
+file(COPY src/assets/ DESTINATION ./)

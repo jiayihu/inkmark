@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QJsonDocument>
 
+QString Inkmark::modelFilename = "model.json";
+
 Inkmark::Inkmark(): appModel(new ApplicationModel()), appView(appView = new ApplicationView()) {
   loadModel();
 }
@@ -22,7 +24,7 @@ void Inkmark::init() {
 }
 
 bool Inkmark::loadModel() {
-  QFile loadFile("model.json");
+  QFile loadFile(Inkmark::modelFilename);
 
   if (!loadFile.open(QIODevice::ReadOnly)) {
     qWarning("Couldn't open JSON file to read from.");
@@ -41,7 +43,7 @@ void Inkmark::saveModel() const {
   appModel->writeToJSON(modelJSON);
   QJsonDocument jsonDoc(modelJSON);
 
-  QFile saveFile("model.json");
+  QFile saveFile(Inkmark::modelFilename);
 
   if (!saveFile.open(QIODevice::WriteOnly)) {
     qWarning("Couldn't open JSON file to write to.");

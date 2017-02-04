@@ -11,9 +11,6 @@ class BookmarksListController: public QObject {
   ApplicationModel *model;
   BookmarksListView *view;
 
- private slots:
-  void handleAddedBookmark(BookmarkModel *bookmark);
-
  public:
   BookmarksListController(ApplicationModel *m = nullptr, BookmarksListView *v = nullptr);
 };

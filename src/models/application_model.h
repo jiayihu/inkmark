@@ -23,10 +23,12 @@ class ApplicationModel: public QObject {
   void writeToJSON(QJsonObject &json) const;
 
  public slots:
-    void addBookmark(BookmarkModel *bookmark);
+  void addBookmark(BookmarkModel *bookmark);
+  void deleteBookmark(BookmarkModel *bookmark);
 
  signals:
-    void addedBookmark(BookmarkModel *bookmark);
+  void addedBookmark(BookmarkModel *bookmark);
+  void deletedBookmark(BookmarkModel *bookmark);
 };
 
 #endif //INKMARK_MODEL_H

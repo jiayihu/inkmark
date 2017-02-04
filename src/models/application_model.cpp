@@ -36,3 +36,21 @@ void ApplicationModel::addBookmark(BookmarkModel *bookmark) {
   bookmarks.push_back(bookmark);
   emit addedBookmark(bookmark);
 }
+
+void ApplicationModel::deleteBookmark(BookmarkModel *bookmark) {
+  QVector<BookmarkModel*>::iterator it = bookmarks.begin();
+  bool trovato = false;
+
+  for (; it != bookmarks.end() && !trovato; it++) {
+    if (*it == bookmark) {
+      bookmarks.erase(it);
+      trovato = true;
+    }
+  }
+
+  if (!trovato) return;
+
+  emit deletedBookmark(bookmark);
+  // Cancella il bookmark dallo heap dopo il signal
+  delete bookmark;
+}

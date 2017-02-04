@@ -13,6 +13,7 @@ class Inkmark: public QObject {
  private:
   ApplicationModel *appModel;
   ApplicationView *appView;
+  static QString modelFilename; // Non è utilizzato all'esterno per il momento
 
  public:
   Inkmark();
