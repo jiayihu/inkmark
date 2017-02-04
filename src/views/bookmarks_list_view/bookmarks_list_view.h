@@ -13,10 +13,13 @@ class BookmarksListView: public QWidget {
   Q_OBJECT
 
  private:
+  QVector<BookmarkModel*> model;
   QHBoxLayout *containerLayout;
   QVBoxLayout *listLayout;
   EditBookmarkView *editBookmarkView;
   QMap<BookmarkModel*, BookmarkView*> viewsMap;
+
+  void clean();
 
  private slots:
   /**
@@ -30,6 +33,7 @@ class BookmarksListView: public QWidget {
   BookmarksListView(QWidget *parent = nullptr);
 
  public slots:
+  void setModel(const QVector<BookmarkModel*> &newModel);
   void addBookmarkView(BookmarkModel *bookmark);
   void updateBookmarkView(BookmarkModel *bookmark);
 

@@ -20,6 +20,7 @@ class ApplicationModel: public QObject {
   QVector<BookmarkModel*> getBookmarks() const;
   ~ApplicationModel();
 
+  QVector<BookmarkModel*> search(QString searchText) const;
   void readFromJSON(const QJsonObject &json);
   void writeToJSON(QJsonObject &json) const;
 

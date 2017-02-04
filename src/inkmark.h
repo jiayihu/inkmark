@@ -3,8 +3,6 @@
 
 #include <QObject>
 #include "models/application_model.h"
-#include "controllers/add_bookmark_controller.h"
-#include "controllers/bookmarks_list_controller.h"
 #include "views/application_view/application_view.h"
 
 class Inkmark: public QObject {

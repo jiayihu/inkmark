@@ -25,6 +25,14 @@ bool BookmarkModel::getIsImportant() const { return isImportant; }
 
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 
+bool BookmarkModel::hasWord(QString searchText) const {
+  bool isSimilarName = name.indexOf(searchText) != -1;
+  bool isSimilarLink = link.toString().indexOf(searchText) != -1;
+  bool isSimilarDesc = description.indexOf(searchText) != -1;
+
+  return isSimilarName || isSimilarLink || isSimilarDesc;
+}
+
 void BookmarkModel::readFromJSON(const QJsonObject &json) {
  name = json.value("name").toString();
  link = QUrl(json.value("link").toString());

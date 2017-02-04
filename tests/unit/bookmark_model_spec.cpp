@@ -11,7 +11,7 @@ TEST(BookmarkModel, Getters) {
 
 TEST(BookmarkModel, EditFunctions) {
   BookmarkModel bookmark("https://www.google.it/", "Google", "Google's homepage");
-  bookmark.editLink(QUrl("https://www.microsoft.com/it-it/"));
+  bookmark.editLink("https://www.microsoft.com/it-it/");
   bookmark.editName("Microsoft");
   bookmark.editDescription("Microsoft Italian homepage");
 
@@ -25,6 +25,14 @@ TEST(BookmarkModel, IsLinkValid) {
   BookmarkModel valid("google.com");
   EXPECT_FALSE(invalid.isLinkValid());
   EXPECT_TRUE(valid.isLinkValid());
+}
+
+TEST(BookmarkModel, HasWord) {
+  BookmarkModel google("https://www.google.it/", "Google", "Google's homepage");
+
+  EXPECT_TRUE(google.hasWord("google"));
+  EXPECT_TRUE(google.hasWord("Google"));
+  EXPECT_TRUE(google.hasWord("homepage"));
 }
 
 TEST(BookmarkModel, ReadFromJSON) {

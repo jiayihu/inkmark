@@ -31,6 +31,8 @@ class BookmarkModel {
   bool isLinkValid() const;
   bool getIsImportant() const;
   void setImportance(bool newValue);
+
+  virtual bool hasWord(QString searchText) const;
   virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 

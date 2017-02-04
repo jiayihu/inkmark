@@ -1,6 +1,8 @@
-#include "inkmark.h"
-#include <QDebug>
 #include <QJsonDocument>
+#include "inkmark.h"
+#include "controllers/add_bookmark_controller.h"
+#include "controllers/bookmarks_list_controller.h"
+#include "controllers/application_controller.h"
 
 QString Inkmark::modelFilename = "model.json";
 
@@ -11,12 +13,14 @@ Inkmark::Inkmark(): appModel(new ApplicationModel()), appView(appView = new Appl
 Inkmark::~Inkmark() { delete appModel; }
 
 void Inkmark::init() {
+  ApplicationController *applicationController = new ApplicationController(appModel, appView);
+
   AddBookmarkView *addBookmarkView = appView->getAddBookmarkView();
   AddBookmarkController *addBookmarkController = new AddBookmarkController(appModel, addBookmarkView);
 
   BookmarksListView *bookmarksListView = appView->getBookmarkListView();
   BookmarksListController *bookmarksListController = new BookmarksListController(appModel, bookmarksListView);
-
+  SearchBookmarkView *searchBookmarkView = appView->getSearchBookmarkView();
 
   QObject::connect(appView, SIGNAL(applicationClosed()), this, SLOT(saveModel()));
 

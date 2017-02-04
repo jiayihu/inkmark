@@ -1,8 +1,19 @@
 #include <QString>
 #include "bookmarks_list_view.h"
 
+void BookmarksListView::clean() {
+  for (int i = 0; i < model.size(); i++) {
+    BookmarkModel *bookmark = model[i];
+    listLayout->removeWidget(viewsMap[bookmark]);
+    delete viewsMap[bookmark];
+    viewsMap.remove(bookmark);
+  }
+  model.clear();
+}
+
 void BookmarksListView::handleDeleteClicked(BookmarkModel *bookmark) {
   listLayout->removeWidget(viewsMap[bookmark]);
+  delete viewsMap[bookmark];
   viewsMap.remove(bookmark);
 
   emit clickedDelete(bookmark);
@@ -42,6 +53,14 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   containerLayout->addWidget(editBookmarkView);
 
   setLayout(containerLayout);
+}
+
+void BookmarksListView::setModel(const QVector<BookmarkModel *> &newModel) {
+  if (model.size()) clean();
+
+  model = newModel;
+
+  for (int i = 0; i < model.size(); i++) addBookmarkView(model[i]);
 }
 
 void BookmarksListView::addBookmarkView(BookmarkModel *bookmark) {

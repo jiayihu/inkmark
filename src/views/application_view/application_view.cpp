@@ -1,10 +1,18 @@
 #include <QPushButton>
 #include "application_view.h"
-#include "widgets/button_widget/button_widget.h"
 
 void ApplicationView::toggleAddViewVisibility() {
+  if (searchBookmarkView->isVisible()) searchBookmarkView->setVisible(false);
+
   bool visibility = addBookmarkView->isVisible();
   addBookmarkView->setVisible(!visibility);
+}
+
+void ApplicationView::toggleSearchViewVisibility() {
+  if (addBookmarkView->isVisible()) addBookmarkView->setVisible(false);
+
+  bool visibility = searchBookmarkView->isVisible();
+  searchBookmarkView->setVisible(!visibility);
 }
 
 ApplicationView::ApplicationView(QWidget *parent): QWidget(parent) {
@@ -18,6 +26,7 @@ ApplicationView::ApplicationView(QWidget *parent): QWidget(parent) {
   ButtonWidget *addBookmarkButton = new ButtonWidget("Add bookmark");
   QObject::connect(addBookmarkButton, SIGNAL(clicked()), this, SLOT(toggleAddViewVisibility()));
   ButtonWidget *searchButton = new ButtonWidget("Search bookmark");
+  QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(toggleSearchViewVisibility()));
   menuLayout->addWidget(addBookmarkButton);
   menuLayout->addWidget(searchButton);
 
@@ -27,8 +36,13 @@ ApplicationView::ApplicationView(QWidget *parent): QWidget(parent) {
   addBookmarkView->setVisible(false);
   QObject::connect(addBookmarkView, SIGNAL(submitClicked(QString, QString, QString)), this, SLOT(toggleAddViewVisibility()));
 
+  searchBookmarkView = new SearchBookmarkView;
+  searchBookmarkView->setVisible(false);
+  QObject::connect(searchBookmarkView, SIGNAL(clickedSearch(QString)), this, SLOT(toggleSearchViewVisibility()));
+
   bookmarksListView = new BookmarksListView;
   contentLayout->addWidget(addBookmarkView);
+  contentLayout->addWidget(searchBookmarkView);
   contentLayout->addWidget(bookmarksListView);
 
   containerLayout->addLayout(menuLayout);
@@ -43,6 +57,14 @@ AddBookmarkView* ApplicationView::getAddBookmarkView() const {
 
 BookmarksListView* ApplicationView::getBookmarkListView() const {
   return bookmarksListView;
+}
+
+SearchBookmarkView* ApplicationView::getSearchBookmarkView() const {
+  return searchBookmarkView;
+}
+
+void ApplicationView::showSearchResults(const QVector<BookmarkModel*> &results) {
+  bookmarksListView->setModel(results);
 }
 
 void ApplicationView::closeEvent(QCloseEvent *event) {

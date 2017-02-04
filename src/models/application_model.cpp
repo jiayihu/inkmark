@@ -8,6 +8,16 @@ void ApplicationModel::clean() {
 
 ApplicationModel::~ApplicationModel() { clean(); }
 
+QVector<BookmarkModel*> ApplicationModel::search(QString searchText) const {
+  QVector<BookmarkModel*> found;
+
+  for (int i = 0; i < bookmarks.size(); i++) {
+    if (bookmarks[i]->hasWord(searchText)) found.push_back(bookmarks[i]);
+  }
+
+  return found;
+}
+
 void ApplicationModel::readFromJSON(const QJsonObject &json) {
   // Pulisco l'oggetto se conteneva dati
   clean();

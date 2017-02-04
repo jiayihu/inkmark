@@ -20,9 +20,5 @@ BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksL
       SLOT(editBookmark(BookmarkModel*, QString, QString, QString))
   );
 
-  // Il model ha già dei bookmarks
-  QVector<BookmarkModel*> bookmarks = m->getBookmarks();
-  if (bookmarks.size()) {
-    for (int i = 0; i < bookmarks.size(); i++) view->addBookmarkView(bookmarks[i]);
-  }
+  view->setModel(model->getBookmarks());
 }
