@@ -10,7 +10,8 @@ class LinkWidget: public QLabel {
   QUrl url;
 
  public:
-  LinkWidget(QString t = "", QUrl u = QUrl());
+  LinkWidget(QWidget *parent = nullptr);
+  LinkWidget(QString t = "", QUrl u = QUrl(), QWidget *parent = nullptr);
 
   void setUrl(QUrl newUrl);
 };

@@ -5,7 +5,7 @@
 
 class TextInputWidget: public QLineEdit {
  public:
-  TextInputWidget();
+  TextInputWidget(QWidget *parent = nullptr);
 };
 
 #endif //INKMARK_TEXT_INPUT_WIDGET_H

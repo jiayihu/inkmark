@@ -6,7 +6,9 @@ void BookmarkView::handleDeleteClick() { emit clickedDelete(model); }
 
 void BookmarkView::handleEditClick() { emit clickedEdit(model); }
 
-BookmarkView::BookmarkView(BookmarkModel *m): model(m) {
+BookmarkView::BookmarkView(QWidget *parent): QWidget(parent) {}
+
+BookmarkView::BookmarkView(BookmarkModel *m, QWidget *parent): model(m), QWidget(parent) {
   if (!model) return;
 
   QHBoxLayout *layout = new QHBoxLayout();

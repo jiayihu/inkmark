@@ -22,7 +22,8 @@ class BookmarkView: public QWidget {
   void handleEditClick();
 
  public:
-  BookmarkView(BookmarkModel *m = nullptr);
+  BookmarkView(QWidget *parent = nullptr);
+  BookmarkView(BookmarkModel *m = nullptr, QWidget *parent = nullptr);
 
  public slots:
   void setModel(BookmarkModel *newModel);

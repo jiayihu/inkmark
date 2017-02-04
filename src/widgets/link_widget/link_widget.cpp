@@ -1,6 +1,8 @@
 #include "link_widget.h"
 
-LinkWidget::LinkWidget(QString t, QUrl u): QLabel(t), url(u) {
+LinkWidget::LinkWidget(QWidget *parent): QLabel(parent) {}
+
+LinkWidget::LinkWidget(QString t, QUrl u, QWidget *parent): QLabel(t, parent), url(u) {
   setText("<a href=\"" + url.toString() + "\">" + QLabel::text() + "</a>");
   setTextFormat(Qt::RichText);
   setTextInteractionFlags(Qt::TextBrowserInteraction);

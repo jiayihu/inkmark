@@ -5,7 +5,7 @@
 
 class TextAreaWidget: public QTextEdit {
  public:
-  TextAreaWidget();
+  TextAreaWidget(QWidget *parent = nullptr);
 };
 
 #endif //INKMARK_TEXT_AREAD_WIDGET_H

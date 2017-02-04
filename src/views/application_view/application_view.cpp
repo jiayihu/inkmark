@@ -4,6 +4,7 @@
 ApplicationView::ApplicationView(QWidget *parent): QWidget(parent) {
   setWindowTitle("Inkmark");
   setStyleSheet("background-color: #FFFFFF;");
+  setMinimumSize(768, 480);
 
   QHBoxLayout *twoColumns = new QHBoxLayout;
   addBookmarkView = new AddBookmarkView;

@@ -27,7 +27,7 @@ class BookmarksListView: public QWidget {
   void handleSaveClicked();
 
  public:
-  BookmarksListView();
+  BookmarksListView(QWidget *parent = nullptr);
 
  public slots:
   void addBookmarkView(BookmarkModel *bookmark);

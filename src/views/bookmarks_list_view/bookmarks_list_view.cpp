@@ -17,7 +17,7 @@ void BookmarksListView::handleEditClicked(BookmarkModel *bookmark) {
   editBookmarkView->setVisible(true);
 }
 
-BookmarksListView::BookmarksListView() {
+BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   containerLayout = new QHBoxLayout();
   containerLayout->setAlignment(Qt::AlignTop);
 
