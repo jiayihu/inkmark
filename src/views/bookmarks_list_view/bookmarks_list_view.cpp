@@ -8,7 +8,7 @@ void BookmarksListView::handleDeleteClicked(BookmarkModel *bookmark) {
   emit clickedDelete(bookmark);
 }
 
-void BookmarksListView::handleSaveClicked() {
+void BookmarksListView::hideEditView() {
   editBookmarkView->setVisible(false);
 }
 
@@ -28,7 +28,8 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   editBookmarkView = new EditBookmarkView(this);
   editBookmarkView->setVisible(false);
   // Chiudi il widget per la modifica
-  QObject::connect(editBookmarkView, SIGNAL(saveClicked(BookmarkModel*, QString, QString, QString)), this, SLOT(handleSaveClicked()));
+  QObject::connect(editBookmarkView, SIGNAL(saveClicked(BookmarkModel*, QString, QString, QString)), this, SLOT(hideEditView()));
+  QObject::connect(editBookmarkView, SIGNAL(cancelClicked()), this, SLOT(hideEditView()));
   // Propaga il signal all'esterno
   QObject::connect(
       editBookmarkView,

@@ -15,12 +15,15 @@ EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
   nameInput = new TextInputWidget();
   linkInput = new TextInputWidget();
   descriptionTextArea = new TextAreaWidget();
+  QPushButton *cancelButton = new QPushButton("Cancel");
+  QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
   QPushButton *editButton = new QPushButton("Save bookmark");
   QObject::connect(editButton, SIGNAL(clicked()), this, SLOT(handleEditClick()));
 
   formLayout->addRow("Name: ", nameInput);
   formLayout->addRow("Link: ", linkInput);
   formLayout->addRow("Description", descriptionTextArea);
+  formLayout->addWidget(cancelButton);
   formLayout->addWidget(editButton);
 
   setLayout(formLayout);

@@ -24,7 +24,7 @@ class BookmarksListView: public QWidget {
    */
   void handleDeleteClicked(BookmarkModel *bookmark);
   void handleEditClicked(BookmarkModel *bookmark);
-  void handleSaveClicked();
+  void hideEditView();
 
  public:
   BookmarksListView(QWidget *parent = nullptr);

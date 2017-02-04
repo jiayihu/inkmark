@@ -27,6 +27,7 @@ class EditBookmarkView: public QWidget {
 
  signals:
   void saveClicked(BookmarkModel * model, QString newName, QString newLink, QString newDesc);
+  void cancelClicked();
 };
 
 #endif //INKMARK_EDIT_BOOKMARK_VIEW_H
