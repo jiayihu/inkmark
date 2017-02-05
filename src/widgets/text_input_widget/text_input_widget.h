@@ -4,6 +4,8 @@
 #include <QLineEdit>
 
 class TextInputWidget: public QLineEdit {
+  Q_OBJECT
+
  public:
   TextInputWidget(QWidget *parent = nullptr);
 };

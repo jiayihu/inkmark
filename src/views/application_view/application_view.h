@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QVector>
 #include <QCloseEvent>
+#include <QHBoxLayout>
 #include "models/bookmark_model.h"
 #include "views/add_bookmark_view/add_bookmark_view.h"
 #include "views/search_bookmark_view/search_bookmark_view.h"
@@ -17,9 +18,16 @@ class ApplicationView: public QWidget {
   SearchBookmarkView *searchBookmarkView;
   BookmarksListView *bookmarksListView;
 
+  QString getApplicationStyles() const;
+  QString getMenuStyle() const;
+  QVBoxLayout *createAppLayout() const;
+  QWidget *createMenu() const;
+  QWidget *createContent();
+
  private slots:
   void toggleSearchViewVisibility();
   void toggleAddViewVisibility();
+  void resizeToMin();
 
  public:
   ApplicationView(QWidget *parent = nullptr);
@@ -29,7 +37,6 @@ class ApplicationView: public QWidget {
   BookmarksListView* getBookmarkListView() const;
 
   void closeEvent(QCloseEvent *event);
-  void showBookmarks(const QVector<BookmarkModel *> &results);
 
   signals:
     void applicationClosed();

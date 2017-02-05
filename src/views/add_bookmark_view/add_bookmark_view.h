@@ -21,8 +21,9 @@ class AddBookmarkView: public QWidget {
  public:
   AddBookmarkView(QWidget *parent = nullptr);
 
-  signals:
-    void submitClicked(QString name, QString link, QString description);
+ signals:
+  void cancelClicked();
+  void submitClicked(QString name, QString link, QString description);
 };
 
 #endif //INKMARK_ADD_BOOKMARK_VIEW_H

@@ -9,8 +9,9 @@ class LinkWidget: public QLabel {
  private:
   QUrl url;
 
+  QString createHTMLLink() const;
+
  public:
-  LinkWidget(QWidget *parent = nullptr);
   LinkWidget(QString t = "", QUrl u = QUrl(), QWidget *parent = nullptr);
 
   void setUrl(QUrl newUrl);

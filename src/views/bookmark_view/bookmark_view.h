@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QLabel>
+#include <QVBoxLayout>
 #include "models/bookmark_model.h"
 #include "widgets/link_widget/link_widget.h"
 
@@ -12,7 +13,12 @@ class BookmarkView: public QWidget {
  private:
   BookmarkModel *model;
   LinkWidget *nameLink;
+  QLabel *descriptionLabel;
   QLabel *hostLabel;
+
+  QWidget* createContent();
+  QLabel* createHostLabel() const;
+  QWidget* createButtons() const;
 
  private slots:
   /**
@@ -23,7 +29,6 @@ class BookmarkView: public QWidget {
 
  public:
   BookmarkView(QWidget *parent = nullptr);
-  BookmarkView(BookmarkModel *m = nullptr, QWidget *parent = nullptr);
 
  public slots:
   void setModel(BookmarkModel *newModel);

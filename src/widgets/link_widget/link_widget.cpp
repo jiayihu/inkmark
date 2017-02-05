@@ -1,9 +1,12 @@
 #include "link_widget.h"
 
-LinkWidget::LinkWidget(QWidget *parent): QLabel(parent) {}
+QString LinkWidget::createHTMLLink() const {
+  return
+    "<a href=\"" + url.toString() + "\" style=\"color: #666; font-weight: bold;\">" + QLabel::text() + "</a>";
+}
 
 LinkWidget::LinkWidget(QString t, QUrl u, QWidget *parent): QLabel(t, parent), url(u) {
-  setText("<a href=\"" + url.toString() + "\">" + QLabel::text() + "</a>");
+  setText(createHTMLLink());
   setTextFormat(Qt::RichText);
   setTextInteractionFlags(Qt::TextBrowserInteraction);
   setOpenExternalLinks(true);
@@ -11,5 +14,5 @@ LinkWidget::LinkWidget(QString t, QUrl u, QWidget *parent): QLabel(t, parent), u
 
 void LinkWidget::setUrl(QUrl newUrl) {
   url = newUrl;
-  setText("<a href=\"" + url.toString() + "\">" + QLabel::text() + "</a>");
+  setText(createHTMLLink());
 }

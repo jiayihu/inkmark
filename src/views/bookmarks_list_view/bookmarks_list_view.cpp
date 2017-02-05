@@ -1,5 +1,14 @@
 #include <QString>
+#include <QScrollArea>
 #include "bookmarks_list_view.h"
+
+QString BookmarksListView::getStyles() const {
+  return
+  "QScrollBar:vertical { width: 5px; }"
+  "QScrollBar::handle:vertical {"
+    "background-color: #696969;"
+  "}";
+}
 
 void BookmarksListView::clean() {
   for (int i = 0; i < model.size(); i++) {
@@ -29,12 +38,25 @@ void BookmarksListView::handleEditClicked(BookmarkModel *bookmark) {
 }
 
 BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
+  setStyleSheet(getStyles());
+
   containerLayout = new QHBoxLayout();
   containerLayout->setAlignment(Qt::AlignTop);
+  containerLayout->setSpacing(0);
 
   QWidget *listContainer = new QWidget();
   listLayout = new QVBoxLayout(listContainer);
+  listLayout->setContentsMargins(0, 0, 0, 0);
+  listLayout->setSpacing(0);
   listLayout->setAlignment(Qt::AlignTop);
+
+  QScrollArea *scrollArea = new QScrollArea();
+  scrollArea->setWidget(listContainer);
+  scrollArea->setWidgetResizable(true);
+  scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarPolicy::ScrollBarAlwaysOff);
+  // BookmarkView fixed width + 2 to avoid horizontal scroll
+  scrollArea->setMinimumWidth(642);
+  scrollArea->setFrameShape(QFrame::NoFrame);
 
   editBookmarkView = new EditBookmarkView(this);
   editBookmarkView->setVisible(false);
@@ -49,7 +71,7 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
       SIGNAL(editedBookmark(BookmarkModel*, QString, QString, QString))
   );
 
-  containerLayout->addWidget(listContainer);
+  containerLayout->addWidget(scrollArea);
   containerLayout->addWidget(editBookmarkView);
 
   setLayout(containerLayout);
@@ -64,7 +86,8 @@ void BookmarksListView::setModel(const QVector<BookmarkModel *> &newModel) {
 }
 
 void BookmarksListView::addBookmarkView(BookmarkModel *bookmark) {
-  BookmarkView *bookmarkView = new BookmarkView(bookmark);
+  BookmarkView *bookmarkView = new BookmarkView();
+  bookmarkView->setModel(bookmark);
   viewsMap[bookmark] = bookmarkView;
   QObject::connect(bookmarkView, SIGNAL(clickedDelete(BookmarkModel*)), this, SLOT(handleDeleteClicked(BookmarkModel*)));
   QObject::connect(bookmarkView, SIGNAL(clickedEdit(BookmarkModel*)), this, SLOT(handleEditClicked(BookmarkModel*)));

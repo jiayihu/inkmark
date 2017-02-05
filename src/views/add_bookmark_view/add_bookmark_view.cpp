@@ -1,6 +1,7 @@
-#include <QFormLayout>
 #include <QLabel>
-#include <QPushButton>
+#include <QVBoxLayout>
+#include <widgets/text_input_widget/text_input_widget.h>
+#include <widgets/text_area_widget/text_area_widget.h>
 #include "add_bookmark_view.h"
 #include "widgets/button_widget/button_widget.h"
 
@@ -13,23 +14,27 @@ void AddBookmarkView::handleSubmitClick() {
 }
 
 AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
-  QFormLayout *formLayout = new QFormLayout;
-  nameInput = new QLineEdit;
-  nameInput->setMinimumWidth(200);
-  linkInput = new QLineEdit;
-  linkInput->setMinimumWidth(200);
-  descriptionTextArea = new QTextEdit;
-  descriptionTextArea->setMinimumWidth(300);
-  // Al copy-paste incolla il testo senza formattazione
-  descriptionTextArea->setAcceptRichText(false);
-  ButtonWidget *submit = new ButtonWidget("Add bookmark");
+  QVBoxLayout *layout = new QVBoxLayout;
+  nameInput = new TextInputWidget();
+  linkInput = new TextInputWidget();
+  descriptionTextArea = new TextAreaWidget();
 
-  formLayout->addRow("Name: ", nameInput);
-  formLayout->addRow("Link: ", linkInput);
-  formLayout->addRow("Description", descriptionTextArea);
-  formLayout->addWidget(submit);
+  layout->addWidget(new QLabel("Name"));
+  layout->addWidget(nameInput);
+  layout->addWidget(new QLabel("Url"));
+  layout->addWidget(linkInput);
+  layout->addWidget(new QLabel("Description"));
+  layout->addWidget(descriptionTextArea);
 
-  QObject::connect(submit, SIGNAL(clicked()), this, SLOT(handleSubmitClick()));
+  QHBoxLayout *buttonsLayout = new QHBoxLayout();
+  ButtonWidget *cancelButton = new ButtonWidget("Cancel");
+  QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
+  ButtonWidget *submitButton = new ButtonWidget("Add bookmark");
+  QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(handleSubmitClick()));
+  buttonsLayout->setAlignment(Qt::AlignLeft);
+  buttonsLayout->addWidget(cancelButton);
+  buttonsLayout->addWidget(submitButton);
+  layout->addLayout(buttonsLayout);
 
-  setLayout(formLayout);
+  setLayout(layout);
 }

@@ -4,6 +4,8 @@
 #include <QTextEdit>
 
 class TextAreaWidget: public QTextEdit {
+  Q_OBJECT
+
  public:
   TextAreaWidget(QWidget *parent = nullptr);
 };

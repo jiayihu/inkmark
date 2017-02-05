@@ -19,6 +19,7 @@ class BookmarksListView: public QWidget {
   EditBookmarkView *editBookmarkView;
   QMap<BookmarkModel*, BookmarkView*> viewsMap;
 
+  QString getStyles() const;
   void clean();
 
  private slots:

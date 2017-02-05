@@ -1,5 +1,5 @@
 #include <QFormLayout>
-#include <QPushButton>
+#include <QLabel>
 #include "edit_bookmark_view.h"
 #include "widgets/button_widget/button_widget.h"
 
@@ -12,22 +12,29 @@ void EditBookmarkView::handleEditClick() {
 }
 
 EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
-  QFormLayout *formLayout = new QFormLayout;
+  QVBoxLayout *layout = new QVBoxLayout;
   nameInput = new TextInputWidget();
   linkInput = new TextInputWidget();
   descriptionTextArea = new TextAreaWidget();
+
+  layout->addWidget(new QLabel("Name"));
+  layout->addWidget(nameInput);
+  layout->addWidget(new QLabel("Url"));
+  layout->addWidget(linkInput);
+  layout->addWidget(new QLabel("Description"));
+  layout->addWidget(descriptionTextArea);
+
+  QHBoxLayout *buttonsLayout = new QHBoxLayout();
   ButtonWidget *cancelButton = new ButtonWidget("Cancel");
   QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
   ButtonWidget *editButton = new ButtonWidget("Save bookmark");
   QObject::connect(editButton, SIGNAL(clicked()), this, SLOT(handleEditClick()));
+  buttonsLayout->setAlignment(Qt::AlignLeft);
+  buttonsLayout->addWidget(cancelButton);
+  buttonsLayout->addWidget(editButton);
+  layout->addLayout(buttonsLayout);
 
-  formLayout->addRow("Name: ", nameInput);
-  formLayout->addRow("Link: ", linkInput);
-  formLayout->addRow("Description", descriptionTextArea);
-  formLayout->addWidget(cancelButton);
-  formLayout->addWidget(editButton);
-
-  setLayout(formLayout);
+  setLayout(layout);
 }
 
 void EditBookmarkView::setModel(BookmarkModel *newModel) {
