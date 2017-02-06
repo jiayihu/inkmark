@@ -32,6 +32,7 @@ void Inkmark::init() {
   SearchBookmarkView *searchBookmarkView = appView->getSearchBookmarkView();
   searchBookmarkController = new SearchBookmarkController(appModel, searchBookmarkView);
 
+  // Salvantaggio dei dati alla chiusura
   QObject::connect(appView, SIGNAL(applicationClosed()), this, SLOT(saveModel()));
 
   appView->show();

@@ -8,6 +8,12 @@
 #include <QJsonArray>
 #include "bookmark_model.h"
 
+/**
+ * Classe che gestisce il model dell'applicazione. Nessun'altra classa può
+ * modificare il model dell'applicazione, infatti tutti i metodi ritornano al
+ * massimo puntatori di tipo BookmarkInterface, che contiene solo metodi virtuali
+ * marcati const.
+ */
 class ApplicationModel: public QObject {
   Q_OBJECT
 

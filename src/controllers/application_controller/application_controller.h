@@ -4,6 +4,10 @@
 #include "models/application_model.h"
 #include "views/application_view/application_view.h"
 
+/**
+ * Controller generale dell'applicazione che gestisce casi più particolari come
+ * comunicazione tra views senza utilizzo del Model
+ */
 class ApplicationController {
  private:
   ApplicationModel *model;
