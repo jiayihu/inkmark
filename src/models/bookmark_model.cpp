@@ -4,7 +4,7 @@
 
 BookmarkModel::BookmarkModel() {}
 
-BookmarkModel::BookmarkModel(QString l, QString n, QString d):
+BookmarkModel::BookmarkModel(const QString &l, const QString &n, const QString &d):
     link(QUrl::fromUserInput(l)), name(n), description(d), isImportant(false) {}
 
 QUrl BookmarkModel::getLink() const { return link; }
@@ -13,11 +13,11 @@ QString BookmarkModel::getName() const { return name; }
 
 QString BookmarkModel::getDescription() const { return description; }
 
-void BookmarkModel::editLink(QString newLink) { link = QUrl::fromUserInput(newLink); }
+void BookmarkModel::editLink(const QString &newLink) { link = QUrl::fromUserInput(newLink); }
 
-void BookmarkModel::editName(QString newName) { name = newName; }
+void BookmarkModel::editName(const QString &newName) { name = newName; }
 
-void BookmarkModel::editDescription(QString newDescription) { description = newDescription; }
+void BookmarkModel::editDescription(const QString &newDescription) { description = newDescription; }
 
 bool BookmarkModel::isLinkValid() const { return link.isValid(); }
 
@@ -25,7 +25,7 @@ bool BookmarkModel::getIsImportant() const { return isImportant; }
 
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 
-bool BookmarkModel::hasWord(QString searchText) const {
+bool BookmarkModel::hasWord(const QString &searchText) const {
   bool isInName = name.indexOf(searchText) != -1;
   bool isInLink = link.toString().indexOf(searchText) != -1;
   bool isInDesc = description.indexOf(searchText) != -1;
@@ -59,10 +59,10 @@ std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
 
 ArticleModel::ArticleModel() {}
 
-ArticleModel::ArticleModel(QString l, QString n, QString d, QDateTime p, int mr)
+ArticleModel::ArticleModel(const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr)
     : BookmarkModel(l, n, d), publication(p), minRead(mr) {}
 
-void ArticleModel::addAuthor(QString fullname) {
+void ArticleModel::addAuthor(const QString &fullname) {
   authors.push_back(fullname);
 }
 
@@ -72,7 +72,7 @@ QVector<QString> ArticleModel::getAuthors() const { return authors; }
 
 int ArticleModel::getMinRead() const { return minRead; }
 
-bool ArticleModel::hasWord(QString searchText) const {
+bool ArticleModel::hasWord(const QString &searchText) const {
   bool isInAuthors = false;
 
   for (int i = 0; i < authors.size() && !isInAuthors; i++) {
@@ -114,7 +114,7 @@ QString ArticleModel::format = "dd MMM yyyy hh:mm:ss";
  * Video
  */
 
-VideoPlatform stringToPlatform(QString platformString) {
+VideoPlatform stringToPlatform(const QString &platformString) {
   QMap<QString, VideoPlatform> platformMap = {
       { "youtube", VideoPlatform ::youtube },
       { "video", VideoPlatform::vimeo },
@@ -125,7 +125,7 @@ VideoPlatform stringToPlatform(QString platformString) {
   return platformMap[platformString];
 }
 
-QString platformToString(VideoPlatform platform) {
+QString platformToString(const VideoPlatform &platform) {
   switch (platform) {
     case VideoPlatform::youtube :
       return "youtube";
@@ -143,15 +143,16 @@ QString platformToString(VideoPlatform platform) {
 
 VideoModel::VideoModel() {}
 
-VideoModel::VideoModel(QString l, QString n, QString d, QTime dur, VideoPlatform p): BookmarkModel(l, n, d), duration(dur), platform(p) {}
+VideoModel::VideoModel(const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p)
+  : BookmarkModel(l, n, d), duration(dur), platform(p) {}
 
 QTime VideoModel::getDuration() const { return duration; }
 
 VideoPlatform VideoModel::getPlatform() const { return platform; }
 
-bool VideoModel::hasWord(QString searchText) const {
+bool VideoModel::hasWord(const QString &searchText) const {
   bool isInPlatform = platformToString(platform).indexOf(searchText) != -1;
-  
+
   return BookmarkModel::hasWord(searchText) || isInPlatform;
 }
 

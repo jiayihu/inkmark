@@ -13,17 +13,6 @@ void ApplicationModel::clean() {
 
 ApplicationModel::~ApplicationModel() { clean(); }
 
-QVector<BookmarkInterface*> ApplicationModel::search(QString searchText) const {
-  QVector<BookmarkInterface*> found;
-
-  for (int i = 0; i < bookmarks.size(); i++) {
-    if (bookmarks[i]->hasWord(searchText)) found.push_back(bookmarks[i]);
-  }
-
-  emit finishedSearch(found);
-  return found;
-}
-
 void ApplicationModel::readFromJSON(const QJsonObject &json) {
   // Pulisco l'oggetto se conteneva dati
   clean();
@@ -48,8 +37,10 @@ void ApplicationModel::writeToJSON(QJsonObject &json) const {
   json.insert("bookmarks", bookmarksJSON);
 }
 
-void ApplicationModel::addBookmark(BookmarkModel *bookmark) {
+void ApplicationModel::addBookmark(const QString &name, const QString &link, const QString &description) {
+  BookmarkModel *bookmark = new BookmarkModel(link, name, description);
   bookmarks.push_back(bookmark);
+  
   emit addedBookmark(bookmark);
 }
 
@@ -71,7 +62,7 @@ void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   delete bookmark;
 }
 
-void ApplicationModel::editBookmark(BookmarkInterface *bookmark, QString newName, QString newLink, QString newDesc) {
+void ApplicationModel::editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc) {
   int bookmarkIndex = bookmarks.indexOf(static_cast<BookmarkModel*>(bookmark));
 
   if (bookmarkIndex == -1) return;
@@ -82,4 +73,15 @@ void ApplicationModel::editBookmark(BookmarkInterface *bookmark, QString newName
   foundBookmark->editDescription(newDesc);
 
   emit updatedBookmark(bookmark);
+}
+
+QVector<BookmarkInterface*> ApplicationModel::search(const QString &searchText) const {
+  QVector<BookmarkInterface*> found;
+
+  for (int i = 0; i < bookmarks.size(); i++) {
+    if (bookmarks[i]->hasWord(searchText)) found.push_back(bookmarks[i]);
+  }
+
+  emit finishedSearch(found);
+  return found;
 }

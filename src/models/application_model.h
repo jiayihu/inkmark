@@ -36,16 +36,16 @@ class ApplicationModel: public QObject {
   void writeToJSON(QJsonObject &json) const;
 
  public slots:
-  void addBookmark(BookmarkModel *bookmark);
+  void addBookmark(const QString &name, const QString &link, const QString &description);
   void deleteBookmark(BookmarkInterface *bookmark);
-  void editBookmark(BookmarkInterface *bookmark, QString newName, QString newLink, QString newDesc);
-  QVector<BookmarkInterface*> search(QString searchText) const;
+  void editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc);
+  QVector<BookmarkInterface*> search(const QString &searchText) const;
 
  signals:
   void addedBookmark(BookmarkInterface *bookmark);
   void deletedBookmark(BookmarkInterface *bookmark);
   void updatedBookmark(BookmarkInterface *bookmark);
-  void finishedSearch(QVector<BookmarkInterface*>) const;
+  void finishedSearch(QVector<BookmarkInterface*> results) const;
 };
 
 #endif //INKMARK_MODEL_H

@@ -15,8 +15,8 @@ void BookmarksListView::clean() {
     BookmarkInterface *bookmark = model[i];
     listLayout->removeWidget(viewsMap[bookmark]);
     delete viewsMap[bookmark];
-    viewsMap.remove(bookmark);
   }
+  viewsMap.clear();
   model.clear();
 }
 

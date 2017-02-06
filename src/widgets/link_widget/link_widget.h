@@ -12,7 +12,7 @@ class LinkWidget: public QLabel {
   QString createHTMLLink() const;
 
  public:
-  LinkWidget(QString t = "", QUrl u = QUrl(), QWidget *parent = nullptr);
+  LinkWidget(const QString &t = "", const QUrl &u = QUrl(), QWidget *parent = nullptr);
 
   void setUrl(QUrl newUrl);
 };

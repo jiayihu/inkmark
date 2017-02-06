@@ -10,6 +10,10 @@
 #include "views/search_bookmark_view/search_bookmark_view.h"
 #include "views/bookmarks_list_view/bookmarks_list_view.h"
 
+/**
+ * Classe View che si occupa di istanziare le classi view figlie e del layout
+ * generale come il menu
+ */
 class ApplicationView: public QWidget {
  Q_OBJECT
 

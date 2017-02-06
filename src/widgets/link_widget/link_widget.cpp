@@ -5,7 +5,7 @@ QString LinkWidget::createHTMLLink() const {
     "<a href=\"" + url.toString() + "\" style=\"color: #666; font-weight: bold;\">" + QLabel::text() + "</a>";
 }
 
-LinkWidget::LinkWidget(QString t, QUrl u, QWidget *parent): QLabel(t, parent), url(u) {
+LinkWidget::LinkWidget(const QString &t, const QUrl &u, QWidget *parent): QLabel(t, parent), url(u) {
   setText(createHTMLLink());
   setTextFormat(Qt::RichText);
   setTextInteractionFlags(Qt::TextBrowserInteraction);

@@ -7,6 +7,9 @@
 #include "models/bookmark_model.h"
 #include "widgets/link_widget/link_widget.h"
 
+/**
+ * Classe view che mostra un singolo bookmark
+ */
 class BookmarkView: public QWidget {
   Q_OBJECT
 

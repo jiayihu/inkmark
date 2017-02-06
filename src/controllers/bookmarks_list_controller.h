@@ -12,7 +12,7 @@ class BookmarksListController: public QObject {
   BookmarksListView *view;
 
  private slots:
-  void handleFinishedSearch(QVector<BookmarkInterface*> results);
+  void handleFinishedSearch(const QVector<BookmarkInterface *> &results);
 
  public:
   BookmarksListController(ApplicationModel *m = nullptr, BookmarksListView *v = nullptr);

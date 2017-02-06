@@ -13,7 +13,7 @@ class AddBookmarkController: public QObject {
   AddBookmarkView *view;
 
  private slots:
-  void handleSubmitClicked(QString name, QString link, QString description);
+  void handleSubmitClicked(const QString &name, const QString &link, const QString &description);
 
  public:
   AddBookmarkController(ApplicationModel *m = nullptr, AddBookmarkView *v = nullptr);

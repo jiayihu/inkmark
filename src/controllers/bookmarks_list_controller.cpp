@@ -1,7 +1,7 @@
 #include <QString>
 #include "bookmarks_list_controller.h"
 
-void BookmarksListController::handleFinishedSearch(QVector<BookmarkInterface *> results) {
+void BookmarksListController::handleFinishedSearch(const QVector<BookmarkInterface *> &results) {
   view->setModel(results);
 }
 

@@ -5,7 +5,6 @@ AddBookmarkController::AddBookmarkController(ApplicationModel *m, AddBookmarkVie
   QObject::connect(v, SIGNAL(submitClicked(QString, QString, QString)), this, SLOT(handleSubmitClicked(QString, QString, QString)));
 }
 
-void AddBookmarkController::handleSubmitClicked(QString name, QString link, QString description) {
-  BookmarkModel *bookmark = new BookmarkModel(link, name, description);
-  model->addBookmark(bookmark);
+void AddBookmarkController::handleSubmitClicked(const QString &name, const QString &link, const QString &description) {
+  model->addBookmark(name, link, description);
 }

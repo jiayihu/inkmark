@@ -21,4 +21,4 @@ void ButtonWidget::init() {
 
 ButtonWidget::ButtonWidget(QWidget *parent): QPushButton(parent) { init(); }
 
-ButtonWidget::ButtonWidget(QString text, QWidget *parent): QPushButton(text, parent) { init(); }
+ButtonWidget::ButtonWidget(const QString &text, QWidget *parent): QPushButton(text, parent) { init(); }

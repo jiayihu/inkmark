@@ -22,7 +22,7 @@ class BookmarkInterface {
   virtual QString getDescription() const = 0;
   virtual bool isLinkValid() const = 0;
   virtual bool getIsImportant() const = 0;
-  virtual bool hasWord(QString searchText) const = 0;
+  virtual bool hasWord(const QString &searchText) const = 0;
 };
 
 class BookmarkModel: public BookmarkInterface {
@@ -34,25 +34,26 @@ class BookmarkModel: public BookmarkInterface {
 
  public:
   BookmarkModel();
-  BookmarkModel(QString l, QString n = "", QString d = "");
+  BookmarkModel(const QString &l, const QString &n = "", const QString &d = "");
 
   QUrl getLink() const override;
   QString getName() const override;
   QString getDescription() const override;
-  void editName(QString newName);
-  void editLink(QString newLink);
-  void editDescription(QString newDescription);
+  void editName(const QString &newName);
+  void editLink(const QString &newLink);
+  void editDescription(const QString &newDescription);
   bool isLinkValid() const override;
   bool getIsImportant() const override;
   void setImportance(bool newValue);
 
-  virtual bool hasWord(QString searchText) const override;
+  virtual bool hasWord(const QString &searchText) const override;
   virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 
   // Conversione a QString per poter usare `qDebug() << bookmark`
-  operator QString() const { return name + " " + link.toString() + description; }
+  virtual operator QString() const { return name + " " + link.toString() + " " + description; }
 };
+// TODO Anche per classi derivate
 std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark);
 
 class ArticleModel: public BookmarkModel {
@@ -63,13 +64,13 @@ class ArticleModel: public BookmarkModel {
 
  public:
   ArticleModel();
-  ArticleModel(QString l, QString n, QString d, QDateTime p, int mr = 0);
+  ArticleModel(const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr = 0);
 
-  void addAuthor(QString fullname = "");
+  void addAuthor(const QString &fullname = "");
   QDateTime getPublication() const;
   QVector<QString> getAuthors() const;
   int getMinRead() const;
-  bool hasWord(QString searchText) const override;
+  bool hasWord(const QString &searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 
@@ -78,8 +79,8 @@ class ArticleModel: public BookmarkModel {
 
 enum VideoPlatform { youtube, vimeo, twitch, noPlatform };
 
-extern VideoPlatform stringToPlatform(QString platform);
-extern QString platformToString(VideoPlatform platform);
+extern VideoPlatform stringToPlatform(const QString &platform);
+extern QString platformToString(const VideoPlatform &platform);
 
 class VideoModel: public BookmarkModel {
  private:
@@ -88,11 +89,11 @@ class VideoModel: public BookmarkModel {
 
  public:
   VideoModel();
-  VideoModel(QString l, QString n, QString d, QTime dur, VideoPlatform p = VideoPlatform::noPlatform);
+  VideoModel(const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p = VideoPlatform::noPlatform);
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
-  bool hasWord(QString searchText) const override;
+  bool hasWord(const QString &searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 
