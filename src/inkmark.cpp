@@ -3,41 +3,6 @@
 
 QString Inkmark::modelFilename = "model.json";
 
-Inkmark::Inkmark(): appModel(new ApplicationModel()), appView(appView = new ApplicationView()) {
-  loadModel();
-  applicationController = new ApplicationController(appModel, appView);
-}
-
-Inkmark::~Inkmark() {
-  delete appModel;
-  delete addBookmarkController;
-  delete bookmarksListController;
-  delete searchBookmarkController;
-  delete applicationController;
-}
-
-/**
- * Inizializza i controllers delle views. Le views sono già inizializzate da
- * ApplicationView, mentre il model è già inizializzato con ApplicationModel.
- * Esiste inoltre un'unica istanza di ApplicationModel, che contiene tutti i dati
- * di interesse globale per l'applicazione come la lista di bookmarks.
- */
-void Inkmark::init() {
-  AddBookmarkView *addBookmarkView = appView->getAddBookmarkView();
-  addBookmarkController = new AddBookmarkController(appModel, addBookmarkView);
-
-  BookmarksListView *bookmarksListView = appView->getBookmarkListView();
-  bookmarksListController = new BookmarksListController(appModel, bookmarksListView);
-
-  SearchBookmarkView *searchBookmarkView = appView->getSearchBookmarkView();
-  searchBookmarkController = new SearchBookmarkController(appModel, searchBookmarkView);
-
-  // Salvantaggio dei dati alla chiusura
-  QObject::connect(appView, SIGNAL(applicationClosed()), this, SLOT(saveModel()));
-
-  appView->show();
-}
-
 bool Inkmark::loadModel() {
   QFile loadFile(Inkmark::modelFilename);
 
@@ -67,4 +32,18 @@ void Inkmark::saveModel() const {
   }
 
   saveFile.write(jsonDoc.toJson());
+}
+
+Inkmark::Inkmark(): appModel(new ApplicationModel()), appView(appView = new ApplicationView()) {
+  loadModel();
+  applicationController = new ApplicationController(appModel, appView);
+
+  // Salvantaggio dei dati alla chiusura
+  QObject::connect(appView, SIGNAL(applicationClosed()), this, SLOT(saveModel()));
+  appView->show();
+}
+
+Inkmark::~Inkmark() {
+  delete appModel;
+  delete applicationController;
 }

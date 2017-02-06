@@ -17,6 +17,9 @@
  * Per ogni modifica/aggiunta al model bisogna richiamarne un metodo, che provvederà
  * a fare la modifica e fare emit di un SIGNAL di cui è in ascolto qualunque
  * parte dell'applicazione sia interessata.
+ *
+ * Esiste inoltre un'unica istanza di ApplicationModel, che contiene tutti i dati
+ * di interesse globale per l'applicazione come la lista di bookmarks.
  */
 class ApplicationModel: public QObject {
   Q_OBJECT

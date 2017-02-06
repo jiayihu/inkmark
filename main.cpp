@@ -14,7 +14,6 @@ int main(int argc, char* argv[]) {
   app.setFont(QFont("Helvetica", 14));
 
   Inkmark inkmark;
-  inkmark.init();
 
   return app.exec();
 }

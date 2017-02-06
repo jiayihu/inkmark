@@ -3,18 +3,20 @@
 
 #include "models/application_model.h"
 #include "views/application_view/application_view.h"
+#include "controllers/user_application_controller/user_application_controller.h"
 
 /**
- * Controller generale dell'applicazione che gestisce casi più particolari come
- * comunicazione tra views senza utilizzo del Model
+ * Inizializza i controllers del modulo admin e utente
  */
 class ApplicationController {
  private:
   ApplicationModel *model;
   ApplicationView *view;
+  UserApplicationController *userApplicationController;
 
  public:
   ApplicationController(ApplicationModel *m = nullptr, ApplicationView *v = nullptr);
+  ~ApplicationController();
 };
 
 #endif //INKMARK_APPLICATION_CONTROLLER_H
