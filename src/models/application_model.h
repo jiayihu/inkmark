@@ -13,6 +13,10 @@
  * modificare il model dell'applicazione, infatti tutti i metodi ritornano al
  * massimo puntatori di tipo BookmarkInterface, che contiene solo metodi virtuali
  * marcati const.
+ *
+ * Per ogni modifica/aggiunta al model bisogna richiamarne un metodo, che provvederà
+ * a fare la modifica e fare emit di un SIGNAL di cui è in ascolto qualunque
+ * parte dell'applicazione sia interessata.
  */
 class ApplicationModel: public QObject {
   Q_OBJECT

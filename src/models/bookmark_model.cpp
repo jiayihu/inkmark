@@ -26,11 +26,11 @@ bool BookmarkModel::getIsImportant() const { return isImportant; }
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 
 bool BookmarkModel::hasWord(QString searchText) const {
-  bool isSimilarName = name.indexOf(searchText) != -1;
-  bool isSimilarLink = link.toString().indexOf(searchText) != -1;
-  bool isSimilarDesc = description.indexOf(searchText) != -1;
+  bool isInName = name.indexOf(searchText) != -1;
+  bool isInLink = link.toString().indexOf(searchText) != -1;
+  bool isInDesc = description.indexOf(searchText) != -1;
 
-  return isSimilarName || isSimilarLink || isSimilarDesc;
+  return isInName || isInLink || isInDesc;
 }
 
 void BookmarkModel::readFromJSON(const QJsonObject &json) {
@@ -71,6 +71,16 @@ QDateTime ArticleModel::getPublication() const { return publication; }
 QVector<QString> ArticleModel::getAuthors() const { return authors; }
 
 int ArticleModel::getMinRead() const { return minRead; }
+
+bool ArticleModel::hasWord(QString searchText) const {
+  bool isInAuthors = false;
+
+  for (int i = 0; i < authors.size() && !isInAuthors; i++) {
+    if (authors[i].indexOf(searchText) != -1) isInAuthors = true;
+  }
+
+  return BookmarkModel::hasWord(searchText) || isInAuthors;
+}
 
 void ArticleModel::readFromJSON(const QJsonObject &json) {
   BookmarkModel::readFromJSON(json);
@@ -138,6 +148,12 @@ VideoModel::VideoModel(QString l, QString n, QString d, QTime dur, VideoPlatform
 QTime VideoModel::getDuration() const { return duration; }
 
 VideoPlatform VideoModel::getPlatform() const { return platform; }
+
+bool VideoModel::hasWord(QString searchText) const {
+  bool isInPlatform = platformToString(platform).indexOf(searchText) != -1;
+  
+  return BookmarkModel::hasWord(searchText) || isInPlatform;
+}
 
 void VideoModel::readFromJSON(const QJsonObject &json) {
   BookmarkModel::readFromJSON(json);

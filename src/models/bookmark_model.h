@@ -11,7 +11,7 @@
 #include <QJsonArray>
 
 /**
- * Interfaccia di Bookmark da usare nelle views. Contiene solo metodi const,
+ * Interfaccia di Bookmark da usare nelle views e controllers. Contiene solo metodi const,
  * quindi non ammette modifiche
  */
 class BookmarkInterface {
@@ -69,6 +69,7 @@ class ArticleModel: public BookmarkModel {
   QDateTime getPublication() const;
   QVector<QString> getAuthors() const;
   int getMinRead() const;
+  bool hasWord(QString searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 
@@ -91,6 +92,7 @@ class VideoModel: public BookmarkModel {
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
+  bool hasWord(QString searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 
