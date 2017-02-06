@@ -34,10 +34,10 @@ bool BookmarkModel::hasWord(const QString &searchText) const {
 }
 
 void BookmarkModel::readFromJSON(const QJsonObject &json) {
- name = json.value("name").toString();
- link = QUrl(json.value("link").toString());
- description = json.value("description").toString();
- isImportant = json.value("isImportant").toBool();
+  name = json.value("name").toString();
+  link = QUrl(json.value("link").toString());
+  description = json.value("description").toString();
+  isImportant = json.value("isImportant").toBool();
 }
 
 void BookmarkModel::writeToJSON(QJsonObject &json) const {

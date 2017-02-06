@@ -46,7 +46,7 @@ class BookmarkModel: public BookmarkInterface {
   bool getIsImportant() const override;
   void setImportance(bool newValue);
 
-  virtual bool hasWord(const QString &searchText) const override;
+  bool hasWord(const QString &searchText) const override;
   virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 
@@ -89,7 +89,13 @@ class VideoModel: public BookmarkModel {
 
  public:
   VideoModel();
-  VideoModel(const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p = VideoPlatform::noPlatform);
+  VideoModel(
+    const QString &l,
+    const QString &n,
+    const QString &d,
+    const QTime &dur,
+    const VideoPlatform &p = VideoPlatform::noPlatform
+  );
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
