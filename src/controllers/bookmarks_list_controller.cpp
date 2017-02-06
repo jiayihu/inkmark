@@ -1,7 +1,7 @@
 #include <QString>
 #include "bookmarks_list_controller.h"
 
-void BookmarksListController::handleFinishedSearch(QVector<BookmarkModel *> results) {
+void BookmarksListController::handleFinishedSearch(QVector<BookmarkInterface *> results) {
   view->setModel(results);
 }
 
@@ -10,19 +10,19 @@ BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksL
   /**
    * Connessioni Model => View
    */
-  QObject::connect(model, SIGNAL(addedBookmark(BookmarkModel*)), view, SLOT(addBookmarkView(BookmarkModel*)));
-  QObject::connect(model, SIGNAL(updatedBookmark(BookmarkModel*)), view, SLOT(updateBookmarkView(BookmarkModel*)));
-  QObject::connect(model, SIGNAL(finishedSearch(QVector<BookmarkModel*>)), this, SLOT(handleFinishedSearch(QVector<BookmarkModel*>)));
+  QObject::connect(model, SIGNAL(addedBookmark(BookmarkInterface*)), view, SLOT(addBookmarkView(BookmarkInterface*)));
+  QObject::connect(model, SIGNAL(updatedBookmark(BookmarkInterface*)), view, SLOT(updateBookmarkView(BookmarkInterface*)));
+  QObject::connect(model, SIGNAL(finishedSearch(QVector<BookmarkInterface*>)), this, SLOT(handleFinishedSearch(QVector<BookmarkInterface*>)));
 
   /**
    * Connessioni View => Model
    */
-  QObject::connect(view, SIGNAL(clickedDelete(BookmarkModel*)), model, SLOT(deleteBookmark(BookmarkModel*)));
+  QObject::connect(view, SIGNAL(clickedDelete(BookmarkInterface*)), model, SLOT(deleteBookmark(BookmarkInterface*)));
   QObject::connect(
       view,
-      SIGNAL(editedBookmark(BookmarkModel*, QString, QString, QString)),
+      SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString)),
       model,
-      SLOT(editBookmark(BookmarkModel*, QString, QString, QString))
+      SLOT(editBookmark(BookmarkInterface*, QString, QString, QString))
   );
 
   view->setModel(model->getBookmarks());

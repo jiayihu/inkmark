@@ -12,7 +12,7 @@ QString BookmarksListView::getStyles() const {
 
 void BookmarksListView::clean() {
   for (int i = 0; i < model.size(); i++) {
-    BookmarkModel *bookmark = model[i];
+    BookmarkInterface *bookmark = model[i];
     listLayout->removeWidget(viewsMap[bookmark]);
     delete viewsMap[bookmark];
     viewsMap.remove(bookmark);
@@ -20,7 +20,7 @@ void BookmarksListView::clean() {
   model.clear();
 }
 
-void BookmarksListView::handleDeleteClicked(BookmarkModel *bookmark) {
+void BookmarksListView::handleDeleteClicked(BookmarkInterface *bookmark) {
   listLayout->removeWidget(viewsMap[bookmark]);
   delete viewsMap[bookmark];
   viewsMap.remove(bookmark);
@@ -32,7 +32,7 @@ void BookmarksListView::hideEditView() {
   editBookmarkView->setVisible(false);
 }
 
-void BookmarksListView::handleEditClicked(BookmarkModel *bookmark) {
+void BookmarksListView::handleEditClicked(BookmarkInterface *bookmark) {
   editBookmarkView->setModel(bookmark);
   editBookmarkView->setVisible(true);
 }
@@ -61,14 +61,14 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   editBookmarkView = new EditBookmarkView(this);
   editBookmarkView->setVisible(false);
   // Chiudi il widget per la modifica
-  QObject::connect(editBookmarkView, SIGNAL(saveClicked(BookmarkModel*, QString, QString, QString)), this, SLOT(hideEditView()));
+  QObject::connect(editBookmarkView, SIGNAL(saveClicked(BookmarkInterface*, QString, QString, QString)), this, SLOT(hideEditView()));
   QObject::connect(editBookmarkView, SIGNAL(cancelClicked()), this, SLOT(hideEditView()));
   // Propaga il signal all'esterno
   QObject::connect(
       editBookmarkView,
-      SIGNAL(saveClicked(BookmarkModel*, QString, QString, QString)),
+      SIGNAL(saveClicked(BookmarkInterface*, QString, QString, QString)),
       this,
-      SIGNAL(editedBookmark(BookmarkModel*, QString, QString, QString))
+      SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString))
   );
 
   containerLayout->addWidget(scrollArea);
@@ -77,7 +77,7 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   setLayout(containerLayout);
 }
 
-void BookmarksListView::setModel(const QVector<BookmarkModel *> &newModel) {
+void BookmarksListView::setModel(const QVector<BookmarkInterface *> &newModel) {
   if (model.size()) clean();
 
   // TODO Non fare nulla se è lo stesso model
@@ -85,17 +85,17 @@ void BookmarksListView::setModel(const QVector<BookmarkModel *> &newModel) {
   for (int i = 0; i < model.size(); i++) addBookmarkView(model[i]);
 }
 
-void BookmarksListView::addBookmarkView(BookmarkModel *bookmark) {
+void BookmarksListView::addBookmarkView(BookmarkInterface *bookmark) {
   BookmarkView *bookmarkView = new BookmarkView();
   bookmarkView->setModel(bookmark);
   viewsMap[bookmark] = bookmarkView;
-  QObject::connect(bookmarkView, SIGNAL(clickedDelete(BookmarkModel*)), this, SLOT(handleDeleteClicked(BookmarkModel*)));
-  QObject::connect(bookmarkView, SIGNAL(clickedEdit(BookmarkModel*)), this, SLOT(handleEditClicked(BookmarkModel*)));
+  QObject::connect(bookmarkView, SIGNAL(clickedDelete(BookmarkInterface*)), this, SLOT(handleDeleteClicked(BookmarkInterface*)));
+  QObject::connect(bookmarkView, SIGNAL(clickedEdit(BookmarkInterface*)), this, SLOT(handleEditClicked(BookmarkInterface*)));
 
   listLayout->addWidget(bookmarkView);
 }
 
-void BookmarksListView::updateBookmarkView(BookmarkModel *bookmark) {
+void BookmarksListView::updateBookmarkView(BookmarkInterface *bookmark) {
   BookmarkView *bookmarkView = viewsMap[bookmark];
   bookmarkView->setModel(bookmark);
 }

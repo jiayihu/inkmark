@@ -23,23 +23,25 @@ class ApplicationModel: public QObject {
   void clean();
 
  public:
-  QVector<BookmarkModel*> getBookmarks() const;
   ~ApplicationModel();
+
+  // Restituisce un vettore di array da usare come read-only
+  QVector<BookmarkInterface*> getBookmarks() const;
 
   void readFromJSON(const QJsonObject &json);
   void writeToJSON(QJsonObject &json) const;
 
  public slots:
   void addBookmark(BookmarkModel *bookmark);
-  void deleteBookmark(BookmarkModel *bookmark);
-  void editBookmark(BookmarkModel *bookmark, QString newName, QString newLink, QString newDesc);
-  QVector<BookmarkModel*> search(QString searchText) const;
+  void deleteBookmark(BookmarkInterface *bookmark);
+  void editBookmark(BookmarkInterface *bookmark, QString newName, QString newLink, QString newDesc);
+  QVector<BookmarkInterface*> search(QString searchText) const;
 
  signals:
-  void addedBookmark(BookmarkModel *bookmark);
-  void deletedBookmark(BookmarkModel *bookmark);
-  void updatedBookmark(BookmarkModel *bookmark);
-  void finishedSearch(QVector<BookmarkModel*>) const;
+  void addedBookmark(BookmarkInterface *bookmark);
+  void deletedBookmark(BookmarkInterface *bookmark);
+  void updatedBookmark(BookmarkInterface *bookmark);
+  void finishedSearch(QVector<BookmarkInterface*>) const;
 };
 
 #endif //INKMARK_MODEL_H

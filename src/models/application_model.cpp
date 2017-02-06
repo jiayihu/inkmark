@@ -1,6 +1,11 @@
 #include "application_model.h"
 
-QVector<BookmarkModel*> ApplicationModel::getBookmarks() const { return bookmarks; }
+QVector<BookmarkInterface*> ApplicationModel::getBookmarks() const {
+  QVector<BookmarkInterface*> bookmarksInterfaces;
+  for (int i = 0; i < bookmarks.size(); i++) bookmarksInterfaces.push_back(bookmarks[i]);
+
+  return bookmarksInterfaces;
+}
 
 void ApplicationModel::clean() {
   for (int i = 0; i < bookmarks.size(); i++) delete bookmarks[i];
@@ -8,8 +13,8 @@ void ApplicationModel::clean() {
 
 ApplicationModel::~ApplicationModel() { clean(); }
 
-QVector<BookmarkModel*> ApplicationModel::search(QString searchText) const {
-  QVector<BookmarkModel*> found;
+QVector<BookmarkInterface*> ApplicationModel::search(QString searchText) const {
+  QVector<BookmarkInterface*> found;
 
   for (int i = 0; i < bookmarks.size(); i++) {
     if (bookmarks[i]->hasWord(searchText)) found.push_back(bookmarks[i]);
@@ -48,7 +53,7 @@ void ApplicationModel::addBookmark(BookmarkModel *bookmark) {
   emit addedBookmark(bookmark);
 }
 
-void ApplicationModel::deleteBookmark(BookmarkModel *bookmark) {
+void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   QVector<BookmarkModel*>::iterator it = bookmarks.begin();
   bool trovato = false;
 
@@ -66,8 +71,8 @@ void ApplicationModel::deleteBookmark(BookmarkModel *bookmark) {
   delete bookmark;
 }
 
-void ApplicationModel::editBookmark(BookmarkModel *bookmark, QString newName, QString newLink, QString newDesc) {
-  int bookmarkIndex = bookmarks.indexOf(bookmark);
+void ApplicationModel::editBookmark(BookmarkInterface *bookmark, QString newName, QString newLink, QString newDesc) {
+  int bookmarkIndex = bookmarks.indexOf(static_cast<BookmarkModel*>(bookmark));
 
   if (bookmarkIndex == -1) return;
 

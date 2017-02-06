@@ -10,7 +10,22 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-class BookmarkModel {
+/**
+ * Interfaccia di Bookmark da usare nelle views. Contiene solo metodi const,
+ * quindi non ammette modifiche
+ */
+class BookmarkInterface {
+ public:
+  virtual ~BookmarkInterface() {}
+  virtual QUrl getLink() const = 0;
+  virtual QString getName() const = 0;
+  virtual QString getDescription() const = 0;
+  virtual bool isLinkValid() const = 0;
+  virtual bool getIsImportant() const = 0;
+  virtual bool hasWord(QString searchText) const = 0;
+};
+
+class BookmarkModel: public BookmarkInterface {
  private:
   QUrl link;
   QString name;
@@ -20,19 +35,18 @@ class BookmarkModel {
  public:
   BookmarkModel();
   BookmarkModel(QString l, QString n = "", QString d = "");
-  virtual ~BookmarkModel() {}
 
-  QUrl getLink() const;
-  QString getName() const;
-  QString getDescription() const;
+  QUrl getLink() const override;
+  QString getName() const override;
+  QString getDescription() const override;
   void editName(QString newName);
   void editLink(QString newLink);
   void editDescription(QString newDescription);
-  bool isLinkValid() const;
-  bool getIsImportant() const;
+  bool isLinkValid() const override;
+  bool getIsImportant() const override;
   void setImportance(bool newValue);
 
-  virtual bool hasWord(QString searchText) const;
+  virtual bool hasWord(QString searchText) const override;
   virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 

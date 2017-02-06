@@ -69,7 +69,7 @@ BookmarkView::BookmarkView(QWidget *parent): model(nullptr), QWidget(parent) {
   setLayout(layout);
 }
 
-void BookmarkView::setModel(BookmarkModel *newModel) {
+void BookmarkView::setModel(BookmarkInterface *newModel) {
   model = newModel;
 
   QUrl link = model->getLink();

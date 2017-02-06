@@ -11,7 +11,7 @@ class BookmarkView: public QWidget {
   Q_OBJECT
 
  private:
-  BookmarkModel *model;
+  BookmarkInterface *model;
   LinkWidget *nameLink;
   QLabel *descriptionLabel;
   QLabel *hostLabel;
@@ -31,11 +31,11 @@ class BookmarkView: public QWidget {
   BookmarkView(QWidget *parent = nullptr);
 
  public slots:
-  void setModel(BookmarkModel *newModel);
+  void setModel(BookmarkInterface *newModel);
 
  signals:
-  void clickedDelete(BookmarkModel*);
-  void clickedEdit(BookmarkModel*);
+  void clickedDelete(BookmarkInterface*);
+  void clickedEdit(BookmarkInterface*);
 };
 
 #endif //INKMARK_BOOKMARK_VIEW_H

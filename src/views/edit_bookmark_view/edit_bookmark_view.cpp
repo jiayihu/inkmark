@@ -37,7 +37,7 @@ EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
   setLayout(layout);
 }
 
-void EditBookmarkView::setModel(BookmarkModel *newModel) {
+void EditBookmarkView::setModel(BookmarkInterface *newModel) {
   model = newModel;
 
   nameInput->setText(model->getName());

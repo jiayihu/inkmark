@@ -13,11 +13,11 @@ class BookmarksListView: public QWidget {
   Q_OBJECT
 
  private:
-  QVector<BookmarkModel*> model;
+  QVector<BookmarkInterface*> model;
   QHBoxLayout *containerLayout;
   QVBoxLayout *listLayout;
   EditBookmarkView *editBookmarkView;
-  QMap<BookmarkModel*, BookmarkView*> viewsMap;
+  QMap<BookmarkInterface*, BookmarkView*> viewsMap;
 
   QString getStyles() const;
   void clean();
@@ -26,21 +26,21 @@ class BookmarksListView: public QWidget {
   /**
    * Cancella la view relativa al bookmark ed emette il signal `clickedDelete`
    */
-  void handleDeleteClicked(BookmarkModel *bookmark);
-  void handleEditClicked(BookmarkModel *bookmark);
+  void handleDeleteClicked(BookmarkInterface *bookmark);
+  void handleEditClicked(BookmarkInterface *bookmark);
   void hideEditView();
 
  public:
   BookmarksListView(QWidget *parent = nullptr);
 
  public slots:
-  void setModel(const QVector<BookmarkModel*> &newModel);
-  void addBookmarkView(BookmarkModel *bookmark);
-  void updateBookmarkView(BookmarkModel *bookmark);
+  void setModel(const QVector<BookmarkInterface *> &newModel);
+  void addBookmarkView(BookmarkInterface *bookmark);
+  void updateBookmarkView(BookmarkInterface *bookmark);
 
  signals:
-  void clickedDelete(BookmarkModel *bookmark);
-  void editedBookmark(BookmarkModel *bookmark, QString newName, QString newLink, QString newDesc);
+  void clickedDelete(BookmarkInterface *bookmark);
+  void editedBookmark(BookmarkInterface *bookmark, QString newName, QString newLink, QString newDesc);
 };
 
 #endif //INKMARK_BOOKMARKS_LIST_VIEW_H

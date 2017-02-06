@@ -11,7 +11,7 @@ class EditBookmarkView: public QWidget {
   Q_OBJECT
 
  private:
-  BookmarkModel *model;
+  BookmarkInterface *model;
   TextInputWidget *nameInput;
   TextInputWidget *linkInput;
   TextAreaWidget *descriptionTextArea;
@@ -23,10 +23,10 @@ class EditBookmarkView: public QWidget {
   EditBookmarkView(QWidget *parent = nullptr);
 
  public slots:
-  void setModel(BookmarkModel *newModel);
+  void setModel(BookmarkInterface *newModel);
 
  signals:
-  void saveClicked(BookmarkModel * model, QString newName, QString newLink, QString newDesc);
+  void saveClicked(BookmarkInterface *model, QString newName, QString newLink, QString newDesc);
   void cancelClicked();
 };
 
