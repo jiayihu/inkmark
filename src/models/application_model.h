@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include "bookmark_model.h"
+#include "user_model.h"
 
 /**
  * Classe che gestisce il model dell'applicazione. Nessun'altra classa può
@@ -26,6 +27,8 @@ class ApplicationModel: public QObject {
 
  private:
   QVector<BookmarkModel*> bookmarks;
+  QVector<UserModel*> users;
+  UserModel* currentUser;
 
   void clean();
 
@@ -46,11 +49,26 @@ class ApplicationModel: public QObject {
   void editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc);
   QVector<BookmarkInterface*> search(const QString &searchText) const;
 
+  void registerUser(
+    bool isGuest = true,
+    const QString &name = "",
+    const QString &surname = "",
+    const QString &email = "",
+    const QString &password = ""
+  );
+  void deleteUser(UserInterface *user);
+  void editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password);
+  bool loginUser(const QString &email, const QString &password);
+
  signals:
   void addedBookmark(BookmarkInterface *bookmark);
   void deletedBookmark(BookmarkInterface *bookmark);
   void updatedBookmark(BookmarkInterface *bookmark);
   void finishedSearch(QVector<BookmarkInterface*> results) const;
+
+  void registeredUser(UserInterface *user) const;
+  void updatedUser(UserInterface *user) const;
+  void loggedUser(UserInterface *user) const;
 };
 
 #endif //INKMARK_MODEL_H

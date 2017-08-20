@@ -20,6 +20,7 @@ class BookmarkInterface {
   virtual QUrl getLink() const = 0;
   virtual QString getName() const = 0;
   virtual QString getDescription() const = 0;
+  virtual int getAuthorId() const = 0;
   virtual bool isLinkValid() const = 0;
   virtual bool getIsImportant() const = 0;
   virtual bool hasWord(const QString &searchText) const = 0;
@@ -30,15 +31,17 @@ class BookmarkModel: public BookmarkInterface {
   QUrl link;
   QString name;
   QString description;
+  int authorId;
   bool isImportant;
 
  public:
   BookmarkModel();
-  BookmarkModel(const QString &l, const QString &n = "", const QString &d = "");
+  BookmarkModel(int ai, const QString &l, const QString &n = "", const QString &d = "");
 
   QUrl getLink() const override;
   QString getName() const override;
   QString getDescription() const override;
+  int getAuthorId() const override;
   void editName(const QString &newName);
   void editLink(const QString &newLink);
   void editDescription(const QString &newDescription);
@@ -64,7 +67,7 @@ class ArticleModel: public BookmarkModel {
 
  public:
   ArticleModel();
-  ArticleModel(const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr = 0);
+  ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr = 0);
 
   void addAuthor(const QString &fullname = "");
   QDateTime getPublication() const;
@@ -90,6 +93,7 @@ class VideoModel: public BookmarkModel {
  public:
   VideoModel();
   VideoModel(
+    int ai,
     const QString &l,
     const QString &n,
     const QString &d,

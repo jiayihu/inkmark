@@ -4,14 +4,16 @@
 
 BookmarkModel::BookmarkModel() {}
 
-BookmarkModel::BookmarkModel(const QString &l, const QString &n, const QString &d):
-    link(QUrl::fromUserInput(l)), name(n), description(d), isImportant(false) {}
+BookmarkModel::BookmarkModel(int ai, const QString &l, const QString &n, const QString &d):
+    link(QUrl::fromUserInput(l)), name(n), description(d), authorId(ai), isImportant(false) {}
 
 QUrl BookmarkModel::getLink() const { return link; }
 
 QString BookmarkModel::getName() const { return name; }
 
 QString BookmarkModel::getDescription() const { return description; }
+
+int BookmarkModel::getAuthorId() const { return authorId; }
 
 void BookmarkModel::editLink(const QString &newLink) { link = QUrl::fromUserInput(newLink); }
 
@@ -34,6 +36,7 @@ bool BookmarkModel::hasWord(const QString &searchText) const {
 }
 
 void BookmarkModel::readFromJSON(const QJsonObject &json) {
+  authorId = json.value("authorId").toInt();
   name = json.value("name").toString();
   link = QUrl(json.value("link").toString());
   description = json.value("description").toString();
@@ -41,6 +44,7 @@ void BookmarkModel::readFromJSON(const QJsonObject &json) {
 }
 
 void BookmarkModel::writeToJSON(QJsonObject &json) const {
+  json.insert("authorId", authorId);
   json.insert("link", link.toString());
   json.insert("name", name);
   json.insert("description", description);
@@ -48,7 +52,8 @@ void BookmarkModel::writeToJSON(QJsonObject &json) const {
 }
 
 std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
-  os << bookmark.getName() << " " << bookmark.getLink().toString();
+  // Conversione da QString a std::string necessaria per poter usare l'operatore <<
+  os << bookmark.getName().toStdString() << " " << bookmark.getLink().toString().toStdString();
   return os;
 }
 
@@ -59,8 +64,8 @@ std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
 
 ArticleModel::ArticleModel() {}
 
-ArticleModel::ArticleModel(const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr)
-    : BookmarkModel(l, n, d), publication(p), minRead(mr) {}
+ArticleModel::ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr)
+    : BookmarkModel(ai, l, n, d), publication(p), minRead(mr) {}
 
 void ArticleModel::addAuthor(const QString &fullname) {
   authors.push_back(fullname);
@@ -143,8 +148,8 @@ QString platformToString(const VideoPlatform &platform) {
 
 VideoModel::VideoModel() {}
 
-VideoModel::VideoModel(const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p)
-  : BookmarkModel(l, n, d), duration(dur), platform(p) {}
+VideoModel::VideoModel(int ai, const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p)
+  : BookmarkModel(ai, l, n, d), duration(dur), platform(p) {}
 
 QTime VideoModel::getDuration() const { return duration; }
 
