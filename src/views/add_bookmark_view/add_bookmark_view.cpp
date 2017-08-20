@@ -1,7 +1,7 @@
 #include <QLabel>
 #include <QVBoxLayout>
-#include <widgets/text_input_widget/text_input_widget.h>
-#include <widgets/text_area_widget/text_area_widget.h>
+#include "widgets/text_input_widget/text_input_widget.h"
+#include "widgets/text_area_widget/text_area_widget.h"
 #include "add_bookmark_view.h"
 #include "widgets/button_widget/button_widget.h"
 

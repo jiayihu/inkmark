@@ -11,7 +11,7 @@ UserApplicationController::UserApplicationController(ApplicationModel *m, UserAp
   SearchBookmarkView *searchBookmarkView = view->getSearchBookmarkView();
   searchBookmarkController = new SearchBookmarkController(model, searchBookmarkView);
 
-  // Uso di funzione lambda, permesso da Qt, per evitare di scrivere una funzione
+  // Uso di funzione lambda, permesso da Qt, per evitare di scrivere un metodo
   // handler. Non interessano gli eventuali parametri del signal.
   QObject::connect(
     searchBookmarkView,

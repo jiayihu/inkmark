@@ -30,6 +30,8 @@ class ApplicationModel: public QObject {
   void clean();
 
  public:
+  // Solo il distruttore è necessario per ora, non è previsto l'uso di costruttore
+  // di copia o operatore di assegnazione per l'ApplicationModel
   ~ApplicationModel();
 
   // Restituisce un vettore di array da usare come read-only

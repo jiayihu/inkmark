@@ -34,16 +34,19 @@ void Inkmark::saveModel() const {
   saveFile.write(jsonDoc.toJson());
 }
 
-Inkmark::Inkmark(): appModel(new ApplicationModel()), appView(appView = new ApplicationView()) {
+Inkmark::Inkmark(): appModel(new ApplicationModel()), appView(new ApplicationView()) {
   loadModel();
   applicationController = new ApplicationController(appModel, appView);
 
   // Salvantaggio dei dati alla chiusura
   QObject::connect(appView, SIGNAL(applicationClosed()), this, SLOT(saveModel()));
-  appView->show();
 }
 
 Inkmark::~Inkmark() {
   delete appModel;
   delete applicationController;
+}
+
+void Inkmark::show() const {
+  appView->show();
 }

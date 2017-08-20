@@ -31,7 +31,7 @@ class ApplicationView: public QWidget {
 
   UserApplicationView* getUserApplicationView() const;
 
-  void closeEvent(QCloseEvent *event);
+  void closeEvent(QCloseEvent *event) override;
 
   signals:
     void applicationClosed();

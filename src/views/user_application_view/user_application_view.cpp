@@ -45,7 +45,7 @@ void UserApplicationView::toggleAddViewVisibility() {
 
   bool visibility = addBookmarkView->isVisible();
   addBookmarkView->setVisible(!visibility);
-  QTimer::singleShot(0, this, SLOT(resizeToMin()));
+  resizeToMin();
 }
 
 void UserApplicationView::toggleSearchViewVisibility() {
@@ -53,11 +53,19 @@ void UserApplicationView::toggleSearchViewVisibility() {
 
   bool visibility = searchBookmarkView->isVisible();
   searchBookmarkView->setVisible(!visibility);
-  QTimer::singleShot(0, this, SLOT(resizeToMin()));
+  resizeToMin();
 }
 
-void UserApplicationView::resizeToMin() { adjustSize(); }
+void UserApplicationView::resizeToMin() {
+  // Ridimensiona la finestra appena i widget sono stabili. Uso di lamda invece
+  // che di SLOT per evitare nuovo metodo
+  QTimer::singleShot(0, this, [&]() {
+    adjustSize();
+  });
+}
 
+// Inizializza le sotto-views dell'area utente. Il loro parent è nullptr perché
+// saranno aggiunge al layout in `createContent`
 UserApplicationView::UserApplicationView(QWidget *parent)
   : QWidget(parent), addBookmarkView(nullptr), bookmarksListView(nullptr), searchBookmarkView(nullptr) {}
 

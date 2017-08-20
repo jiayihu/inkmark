@@ -24,6 +24,8 @@ class Inkmark: public QObject {
  public:
   Inkmark();
   ~Inkmark();
+
+  void show() const;
 };
 
 #endif //INKMARK_INKMARK_H

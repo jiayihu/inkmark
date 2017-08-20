@@ -18,10 +18,11 @@ class UserApplicationView: public QWidget {
   SearchBookmarkView *searchBookmarkView;
   BookmarksListView *bookmarksListView;
 
+  void resizeToMin();
+
  private slots:
   void toggleSearchViewVisibility();
   void toggleAddViewVisibility();
-  void resizeToMin();
 
  public:
   UserApplicationView(QWidget *parent = nullptr);

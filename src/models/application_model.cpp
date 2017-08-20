@@ -1,6 +1,7 @@
 #include "application_model.h"
 
 QVector<BookmarkInterface*> ApplicationModel::getBookmarks() const {
+  // Crea una copia del vettore utilizzabile localmente dalle views
   QVector<BookmarkInterface*> bookmarksInterfaces;
   for (int i = 0; i < bookmarks.size(); i++) bookmarksInterfaces.push_back(bookmarks[i]);
 
@@ -58,7 +59,7 @@ void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   if (!trovato) return;
 
   emit deletedBookmark(bookmark);
-  // Cancella il bookmark dallo heap dopo il signal
+  // Cancella il bookmark dal heap dopo il signal
   delete bookmark;
 }
 
