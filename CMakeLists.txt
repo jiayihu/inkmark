@@ -11,7 +11,6 @@ add_executable(inkmark ${SOURCE_FILES})
 include_directories(src)
 
 add_subdirectory(src)
-add_subdirectory(tests)
 
 target_link_libraries(inkmark src)
 
