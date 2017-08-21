@@ -17,6 +17,8 @@ class ButtonWidget: public QPushButton {
  public:
   ButtonWidget(QWidget *parent = nullptr);
   ButtonWidget(const QString &text, QWidget *parent = nullptr);
+
+  void setSize(float factor = 1);
 };
 
 #endif //INKMARK_BUTTON_WIDGET_H

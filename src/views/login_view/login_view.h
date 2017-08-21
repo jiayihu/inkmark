@@ -15,12 +15,13 @@ class LoginView: public QWidget {
   QWidget *createButtons() const;
 
   private slots:
-   void handleSubmitClicked();
+   void handleLoginClicked();
 
  public:
   LoginView(QWidget *parent = nullptr);
 
   signals:
+   void guestClicked();
    void registerClicked();
    void loginClicked(QString email, QString password);
 };

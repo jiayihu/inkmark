@@ -8,20 +8,36 @@ QWidget * LoginView::createButtons() const {
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignHCenter);
 
-  ButtonWidget *submitButton = new ButtonWidget("Login");
-  QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(handleSubmitClicked()));
-  layout->addWidget(submitButton);
+  // Bottone Login
+  ButtonWidget *loginButton = new ButtonWidget("Login");
+  loginButton->setSize(1.5);
+  QObject::connect(loginButton, SIGNAL(clicked()), this, SLOT(handleLoginClicked()));
+  layout->addWidget(loginButton);
 
+  // Scritta OR
+  QLabel *orLabel = new QLabel("OR");
+  orLabel->setAlignment(Qt::AlignHCenter);
+  layout->addWidget(orLabel);
+
+  // Bottoni per loggare come Guest o per Registrarsi
   QHBoxLayout *minorLayout = new QHBoxLayout();
+  minorLayout->setContentsMargins(0, 0, 0, 0);
+
+  ButtonWidget *guestButton = new ButtonWidget("Enter as Guest");
+  QObject::connect(guestButton, SIGNAL(clicked()), this, SIGNAL(guestClicked()));
+
   ButtonWidget *registerButton = new ButtonWidget("Register");
   QObject::connect(registerButton, SIGNAL(clicked()), this, SIGNAL(registerClicked()));
+
+  minorLayout->addWidget(guestButton);
   minorLayout->addWidget(registerButton);
   layout->addWidget(wrap(minorLayout));
+
 
   return wrap(layout);
 }
 
-void LoginView::handleSubmitClicked() {
+void LoginView::handleLoginClicked() {
   QString email = emailInput->text();
   QString password = passwordInput->text();
 
@@ -32,7 +48,7 @@ LoginView::LoginView(QWidget *parent): QWidget(parent) {
   QVBoxLayout *layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignCenter);
-  setMinimumSize(480, 320);
+  setMinimumSize(480, 360);
 
   QPixmap logoImg("images/logo.png");
   QLabel *logo = new QLabel();

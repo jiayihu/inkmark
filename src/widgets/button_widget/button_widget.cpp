@@ -1,17 +1,20 @@
+#include <cmath>
 #include "button_widget.h"
 
-QSizePolicy ButtonWidget::sizePolicy = QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+QSizePolicy ButtonWidget::sizePolicy = QSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 
 void ButtonWidget::init() {
   setStyleSheet(
     "ButtonWidget {"
-      "background-color: #e3e1e1;"
+      "background-color: #ffffff;"
+      "border: 1px solid #e3e1e1;"
       "border-radius: 3px;"
-      "color: #737373;"
+      "color: #4C5052;"
       "padding: 8px 12px;"
     "}"
     "ButtonWidget:hover {"
-      "background-color: #767373;"
+      "border-color: #54C0C0;"
+      "background-color: #54C0C0;"
       "color: #ffffff;"
     "}"
   );
@@ -19,6 +22,17 @@ void ButtonWidget::init() {
   setSizePolicy(sizePolicy);
 }
 
-ButtonWidget::ButtonWidget(QWidget *parent): QPushButton(parent) { init(); }
+ButtonWidget::ButtonWidget(QWidget *parent): QPushButton(parent) {
+  init();
+}
 
-ButtonWidget::ButtonWidget(const QString &text, QWidget *parent): QPushButton(text, parent) { init(); }
+ButtonWidget::ButtonWidget(const QString &text, QWidget *parent): QPushButton(text, parent) {
+  init();
+}
+
+void ButtonWidget::setSize(float factor) {
+  QSize currentSize = sizeHint();
+  int width = static_cast<int>(std::round(currentSize.width() * factor));
+  int height = static_cast<int>(std::round(currentSize.height() * factor));
+  setMinimumSize(width, height);
+}
