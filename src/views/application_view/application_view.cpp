@@ -76,7 +76,7 @@ ApplicationView::ApplicationView(QWidget *parent)
   setLayout(appLayout);
 }
 
-LoginView* ApplicationView::getLoginView() const {
+AuthView* ApplicationView::getLoginView() const {
   return loginView;
 }
 

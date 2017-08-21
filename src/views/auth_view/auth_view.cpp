@@ -1,9 +1,9 @@
 #include <QLabel>
-#include "login_view.h"
+#include "auth_view.h"
 #include "widgets/button_widget/button_widget.h"
 #include "utilities/utilities.h"
 
-QWidget * LoginView::createButtons() const {
+QWidget * AuthView::createButtons() const {
   QVBoxLayout *layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignHCenter);
@@ -37,14 +37,14 @@ QWidget * LoginView::createButtons() const {
   return wrap(layout);
 }
 
-void LoginView::handleLoginClicked() {
+void AuthView::handleLoginClicked() {
   QString email = emailInput->text();
   QString password = passwordInput->text();
 
   emit loginClicked(email, password);
 }
 
-LoginView::LoginView(QWidget *parent): QWidget(parent) {
+AuthView::AuthView(QWidget *parent): QWidget(parent) {
   QVBoxLayout *layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignCenter);

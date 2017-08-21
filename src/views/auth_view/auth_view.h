@@ -5,7 +5,7 @@
 #include <QFormLayout>
 #include "widgets/text_input_widget/text_input_widget.h"
 
-class LoginView: public QWidget {
+class AuthView: public QWidget {
   Q_OBJECT
 
  private:
@@ -18,7 +18,7 @@ class LoginView: public QWidget {
    void handleLoginClicked();
 
  public:
-  LoginView(QWidget *parent = nullptr);
+  AuthView(QWidget *parent = nullptr);
 
   signals:
    void guestClicked();
