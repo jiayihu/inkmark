@@ -84,7 +84,6 @@ void UserApplicationView::setUser(UserInterface *u) {
   user = u;
 
   if (user) {
-    qDebug() << user->getName() << user->canAdd();
     addBookmarkButton->setVisible(user->canAdd());
     bookmarksListView->setPrivilegies(user);
   }

@@ -21,6 +21,9 @@ class AddBookmarkView: public QWidget {
  public:
   AddBookmarkView(QWidget *parent = nullptr);
 
+ public slots:
+  void clear() const;
+
  signals:
   void cancelClicked();
   void submitClicked(const QString &name, const QString &link, const QString &description);

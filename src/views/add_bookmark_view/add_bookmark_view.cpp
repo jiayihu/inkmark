@@ -36,3 +36,9 @@ AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
 
   setLayout(layout);
 }
+
+void AddBookmarkView::clear() const {
+  nameInput->clear();
+  linkInput->clear();
+  descriptionTextArea->clear();
+}
