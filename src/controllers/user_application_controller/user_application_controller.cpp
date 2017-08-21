@@ -11,6 +11,8 @@ UserApplicationController::UserApplicationController(ApplicationModel *m, UserAp
   SearchBookmarkView *searchBookmarkView = view->getSearchBookmarkView();
   searchBookmarkController = new SearchBookmarkController(model, searchBookmarkView);
 
+  QObject::connect(view, SIGNAL(logoutClicked()), model, SLOT(logout()));
+
   // Uso di funzione lambda, permesso da Qt, per evitare di scrivere un metodo
   // handler. Non interessano gli eventuali parametri del signal.
   QObject::connect(

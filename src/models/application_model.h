@@ -59,6 +59,7 @@ class ApplicationModel: public QObject {
   void deleteUser(UserInterface *user);
   void editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password);
   bool loginUser(const QString &email, const QString &password);
+  void logout();
 
  signals:
   void addedBookmark(BookmarkInterface *bookmark);
@@ -68,7 +69,8 @@ class ApplicationModel: public QObject {
 
   void registeredUser(UserInterface *user) const;
   void updatedUser(UserInterface *user) const;
-  void loggedUser(UserInterface *user) const;
+  void loggedIn(UserInterface *user) const;
+  void loggedOut() const;
 };
 
 #endif //INKMARK_MODEL_H

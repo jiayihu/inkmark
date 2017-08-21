@@ -20,10 +20,13 @@ class AuthView: public QWidget {
  public:
   AuthView(QWidget *parent = nullptr);
 
-  signals:
-   void guestClicked();
-   void registerClicked();
-   void loginClicked(QString email, QString password);
+ public slots:
+  void clear();
+
+ signals:
+  void guestClicked();
+  void registerClicked();
+  void loginClicked(QString email, QString password);
 };
 
 #endif //INKMARK_LOGIN_VIEW_H

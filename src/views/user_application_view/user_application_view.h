@@ -33,6 +33,9 @@ class UserApplicationView: public QWidget {
   AddBookmarkView* getAddBookmarkView() const;
   SearchBookmarkView* getSearchBookmarkView() const;
   BookmarksListView* getBookmarkListView() const;
+
+ signals:
+  void logoutClicked();
 };
 
 #endif //INKMARK_USER_APPLICATION_VIEW_H

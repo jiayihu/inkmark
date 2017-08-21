@@ -10,7 +10,8 @@ ApplicationController::ApplicationController(ApplicationModel *m, ApplicationVie
   userApplicationController = new UserApplicationController(model, userApplicationView);
 
   // Model => View
-  QObject::connect(model, SIGNAL(loggedUser(UserInterface*)), view, SLOT(setUser(UserInterface*)));
+  QObject::connect(model, SIGNAL(loggedIn(UserInterface*)), view, SLOT(setUser(UserInterface*)));
+  QObject::connect(model, SIGNAL(loggedOut()), view, SLOT(removeUser()));
 }
 
 ApplicationController::~ApplicationController() {

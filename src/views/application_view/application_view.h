@@ -44,6 +44,7 @@ class ApplicationView: public QWidget {
 
  public slots:
   void setUser(UserInterface *user) const;
+  void removeUser() const;
 
   signals:
     void applicationClosed();

@@ -30,6 +30,7 @@ void ApplicationModel::readFromJSON(const QJsonObject &json) {
 
   // Carica la lista di utenti dal JSON
   QJsonArray usersJSON = json.value("users").toArray();
+  int maxId = 0;
   for (int i = 0; i < usersJSON.size(); i++) {
     QJsonObject userJSON = usersJSON[i].toObject();
     QString userRole = userJSON.value("role").toString();
@@ -39,7 +40,12 @@ void ApplicationModel::readFromJSON(const QJsonObject &json) {
 
     user->readFromJSON(userJSON);
     users.push_back(user);
+
+    if (user->getId() > maxId) maxId = user->getId();
   }
+
+  // Nuovi id per utenti partono almeno da questo valore
+  UserModel::setIdCount(maxId);
 }
 
 void ApplicationModel::writeToJSON(QJsonObject &json) const {
@@ -127,7 +133,7 @@ void ApplicationModel::registerUser(bool isGuest, const QString &name, const QSt
   }
 
   emit registeredUser(currentUser);
-  emit loggedUser(currentUser);
+  emit loggedIn(currentUser);
 }
 
 void ApplicationModel::deleteUser(UserInterface *user) {
@@ -174,8 +180,13 @@ bool ApplicationModel::loginUser(const QString &email, const QString &password) 
 
   if (trovato) {
     currentUser = foundUser;
-    emit loggedUser(foundUser);
+    emit loggedIn(foundUser);
   }
 
   return trovato;
+}
+
+void ApplicationModel::logout() {
+  currentUser = nullptr;
+  emit loggedOut();
 }

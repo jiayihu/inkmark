@@ -50,6 +50,7 @@ class UserModel: public UserInterface {
   UserModel& operator=(const UserModel& copy);
 
   static int idCount;
+  static void setIdCount(int value);
 };
 
 class AdminModel: public UserModel {

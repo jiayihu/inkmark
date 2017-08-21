@@ -94,3 +94,9 @@ void ApplicationView::setUser(UserInterface *user) const {
   appLayout->addWidget(userArea);
   userArea->setVisible(true);
 }
+
+void ApplicationView::removeUser() const {
+  appLayout->removeWidget(userArea);
+  appLayout->addWidget(authView);
+  userArea->setVisible(false);
+}

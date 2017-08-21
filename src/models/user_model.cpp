@@ -2,6 +2,10 @@
 
 int UserModel::idCount = 0;
 
+void UserModel::setIdCount(int value) {
+  idCount = value;
+}
+
 UserModel::UserModel(): id(++idCount) {}
 
 UserModel::UserModel(const QString &n, const QString &s, const QString &e, const QString &pw)

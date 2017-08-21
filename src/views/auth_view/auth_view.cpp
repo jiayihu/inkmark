@@ -70,3 +70,8 @@ AuthView::AuthView(QWidget *parent): QWidget(parent) {
   layout->addWidget(buttons);
   setLayout(layout);
 }
+
+void AuthView::clear() {
+  emailInput->clear();
+  passwordInput->clear();
+}
