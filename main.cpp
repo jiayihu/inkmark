@@ -4,6 +4,7 @@
 #include "inkmark.h"
 
 QString getAppStyles() {
+  // Debug, mostra un bordo rosso attorno al widget in hover
   return
       "QWidget:hover { border: 1px solid red; }";
 }

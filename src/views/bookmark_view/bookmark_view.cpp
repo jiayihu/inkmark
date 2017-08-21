@@ -1,6 +1,5 @@
 #include <QHBoxLayout>
 #include "bookmark_view.h"
-#include "widgets/button_widget/button_widget.h"
 
 QWidget* BookmarkView::createContent() {
   QWidget *contentContainer = new QWidget();
@@ -29,7 +28,7 @@ QLabel* BookmarkView::createHostLabel() const {
   return hostLabel;
 }
 
-QWidget* BookmarkView::createButtons() const {
+QWidget* BookmarkView::createButtons() {
   QWidget *buttonsContainer = new QWidget();
   QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
   sizePolicy.setHorizontalStretch(0);
@@ -37,9 +36,9 @@ QWidget* BookmarkView::createButtons() const {
 
   QHBoxLayout *layout = new QHBoxLayout(buttonsContainer);
 
-  ButtonWidget *deleteButton = new ButtonWidget("Delete");
+  deleteButton = new ButtonWidget("Delete");
   QObject::connect(deleteButton, SIGNAL(clicked()), this, SLOT(handleDeleteClick()));
-  ButtonWidget *editButton = new ButtonWidget("Edit");
+  editButton = new ButtonWidget("Edit");
   QObject::connect(editButton, SIGNAL(clicked()), this, SLOT(handleEditClick()));
 
   layout->addWidget(deleteButton);
@@ -67,6 +66,11 @@ BookmarkView::BookmarkView(QWidget *parent): model(nullptr), QWidget(parent) {
   layout->addWidget(buttonsContainer);
 
   setLayout(layout);
+}
+
+void BookmarkView::setPrivilegies(bool canEdit, bool canDelete) const {
+  editButton->setVisible(canEdit);
+  deleteButton->setVisible(canDelete);
 }
 
 void BookmarkView::setModel(BookmarkInterface *newModel) {

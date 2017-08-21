@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include "models/bookmark_model.h"
 #include "widgets/link_widget/link_widget.h"
+#include "widgets/button_widget/button_widget.h"
 
 /**
  * Classe view che mostra un singolo bookmark
@@ -18,10 +19,12 @@ class BookmarkView: public QWidget {
   LinkWidget *nameLink;
   QLabel *descriptionLabel;
   QLabel *hostLabel;
+  ButtonWidget *deleteButton;
+  ButtonWidget *editButton;
 
   QWidget* createContent();
   QLabel* createHostLabel() const;
-  QWidget* createButtons() const;
+  QWidget* createButtons();
 
  private slots:
   /**
@@ -32,6 +35,8 @@ class BookmarkView: public QWidget {
 
  public:
   BookmarkView(QWidget *parent = nullptr);
+
+  void setPrivilegies(bool canEdit, bool canDelete) const;
 
  public slots:
   void setModel(BookmarkInterface *newModel);

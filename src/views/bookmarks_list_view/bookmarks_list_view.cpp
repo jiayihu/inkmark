@@ -77,8 +77,16 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   setLayout(containerLayout);
 }
 
+void BookmarksListView::setPrivilegies(UserInterface* user) const {
+  for (int i = 0; i < model.size(); i++) {
+    BookmarkInterface* bookmark = model[i];
+    BookmarkView* bookmarkView = viewsMap[bookmark];
+    bookmarkView->setPrivilegies(user->canEdit(bookmark), user->canDelete(bookmark));
+  }
+}
+
 void BookmarksListView::setModel(const QVector<BookmarkInterface *> &newModel) {
-  if (model.empty()) clean();
+  if (!model.empty()) clean();
 
   model = newModel;
   for (int i = 0; i < model.size(); i++) addBookmarkView(model[i]);

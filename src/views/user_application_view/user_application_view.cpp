@@ -4,11 +4,11 @@
 #include "user_application_view.h"
 
 
-QLayout* UserApplicationView::createMenu(QWidget *parent) const {
+QLayout* UserApplicationView::createMenu(QWidget *parent) {
   QHBoxLayout *menuLayout = new QHBoxLayout(parent);
   menuLayout->setAlignment(Qt::AlignLeft);
 
-  ButtonWidget *addBookmarkButton = new ButtonWidget("Add bookmark");
+  addBookmarkButton = new ButtonWidget("Add bookmark");
   QObject::connect(addBookmarkButton, SIGNAL(clicked()), this, SLOT(toggleAddViewVisibility()));
 
   ButtonWidget *searchButton = new ButtonWidget("Search bookmark");
@@ -26,6 +26,7 @@ QLayout* UserApplicationView::createMenu(QWidget *parent) const {
 
 QLayout* UserApplicationView::createContent(QWidget *parent) {
   QHBoxLayout *contentLayout = new QHBoxLayout(parent);
+  contentLayout->setContentsMargins(0, 0, 0, 0);
 
   addBookmarkView = new AddBookmarkView();
   addBookmarkView->setVisible(false);
@@ -78,3 +79,13 @@ AddBookmarkView* UserApplicationView::getAddBookmarkView() const { return addBoo
 BookmarksListView* UserApplicationView::getBookmarkListView() const { return bookmarksListView; }
 
 SearchBookmarkView* UserApplicationView::getSearchBookmarkView() const { return searchBookmarkView; }
+
+void UserApplicationView::setUser(UserInterface *u) {
+  user = u;
+
+  if (user) {
+    qDebug() << user->getName() << user->canAdd();
+    addBookmarkButton->setVisible(user->canAdd());
+    bookmarksListView->setPrivilegies(user);
+  }
+}

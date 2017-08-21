@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include "models/bookmark_model.h"
+#include "models/user_model.h"
 #include "views/bookmark_view/bookmark_view.h"
 #include "views/edit_bookmark_view/edit_bookmark_view.h"
 
@@ -23,8 +24,9 @@ class BookmarksListView: public QWidget {
   QVBoxLayout *listLayout;
   EditBookmarkView *editBookmarkView;
   /**
-   * Mappa utilizzata per tenere traccia di quali views sono mostrate ove la chiave
-   * è il puntatore al bookmark
+   * Mappa utilizzata per tenere traccia di quali views sono mostrate, ove la chiave
+   * è il puntatore al bookmark. Tempi di modifica/delete più efficienti rispetto
+   * ad un vector
    */
   QMap<BookmarkInterface*, BookmarkView*> viewsMap;
 
@@ -39,6 +41,8 @@ class BookmarksListView: public QWidget {
 
  public:
   BookmarksListView(QWidget *parent = nullptr);
+
+  void setPrivilegies(UserInterface* user) const;
 
  public slots:
   void setModel(const QVector<BookmarkInterface *> &newModel);
