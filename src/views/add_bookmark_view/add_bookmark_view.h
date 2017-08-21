@@ -23,7 +23,7 @@ class AddBookmarkView: public QWidget {
 
  signals:
   void cancelClicked();
-  void submitClicked(QString name, QString link, QString description);
+  void submitClicked(const QString &name, const QString &link, const QString &description);
 };
 
 #endif //INKMARK_ADD_BOOKMARK_VIEW_H

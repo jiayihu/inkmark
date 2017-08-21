@@ -16,7 +16,7 @@ QString ApplicationView::getMenuStyle() const {
 QVBoxLayout* ApplicationView::createAppLayout() const {
   QVBoxLayout *appLayout = new QVBoxLayout();
   // Layout di dimensione sempre al minimo in base al contenuto
-  appLayout->setSizeConstraint(QLayout::SetMinimumSize);
+  appLayout->setSizeConstraint(QLayout::SetFixedSize);
   appLayout->setContentsMargins(0, 0, 0, 0);
   appLayout->setSpacing(0);
   appLayout->setAlignment(Qt::AlignTop);
@@ -62,22 +62,22 @@ QWidget* ApplicationView::createUserArea() const {
 void ApplicationView::resizeToMin() { adjustSize(); }
 
 ApplicationView::ApplicationView(QWidget *parent)
-  : QWidget(parent), loginView(new LoginView()), userApplicationView(new UserApplicationView()) {
+  : QWidget(parent), authView(new AuthView()), userApplicationView(new UserApplicationView()) {
   setWindowTitle("Inkmark");
   setStyleSheet(getApplicationStyles());
   setMinimumSize(768, 480);
 
   appLayout = createAppLayout();
-  appLayout->addWidget(loginView);
 
-  QWidget *userArea = createUserArea();
+  userArea = createUserArea();
   userArea->setVisible(false);
 
+  appLayout->addWidget(authView);
   setLayout(appLayout);
 }
 
-AuthView* ApplicationView::getLoginView() const {
-  return loginView;
+AuthView* ApplicationView::getAuthView() const {
+  return authView;
 }
 
 UserApplicationView* ApplicationView::getUserApplicationView() const {
@@ -87,4 +87,10 @@ UserApplicationView* ApplicationView::getUserApplicationView() const {
 void ApplicationView::closeEvent(QCloseEvent *event) {
   emit applicationClosed();
   event->accept();
+}
+
+void ApplicationView::setUser(UserInterface *user) const {
+  appLayout->removeWidget(authView);
+  appLayout->addWidget(userArea);
+  userArea->setVisible(true);
 }

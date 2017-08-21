@@ -3,6 +3,7 @@
 
 #include "models/application_model.h"
 #include "views/application_view/application_view.h"
+#include "controllers/auth_controller/auth_controller.h"
 #include "controllers/user_application_controller/user_application_controller.h"
 
 /**
@@ -12,6 +13,7 @@ class ApplicationController {
  private:
   ApplicationModel *model;
   ApplicationView *view;
+  AuthController *authController;
   UserApplicationController *userApplicationController;
 
  public:

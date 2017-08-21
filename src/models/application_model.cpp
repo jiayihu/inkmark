@@ -12,7 +12,6 @@ QVector<BookmarkInterface*> ApplicationModel::getBookmarks() const {
 void ApplicationModel::clean() {
   for (int i = 0; i < bookmarks.size(); i++) delete bookmarks[i];
   for (int i = 0; i < users.size(); i++) delete users[i];
-  delete currentUser;
 }
 
 ApplicationModel::~ApplicationModel() { clean(); }
@@ -32,8 +31,13 @@ void ApplicationModel::readFromJSON(const QJsonObject &json) {
   // Carica la lista di utenti dal JSON
   QJsonArray usersJSON = json.value("users").toArray();
   for (int i = 0; i < usersJSON.size(); i++) {
-    UserModel *user = new UserModel();
-    user->readFromJSON(usersJSON[i].toObject());
+    QJsonObject userJSON = usersJSON[i].toObject();
+    QString userRole = userJSON.value("role").toString();
+    UserModel *user = nullptr;
+    if (userRole == "admin") user = new AdminModel();
+    else user = new UserModel();
+
+    user->readFromJSON(userJSON);
     users.push_back(user);
   }
 }
@@ -132,7 +136,8 @@ void ApplicationModel::deleteUser(UserInterface *user) {
 
   int userIndex = users.indexOf(static_cast<UserModel*>(user));
   if (userIndex == -1) return;
-  else users.remove(userIndex);
+
+  users.remove(userIndex);
 
   for (int i = 0; i < users.size(); i++) {
     qDebug() << users[i]->getName() << " " << users[i]->getSurname();

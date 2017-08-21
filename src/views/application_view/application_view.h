@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include "models/bookmark_model.h"
+#include "models/user_model.h"
 #include "views/auth_view/auth_view.h"
 #include "views/user_application_view/user_application_view.h"
 
@@ -18,7 +19,8 @@ class ApplicationView: public QWidget {
  Q_OBJECT
 
  private:
-  AuthView *loginView;
+  AuthView *authView;
+  QWidget *userArea;
   UserApplicationView *userApplicationView;
   QVBoxLayout *appLayout;
 
@@ -35,10 +37,13 @@ class ApplicationView: public QWidget {
  public:
   ApplicationView(QWidget *parent = nullptr);
 
-  AuthView* getLoginView() const;
+  AuthView* getAuthView() const;
   UserApplicationView* getUserApplicationView() const;
 
   void closeEvent(QCloseEvent *event) override;
+
+ public slots:
+  void setUser(UserInterface *user) const;
 
   signals:
     void applicationClosed();

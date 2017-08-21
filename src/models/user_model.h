@@ -54,12 +54,15 @@ class UserModel: public UserInterface {
 
 class AdminModel: public UserModel {
  public:
+  AdminModel();
   AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw);
 
   bool canEdit(BookmarkInterface *bookmark) const override;
   bool canAdd() const override;
   bool canDelete(BookmarkInterface *bookmark) const override;
   bool canAccessAdmin() const override;
+
+  void writeToJSON(QJsonObject &json) const override;
 };
 
 class GuestModel: public UserModel {

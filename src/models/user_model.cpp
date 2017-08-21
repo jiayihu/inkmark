@@ -54,6 +54,7 @@ void UserModel::readFromJSON(const QJsonObject &json) {
 
 void UserModel::writeToJSON(QJsonObject &json) const {
   json.insert("id", id);
+  json.insert("role", "user");
   json.insert("name", name);
   json.insert("surname", surname);
   json.insert("email", email);
@@ -65,6 +66,8 @@ void UserModel::writeToJSON(QJsonObject &json) const {
  * AdminModel
  */
 
+AdminModel::AdminModel(): UserModel() {}
+
 AdminModel::AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw)
   : UserModel(n, s, e, pw) {}
 
@@ -75,6 +78,12 @@ bool AdminModel::canAdd() const { return true; }
 bool AdminModel::canDelete(BookmarkInterface *bookmark) const { return true; }
 
 bool AdminModel::canAccessAdmin() const { return true; }
+
+void AdminModel::writeToJSON(QJsonObject &json) const {
+  UserModel::writeToJSON(json);
+  // Rimpiazza il ruolo "user" della classe base con "admin"
+  json.insert("role", "admin");
+}
 
 /**
  * GuestModel
