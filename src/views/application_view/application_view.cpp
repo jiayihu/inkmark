@@ -16,7 +16,7 @@ QString ApplicationView::getMenuStyle() const {
 QVBoxLayout* ApplicationView::createAppLayout() const {
   QVBoxLayout *appLayout = new QVBoxLayout();
   // Layout di dimensione sempre al minimo in base al contenuto
-  appLayout->setSizeConstraint(QLayout::SetFixedSize);
+  appLayout->setSizeConstraint(QLayout::SetMinimumSize);
   appLayout->setContentsMargins(0, 0, 0, 0);
   appLayout->setSpacing(0);
   appLayout->setAlignment(Qt::AlignTop);
@@ -36,7 +36,7 @@ QWidget* ApplicationView::createMenu() const {
   return menuContainer;
 }
 
-QWidget* ApplicationView::createContent() {
+QWidget* ApplicationView::createContent() const {
   QWidget *contentContainer = new QWidget();
   contentContainer->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
   QLayout *contentLayout = userApplicationView->createContent();
@@ -45,22 +45,39 @@ QWidget* ApplicationView::createContent() {
   return contentContainer;
 }
 
+QWidget* ApplicationView::createUserArea() const {
+  QWidget *userArea = new QWidget();
+  QVBoxLayout *userAreaLayout = new QVBoxLayout();
+  userAreaLayout->setContentsMargins(0, 0, 0, 0);
+
+  QWidget *menuContainer = createMenu();
+  QWidget *contentContainer = createContent();
+  userAreaLayout->addWidget(menuContainer);
+  userAreaLayout->addWidget(contentContainer);
+
+  userArea->setLayout(userAreaLayout);
+  return userArea;
+}
+
 void ApplicationView::resizeToMin() { adjustSize(); }
 
 ApplicationView::ApplicationView(QWidget *parent)
-  : QWidget(parent), userApplicationView(new UserApplicationView()) {
+  : QWidget(parent), loginView(new LoginView()), userApplicationView(new UserApplicationView()) {
   setWindowTitle("Inkmark");
   setStyleSheet(getApplicationStyles());
   setMinimumSize(768, 480);
 
-  QVBoxLayout *appLayout = createAppLayout();
+  appLayout = createAppLayout();
+  appLayout->addWidget(loginView);
 
-  QWidget *menuContainer = createMenu();
-  QWidget *contentContainer = createContent();
-  appLayout->addWidget(menuContainer);
-  appLayout->addWidget(contentContainer);
+  QWidget *userArea = createUserArea();
+  userArea->setVisible(false);
 
   setLayout(appLayout);
+}
+
+LoginView* ApplicationView::getLoginView() const {
+  return loginView;
 }
 
 UserApplicationView* ApplicationView::getUserApplicationView() const {

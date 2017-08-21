@@ -12,7 +12,7 @@ void EditBookmarkView::handleEditClick() {
 }
 
 EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
-  QVBoxLayout *layout = new QVBoxLayout;
+  QVBoxLayout *layout = new QVBoxLayout();
   nameInput = new TextInputWidget();
   linkInput = new TextInputWidget();
   descriptionTextArea = new TextAreaWidget();

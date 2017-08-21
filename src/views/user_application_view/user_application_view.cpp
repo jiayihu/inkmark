@@ -14,8 +14,12 @@ QLayout* UserApplicationView::createMenu(QWidget *parent) const {
   ButtonWidget *searchButton = new ButtonWidget("Search bookmark");
   QObject::connect(searchButton, SIGNAL(clicked()), this, SLOT(toggleSearchViewVisibility()));
 
+  ButtonWidget *logoutButton = new ButtonWidget("Logout");
+  QObject::connect(logoutButton, SIGNAL(clicked()), this, SLOT(toggleSearchViewVisibility()));
+
   menuLayout->addWidget(addBookmarkButton);
   menuLayout->addWidget(searchButton);
+  menuLayout->addWidget(logoutButton);
 
   return menuLayout;
 }

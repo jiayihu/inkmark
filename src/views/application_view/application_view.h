@@ -5,7 +5,9 @@
 #include <QVector>
 #include <QCloseEvent>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
 #include "models/bookmark_model.h"
+#include "views/login_view/login_view.h"
 #include "views/user_application_view/user_application_view.h"
 
 /**
@@ -16,12 +18,16 @@ class ApplicationView: public QWidget {
  Q_OBJECT
 
  private:
+  LoginView *loginView;
   UserApplicationView *userApplicationView;
+  QVBoxLayout *appLayout;
+
   QString getApplicationStyles() const;
   QString getMenuStyle() const;
   QVBoxLayout *createAppLayout() const;
   QWidget *createMenu() const;
-  QWidget *createContent();
+  QWidget *createContent() const;
+  QWidget *createUserArea() const;
 
  private slots:
   void resizeToMin();
@@ -29,6 +35,7 @@ class ApplicationView: public QWidget {
  public:
   ApplicationView(QWidget *parent = nullptr);
 
+  LoginView* getLoginView() const;
   UserApplicationView* getUserApplicationView() const;
 
   void closeEvent(QCloseEvent *event) override;

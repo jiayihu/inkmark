@@ -2,18 +2,18 @@
 #define INKMARK_ADD_BOOKMARK_VIEW_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include <QTextEdit>
 #include <QString>
+#include "widgets/text_input_widget/text_input_widget.h"
+#include "widgets/text_area_widget/text_area_widget.h"
 
 
 class AddBookmarkView: public QWidget {
   Q_OBJECT
 
  private:
-  QLineEdit *nameInput;
-  QLineEdit *linkInput;
-  QTextEdit *descriptionTextArea;
+  TextInputWidget *nameInput;
+  TextInputWidget *linkInput;
+  TextAreaWidget *descriptionTextArea;
 
   private slots:
     void handleSubmitClick();
