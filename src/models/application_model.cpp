@@ -166,6 +166,11 @@ void ApplicationModel::editUser(UserInterface *user, const QString &name, const 
   emit updatedUser(user);
 }
 
+void ApplicationModel::loginAsGuest() {
+  currentUser = new GuestModel();
+  emit loggedIn(currentUser);
+}
+
 bool ApplicationModel::loginUser(const QString &email, const QString &password) {
   UserModel* foundUser = nullptr;
   bool trovato = false;

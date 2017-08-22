@@ -58,6 +58,7 @@ class ApplicationModel: public QObject {
   );
   void deleteUser(UserInterface *user);
   void editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password);
+  void loginAsGuest();
   bool loginUser(const QString &email, const QString &password);
   void logout();
 

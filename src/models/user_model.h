@@ -4,6 +4,10 @@
 #include <QString>
 #include "bookmark_model.h"
 
+/**
+ * Interfaccia utenti usate dalle views con solo metodi const, per evitare
+ * modifiche dirette
+ */
 class UserInterface {
  public:
   virtual ~UserInterface() {};
