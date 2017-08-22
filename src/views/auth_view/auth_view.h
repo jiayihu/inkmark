@@ -9,13 +9,24 @@ class AuthView: public QWidget {
   Q_OBJECT
 
  private:
-  TextInputWidget *emailInput;
-  TextInputWidget *passwordInput;
+  TextInputWidget *loginEmailInput;
+  TextInputWidget *loginPwdInput;
+  TextInputWidget *registerNameInput;
+  TextInputWidget *registerSurnameInput;
+  TextInputWidget *registerEmailInput;
+  TextInputWidget *registerPwdInput;
+  QWidget *loginArea;
+  QWidget *registerArea;
 
-  QWidget *createButtons() const;
+  QWidget *createLoginBtns() const;
+  QWidget *createLoginArea();
+  QWidget *createRegisterBtns() const;
+  QWidget *createRegisterArea();
 
   private slots:
    void handleLoginClicked();
+   void handleRegisterClicked();
+   void toggleAreas();
 
  public:
   AuthView(QWidget *parent = nullptr);
@@ -25,8 +36,8 @@ class AuthView: public QWidget {
 
  signals:
   void guestClicked();
-  void registerClicked();
-  void loginClicked(QString email, QString password);
+  void registerClicked(const QString &name, const QString &surname, const QString &email, const QString &password);
+  void loginClicked(const QString &email, const QString &password);
 };
 
 #endif //INKMARK_LOGIN_VIEW_H

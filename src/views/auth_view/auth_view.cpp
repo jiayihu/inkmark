@@ -3,7 +3,7 @@
 #include "widgets/button_widget/button_widget.h"
 #include "utilities/utilities.h"
 
-QWidget * AuthView::createButtons() const {
+QWidget* AuthView::createLoginBtns() const {
   QVBoxLayout *layout = new QVBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignHCenter);
@@ -27,7 +27,7 @@ QWidget * AuthView::createButtons() const {
   QObject::connect(guestButton, SIGNAL(clicked()), this, SIGNAL(guestClicked()));
 
   ButtonWidget *registerButton = new ButtonWidget("Register");
-  QObject::connect(registerButton, SIGNAL(clicked()), this, SIGNAL(registerClicked()));
+  QObject::connect(registerButton, SIGNAL(clicked()), this, SLOT(toggleAreas()));
 
   minorLayout->addWidget(guestButton);
   minorLayout->addWidget(registerButton);
@@ -37,11 +37,99 @@ QWidget * AuthView::createButtons() const {
   return wrap(layout);
 }
 
+QWidget* AuthView::createRegisterBtns() const {
+  QVBoxLayout *layout = new QVBoxLayout();
+  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setAlignment(Qt::AlignHCenter);
+
+  // Bottone Login
+  ButtonWidget *registerButton = new ButtonWidget("Register");
+  registerButton->setSize(1.5);
+  QObject::connect(registerButton, SIGNAL(clicked()), this, SLOT(handleRegisterClicked()));
+  layout->addWidget(registerButton);
+
+  // Scritta OR
+  QLabel *orLabel = new QLabel("OR");
+  orLabel->setAlignment(Qt::AlignHCenter);
+  layout->addWidget(orLabel);
+
+  // Bottone per tornare al Login
+  ButtonWidget *loginButton = new ButtonWidget("Back to Login");
+  QObject::connect(loginButton, SIGNAL(clicked()), this, SLOT(toggleAreas()));
+
+  layout->addWidget(loginButton);
+
+  return wrap(layout);
+}
+
+QWidget* AuthView::createLoginArea() {
+  QVBoxLayout *layout = new QVBoxLayout();
+
+  // Area campi input
+  QFormLayout *formLayout = new QFormLayout();
+  loginEmailInput = new TextInputWidget();
+  loginPwdInput = new TextInputWidget();
+  loginPwdInput->setEchoMode(QLineEdit::Password);
+
+  formLayout->addRow(new QLabel("Email"), loginEmailInput);
+  formLayout->addRow(new QLabel("Password"), loginPwdInput);
+
+  QWidget *buttons = createLoginBtns();
+
+  layout->addWidget(wrap(formLayout));
+  layout->addWidget(buttons);
+
+  return wrap(layout);
+}
+
+QWidget* AuthView::createRegisterArea() {
+  QVBoxLayout *layout = new QVBoxLayout();
+
+  // Area campi input
+  QFormLayout *formLayout = new QFormLayout();
+  registerNameInput = new TextInputWidget();
+  registerSurnameInput = new TextInputWidget();
+  registerEmailInput = new TextInputWidget();
+  registerPwdInput = new TextInputWidget();
+  registerPwdInput->setEchoMode(QLineEdit::Password);
+
+  formLayout->addRow(new QLabel("Name"), registerNameInput);
+  formLayout->addRow(new QLabel("Surname"), registerSurnameInput);
+  formLayout->addRow(new QLabel("Email"), registerEmailInput);
+  formLayout->addRow(new QLabel("Password"), registerPwdInput);
+
+  QWidget *buttons = createRegisterBtns();
+
+  layout->addWidget(wrap(formLayout));
+  layout->addWidget(buttons);
+
+  return wrap(layout);
+}
+
 void AuthView::handleLoginClicked() {
-  QString email = emailInput->text();
-  QString password = passwordInput->text();
+  QString email = loginEmailInput->text();
+  QString password = loginPwdInput->text();
 
   emit loginClicked(email, password);
+}
+
+void AuthView::handleRegisterClicked() {
+  QString name = registerNameInput->text();
+  QString surname = registerSurnameInput->text();
+  QString email = registerEmailInput->text();
+  QString password = registerPwdInput->text();
+
+  emit registerClicked(name, surname, email, password);
+}
+
+void AuthView::toggleAreas() {
+  if (registerArea->isHidden()) {
+    loginArea->setVisible(false);
+    registerArea->setVisible(true);
+  } else {
+    registerArea->setVisible(false);
+    loginArea->setVisible(true);
+  }
 }
 
 AuthView::AuthView(QWidget *parent): QWidget(parent) {
@@ -56,22 +144,17 @@ AuthView::AuthView(QWidget *parent): QWidget(parent) {
   logo->setAlignment(Qt::AlignCenter);
   layout->addWidget(logo);
 
-  QFormLayout *formLayout = new QFormLayout();
-  emailInput = new TextInputWidget();
-  passwordInput = new TextInputWidget();
-  passwordInput->setEchoMode(QLineEdit::Password);
+  loginArea = createLoginArea();
+  registerArea = createRegisterArea();
+  registerArea->setVisible(false);
 
-  formLayout->addRow(new QLabel("Email"), emailInput);
-  formLayout->addRow(new QLabel("Password"), passwordInput);
+  layout->addWidget(loginArea);
+  layout->addWidget(registerArea);
 
-  QWidget *buttons = createButtons();
-
-  layout->addWidget(wrap(formLayout));
-  layout->addWidget(buttons);
   setLayout(layout);
 }
 
 void AuthView::clear() {
-  emailInput->clear();
-  passwordInput->clear();
+  loginEmailInput->clear();
+  loginPwdInput->clear();
 }

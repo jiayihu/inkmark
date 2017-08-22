@@ -124,15 +124,10 @@ QVector<BookmarkInterface*> ApplicationModel::search(const QString &searchText) 
   return found;
 }
 
-void ApplicationModel::registerUser(bool isGuest, const QString &name, const QString &surname, const QString &email, const QString &password) {
-  if (isGuest) currentUser = new GuestModel();
-  else {
-    currentUser = new UserModel(name, surname, email, password);
-    // Gli utenti Guest non sono aggiunti
-    users.push_back(currentUser);
-  }
+void ApplicationModel::registerUser(const QString &name, const QString &surname, const QString &email, const QString &password) {
+  currentUser = new UserModel(name, surname, email, password);
+  users.push_back(currentUser);
 
-  emit registeredUser(currentUser);
   emit loggedIn(currentUser);
 }
 

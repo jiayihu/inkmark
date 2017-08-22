@@ -5,9 +5,14 @@ void AuthController::handleLoginClicked(const QString &email, const QString &pas
 }
 
 AuthController::AuthController(ApplicationModel *m, AuthView *v): model(m), view(v) {
+  // View => Model
   QObject::connect(view, SIGNAL(loginClicked(QString, QString)), model, SLOT(loginUser(QString, QString)));
   QObject::connect(view, SIGNAL(guestClicked()), model, SLOT(loginAsGuest()));
+  QObject::connect(view,
+                   SIGNAL(registerClicked(QString, QString, QString, QString)),
+                   model,
+                   SLOT(registerUser(QString, QString, QString, QString)));
 
-  // Pulire gli input al login con successo
+  // Model => View
   QObject::connect(model, SIGNAL(loggedIn(UserInterface*)), view, SLOT(clear()));
 }
