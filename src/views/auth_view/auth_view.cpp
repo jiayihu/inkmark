@@ -110,7 +110,7 @@ void AuthView::handleLoginClicked() {
   QString email = loginEmailInput->text();
   QString password = loginPwdInput->text();
 
-  emit loginClicked(email, password);
+  emit loginClicked("mario@rossi.com", "pass");
 }
 
 void AuthView::handleRegisterClicked() {

@@ -45,7 +45,7 @@ class BookmarksListView: public QWidget {
   void setPrivilegies(UserInterface* user) const;
 
  public slots:
-  void setModel(const QVector<BookmarkInterface *> &newModel);
+  void setModel(QVector<BookmarkInterface *> newModel);
   void addBookmarkView(BookmarkInterface *bookmark);
   void updateBookmarkView(BookmarkInterface *bookmark);
 

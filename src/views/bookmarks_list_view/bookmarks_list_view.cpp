@@ -16,6 +16,7 @@ void BookmarksListView::clean() {
     listLayout->removeWidget(viewsMap[bookmark]);
     delete viewsMap[bookmark];
   }
+
   viewsMap.clear();
   model.clear();
 }
@@ -85,7 +86,7 @@ void BookmarksListView::setPrivilegies(UserInterface* user) const {
   }
 }
 
-void BookmarksListView::setModel(const QVector<BookmarkInterface *> &newModel) {
+void BookmarksListView::setModel(QVector<BookmarkInterface *> newModel) {
   if (!model.empty()) clean();
 
   model = newModel;
