@@ -82,7 +82,8 @@ void BookmarksListView::setPrivilegies(UserInterface* user) const {
   for (int i = 0; i < model.size(); i++) {
     BookmarkInterface* bookmark = model[i];
     BookmarkView* bookmarkView = viewsMap[bookmark];
-    bookmarkView->setPrivilegies(user->canEdit(bookmark), user->canDelete(bookmark));
+    if (user) bookmarkView->setPrivilegies(user->canEdit(bookmark), user->canDelete(bookmark));
+    else bookmarkView->setPrivilegies(false, false);
   }
 }
 

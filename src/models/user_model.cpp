@@ -93,6 +93,9 @@ void AdminModel::writeToJSON(QJsonObject &json) const {
  * GuestModel
  */
 
+QString GuestModel::getName() const { return "Guest"; }
+QString GuestModel::getSurname() const { return "User"; }
+
 bool GuestModel::canEdit(BookmarkInterface *bookmark) const { return false; }
 
 bool GuestModel::canAdd() const { return false; }

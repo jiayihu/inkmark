@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QTimer>
 #include "user_application_view.h"
-
+#include "utilities/utilities.h"
 
 QLayout* UserApplicationView::createMenu(QWidget *parent) {
   QHBoxLayout *menuLayout = new QHBoxLayout(parent);
@@ -17,9 +17,15 @@ QLayout* UserApplicationView::createMenu(QWidget *parent) {
   ButtonWidget *logoutButton = new ButtonWidget("Logout");
   QObject::connect(logoutButton, SIGNAL(clicked()), this, SIGNAL(logoutClicked()));
 
+  username = new QLabel();
+  username->setStyleSheet("background-color: transparent; color: #ffffff;");
+  username->setVisible(false);
+
   menuLayout->addWidget(addBookmarkButton);
   menuLayout->addWidget(searchButton);
   menuLayout->addWidget(logoutButton);
+  menuLayout->addWidget(createSpacer());
+  menuLayout->addWidget(username);
 
   return menuLayout;
 }
@@ -86,5 +92,12 @@ void UserApplicationView::setUser(UserInterface *u) {
   if (user) {
     addBookmarkButton->setVisible(user->canAdd());
     bookmarksListView->setPrivilegies(user);
+    username->setText(user->getName() + " " + user->getSurname());
+    username->setVisible(true);
+  } else {
+    addBookmarkButton->setVisible(false);
+    bookmarksListView->setPrivilegies(user);
+    username->clear();
+    username->setVisible(false);
   }
 }

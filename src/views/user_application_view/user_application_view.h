@@ -19,6 +19,7 @@ class UserApplicationView: public QWidget {
   SearchBookmarkView *searchBookmarkView;
   BookmarksListView *bookmarksListView;
   UserInterface *user;
+  QLabel *username;
 
   ButtonWidget *addBookmarkButton;
 

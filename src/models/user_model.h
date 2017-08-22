@@ -73,6 +73,8 @@ class AdminModel: public UserModel {
 class GuestModel: public UserModel {
  public:
 
+  QString getName() const override;
+  QString getSurname() const override;
   bool canEdit(BookmarkInterface *bookmark) const override;
   bool canAdd() const override;
   bool canDelete(BookmarkInterface *bookmark) const override;

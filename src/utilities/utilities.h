@@ -10,4 +10,10 @@
  */
 QWidget* wrap(QLayout* layout);
 
+/**
+ * Create in widget vuoto auto-espandente come trick per allineare elementi a
+ * destra
+ */
+QWidget* createSpacer();
+
 #endif //INKMARK_UTILITIES_H
