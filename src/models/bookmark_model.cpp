@@ -2,6 +2,10 @@
 #include <QMap>
 #include <QDebug>
 
+bool BookmarkModel::hasInsensitiveText(const QString &text, const QString &query) const {
+  return text.indexOf(query, 0, Qt::CaseInsensitive) != -1;
+}
+
 BookmarkModel::BookmarkModel() {}
 
 BookmarkModel::BookmarkModel(int ai, const QString &l, const QString &n, const QString &d):
@@ -27,10 +31,10 @@ bool BookmarkModel::getIsImportant() const { return isImportant; }
 
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 
-bool BookmarkModel::hasWord(const QString &searchText) const {
-  bool isInName = name.indexOf(searchText) != -1;
-  bool isInLink = link.toString().indexOf(searchText) != -1;
-  bool isInDesc = description.indexOf(searchText) != -1;
+bool BookmarkModel::hasText(const QString &searchText) const {
+  bool isInName = hasInsensitiveText(name, searchText);
+  bool isInLink = hasInsensitiveText(link.toString(), searchText);
+  bool isInDesc = hasInsensitiveText(description, searchText);
 
   return isInName || isInLink || isInDesc;
 }
@@ -62,6 +66,8 @@ std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
  * Article
  */
 
+QString ArticleModel::format = "dd MMM yyyy hh:mm:ss";
+
 ArticleModel::ArticleModel() {}
 
 ArticleModel::ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr)
@@ -77,14 +83,14 @@ QVector<QString> ArticleModel::getAuthors() const { return authors; }
 
 int ArticleModel::getMinRead() const { return minRead; }
 
-bool ArticleModel::hasWord(const QString &searchText) const {
+bool ArticleModel::hasText(const QString &searchText) const {
   bool isInAuthors = false;
 
   for (int i = 0; i < authors.size() && !isInAuthors; i++) {
-    if (authors[i].indexOf(searchText) != -1) isInAuthors = true;
+    if (hasInsensitiveText(authors[i], searchText)) isInAuthors = true;
   }
 
-  return BookmarkModel::hasWord(searchText) || isInAuthors;
+  return BookmarkModel::hasText(searchText) || isInAuthors;
 }
 
 void ArticleModel::readFromJSON(const QJsonObject &json) {
@@ -112,8 +118,6 @@ void ArticleModel::writeToJSON(QJsonObject &json) const {
 
   json.insert("minRead", minRead);
 }
-
-QString ArticleModel::format = "dd MMM yyyy hh:mm:ss";
 
 /**
  * Video
@@ -146,7 +150,9 @@ QString platformToString(const VideoPlatform &platform) {
   }
 }
 
-VideoModel::VideoModel() {}
+QString VideoModel::format = "hh:mm:ss";
+
+VideoModel::VideoModel(): platform(VideoPlatform::noPlatform) {}
 
 VideoModel::VideoModel(int ai, const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p)
   : BookmarkModel(ai, l, n, d), duration(dur), platform(p) {}
@@ -155,10 +161,10 @@ QTime VideoModel::getDuration() const { return duration; }
 
 VideoPlatform VideoModel::getPlatform() const { return platform; }
 
-bool VideoModel::hasWord(const QString &searchText) const {
-  bool isInPlatform = platformToString(platform).indexOf(searchText) != -1;
+bool VideoModel::hasText(const QString &searchText) const {
+  bool isInPlatform = hasInsensitiveText(platformToString(platform), searchText);
 
-  return BookmarkModel::hasWord(searchText) || isInPlatform;
+  return BookmarkModel::hasText(searchText) || isInPlatform;
 }
 
 void VideoModel::readFromJSON(const QJsonObject &json) {
@@ -172,5 +178,3 @@ void VideoModel::writeToJSON(QJsonObject &json) const {
   json.insert("duration", duration.toString(VideoModel::format));
   json.insert("platform", platformToString(platform));
 }
-
-QString VideoModel::format = "hh:mm:ss";

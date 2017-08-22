@@ -117,7 +117,7 @@ QVector<BookmarkInterface*> ApplicationModel::search(const QString &searchText) 
   QVector<BookmarkInterface*> found;
 
   for (int i = 0; i < bookmarks.size(); i++) {
-    if (bookmarks[i]->hasWord(searchText)) found.push_back(bookmarks[i]);
+    if (bookmarks[i]->hasText(searchText)) found.push_back(bookmarks[i]);
   }
 
   emit finishedSearch(found);

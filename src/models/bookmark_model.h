@@ -23,7 +23,7 @@ class BookmarkInterface {
   virtual int getAuthorId() const = 0;
   virtual bool isLinkValid() const = 0;
   virtual bool getIsImportant() const = 0;
-  virtual bool hasWord(const QString &searchText) const = 0;
+  virtual bool hasText(const QString &searchText) const = 0;
 };
 
 class BookmarkModel: public BookmarkInterface {
@@ -33,6 +33,9 @@ class BookmarkModel: public BookmarkInterface {
   QString description;
   int authorId;
   bool isImportant;
+
+ protected:
+  bool hasInsensitiveText(const QString &text, const QString &query) const;
 
  public:
   BookmarkModel();
@@ -49,7 +52,7 @@ class BookmarkModel: public BookmarkInterface {
   bool getIsImportant() const override;
   void setImportance(bool newValue);
 
-  bool hasWord(const QString &searchText) const override;
+  bool hasText(const QString &searchText) const override;
   virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 
@@ -66,6 +69,8 @@ class ArticleModel: public BookmarkModel {
   int minRead;
 
  public:
+  static QString format;
+
   ArticleModel();
   ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr = 0);
 
@@ -73,11 +78,9 @@ class ArticleModel: public BookmarkModel {
   QDateTime getPublication() const;
   QVector<QString> getAuthors() const;
   int getMinRead() const;
-  bool hasWord(const QString &searchText) const override;
+  bool hasText(const QString &searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
-
-  static QString format;
 };
 
 enum VideoPlatform { youtube, vimeo, twitch, noPlatform };
@@ -91,6 +94,8 @@ class VideoModel: public BookmarkModel {
   VideoPlatform platform;
 
  public:
+  static QString format;
+
   VideoModel();
   VideoModel(
     int ai,
@@ -103,11 +108,9 @@ class VideoModel: public BookmarkModel {
 
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
-  bool hasWord(const QString &searchText) const override;
+  bool hasText(const QString &searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
-
-  static QString format;
 };
 
 // TODO SocialPost
