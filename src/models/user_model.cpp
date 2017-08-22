@@ -34,7 +34,7 @@ QString UserModel::getPassword() const { return password; }
 void UserModel::editName(const QString &newName) { name = newName; }
 void UserModel::editSurname(const QString &newSurname) { surname = newSurname; }
 void UserModel::editEmail(const QString &newEmail) { email = newEmail; }
-void UserModel::editPassword(const QString &newPassword) { email = newPassword; }
+void UserModel::editPassword(const QString &newPassword) { password = newPassword; }
 
 bool UserModel::canEdit(BookmarkInterface *bookmark) const {
   return bookmark->getAuthorId() == id;

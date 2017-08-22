@@ -8,7 +8,12 @@
  * Wrappa un QLayout in un QWidget affinché possa essere annidato all'interno
  * di un altro QLayout. Qt non permette QLayout annidati direttamente
  */
-QWidget* wrap(QLayout* layout);
+QWidget* wrapInWidget(QLayout *layout);
+
+/**
+ * Contrario di `wrapInWidget`. Permette QWidget annidati.
+ */
+QLayout* wrapInLayout(QWidget *widget);
 
 /**
  * Create in widget vuoto auto-espandente come trick per allineare elementi a

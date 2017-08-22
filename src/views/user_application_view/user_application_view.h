@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QVector>
-#include <QCloseEvent>
 #include <QHBoxLayout>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
@@ -32,8 +31,10 @@ class UserApplicationView: public QWidget {
  public:
   UserApplicationView(QWidget *parent = nullptr);
 
-  QLayout *createMenu(QWidget *parent = nullptr);
-  QLayout *createContent(QWidget *parent = nullptr);
+  // Ritorna il menu dell'area utente
+  QWidget *createMenu();
+  // Ritorna il contenuto dell'area utente
+  QWidget *createContent();
 
   AddBookmarkView* getAddBookmarkView() const;
   SearchBookmarkView* getSearchBookmarkView() const;

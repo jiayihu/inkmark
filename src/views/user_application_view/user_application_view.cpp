@@ -4,9 +4,9 @@
 #include "user_application_view.h"
 #include "utilities/utilities.h"
 
-QLayout* UserApplicationView::createMenu(QWidget *parent) {
-  QHBoxLayout *menuLayout = new QHBoxLayout(parent);
-  menuLayout->setAlignment(Qt::AlignLeft);
+QWidget* UserApplicationView::createMenu() {
+  QHBoxLayout *layout = new QHBoxLayout();
+  layout->setAlignment(Qt::AlignLeft);
 
   addBookmarkButton = new ButtonWidget("Add bookmark");
   QObject::connect(addBookmarkButton, SIGNAL(clicked()), this, SLOT(toggleAddViewVisibility()));
@@ -21,18 +21,21 @@ QLayout* UserApplicationView::createMenu(QWidget *parent) {
   username->setStyleSheet("background-color: transparent; color: #ffffff;");
   username->setVisible(false);
 
-  menuLayout->addWidget(addBookmarkButton);
-  menuLayout->addWidget(searchButton);
-  menuLayout->addWidget(logoutButton);
-  menuLayout->addWidget(createSpacer());
-  menuLayout->addWidget(username);
+  layout->addWidget(addBookmarkButton);
+  layout->addWidget(searchButton);
+  layout->addWidget(createSpacer());
+  layout->addWidget(username);
+  layout->addWidget(logoutButton);
 
-  return menuLayout;
+  QWidget *wrapper = wrapInWidget(layout);
+  wrapper->setStyleSheet("background-color: #4C5052;");
+
+  return wrapper;
 }
 
-QLayout* UserApplicationView::createContent(QWidget *parent) {
-  QHBoxLayout *contentLayout = new QHBoxLayout(parent);
-  contentLayout->setContentsMargins(0, 0, 0, 0);
+QWidget* UserApplicationView::createContent() {
+  QHBoxLayout *layout = new QHBoxLayout();
+  layout->setContentsMargins(0, 0, 0, 0);
 
   addBookmarkView = new AddBookmarkView();
   addBookmarkView->setVisible(false);
@@ -44,11 +47,11 @@ QLayout* UserApplicationView::createContent(QWidget *parent) {
   QObject::connect(searchBookmarkView, SIGNAL(clickedCancel()), this, SLOT(toggleSearchViewVisibility()));
 
   bookmarksListView = new BookmarksListView();
-  contentLayout->addWidget(addBookmarkView);
-  contentLayout->addWidget(searchBookmarkView);
-  contentLayout->addWidget(bookmarksListView);
+  layout->addWidget(addBookmarkView);
+  layout->addWidget(searchBookmarkView);
+  layout->addWidget(bookmarksListView);
 
-  return contentLayout;
+  return wrapInWidget(layout);
 }
 
 void UserApplicationView::toggleAddViewVisibility() {
@@ -75,10 +78,7 @@ void UserApplicationView::resizeToMin() {
   });
 }
 
-// Inizializza le sotto-views dell'area utente. Il loro parent è nullptr perché
-// saranno aggiunge al layout in `createContent`
-UserApplicationView::UserApplicationView(QWidget *parent)
-  : QWidget(parent), addBookmarkView(nullptr), bookmarksListView(nullptr), searchBookmarkView(nullptr) {}
+UserApplicationView::UserApplicationView(QWidget *parent): QWidget(parent) {}
 
 AddBookmarkView* UserApplicationView::getAddBookmarkView() const { return addBookmarkView; }
 

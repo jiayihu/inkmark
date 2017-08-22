@@ -25,5 +25,6 @@ BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksL
       SLOT(editBookmark(BookmarkInterface*, QString, QString, QString))
   );
 
+  // Setta il model iniziale
   view->setModel(model->getBookmarks());
 }

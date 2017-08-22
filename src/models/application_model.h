@@ -31,14 +31,17 @@ class ApplicationModel: public QObject {
   UserModel* currentUser;
 
   void clean();
+  bool authenticate(const QString &email, const QString &password);
 
  public:
   // Solo il distruttore è necessario per ora, non è previsto l'uso di costruttore
   // di copia o operatore di assegnazione per l'ApplicationModel
   ~ApplicationModel();
 
-  // Restituisce un vettore di array da usare nelle views
+  // Restituisce un vettore di bookmarks da usare nelle views
   QVector<BookmarkInterface*> getBookmarks() const;
+  // Restituisce un vettore di utenti da usare nelle views
+  QVector<UserInterface*> getUsers() const;
 
   void readFromJSON(const QJsonObject &json);
   void writeToJSON(QJsonObject &json) const;
@@ -54,6 +57,7 @@ class ApplicationModel: public QObject {
   void editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password);
   void loginAsGuest();
   bool loginUser(const QString &email, const QString &password);
+  bool loginAdmin(const QString &email, const QString &password);
   void logout();
 
  signals:
@@ -62,8 +66,10 @@ class ApplicationModel: public QObject {
   void updatedBookmark(BookmarkInterface *bookmark);
   void finishedSearch(QVector<BookmarkInterface*> results) const;
 
+  void deletedUser(UserInterface *user) const;
   void updatedUser(UserInterface *user) const;
-  void loggedIn(UserInterface *user) const;
+  void loggedInUser(UserInterface *user) const;
+  void loggedInAdmin(UserInterface *user) const;
   void loggedOut() const;
 };
 

@@ -10,41 +10,54 @@
 #include "models/user_model.h"
 #include "views/auth_view/auth_view.h"
 #include "views/user_application_view/user_application_view.h"
+#include "views/admin_application_view/admin_application_view.h"
 
 /**
- * Classe View che si occupa di istanziare le classi view figlie e del layout
- * generale come il menu
+ * Classe ApplicationView che si occupa di istanziare e gestire le sotto-views
+ * per le aree utente, admin e autenticazione
  */
 class ApplicationView: public QWidget {
  Q_OBJECT
 
  private:
   AuthView *authView;
-  QWidget *userArea;
+  AdminApplicationView *adminApplicationView;
   UserApplicationView *userApplicationView;
-  QVBoxLayout *appLayout;
+
+  QWidget *containerArea;
+  // Layout contenitori dei menu/content delle aree utente e admin
+  QLayout *appLayout;
+  QLayout *menuLayout;
+  QLayout *contentLayout;
+
+  // Widget menu/content delle aree utente e admin
+  QWidget *userMenu;
+  QWidget *userContent;
+  QWidget *adminMenu;
+  QWidget *adminContent;
 
   QString getApplicationStyles() const;
   QString getMenuStyle() const;
-  QVBoxLayout *createAppLayout() const;
-  QWidget *createMenu() const;
-  QWidget *createContent() const;
-  QWidget *createUserArea() const;
-
- private slots:
-  void resizeToMin();
+  QLayout *createAppLayout() const;
+  QWidget *createMenu();
+  QWidget *createContent();
+  QWidget *createContainerArea();
+  void setUserAreaVisible(bool visible) const;
+  void setAdminAreaVisible(bool visible) const;
 
  public:
   ApplicationView(QWidget *parent = nullptr);
 
   AuthView* getAuthView() const;
+  AdminApplicationView* getAdminApplicationView() const;
   UserApplicationView* getUserApplicationView() const;
 
   void closeEvent(QCloseEvent *event) override;
 
  public slots:
-  void setUser(UserInterface *user) const;
-  void removeUser() const;
+  void showUserArea(UserInterface *user) const;
+  void showAdminArea(UserInterface *user) const;
+  void hideContainerArea() const;
 
   signals:
     void applicationClosed();

@@ -4,6 +4,7 @@
 #include "models/application_model.h"
 #include "views/application_view/application_view.h"
 #include "controllers/auth_controller/auth_controller.h"
+#include "controllers/admin_application_controller/admin_application_controller.h"
 #include "controllers/user_application_controller/user_application_controller.h"
 
 /**
@@ -14,6 +15,7 @@ class ApplicationController {
   ApplicationModel *model;
   ApplicationView *view;
   AuthController *authController;
+  AdminApplicationController *adminApplicationController;
   UserApplicationController *userApplicationController;
 
  public:

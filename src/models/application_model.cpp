@@ -1,20 +1,43 @@
 #include "application_model.h"
 #include <QDebug>
 
-QVector<BookmarkInterface*> ApplicationModel::getBookmarks() const {
-  // Crea una copia del vettore utilizzabile localmente dalle views
-  QVector<BookmarkInterface*> bookmarksInterfaces;
-  for (int i = 0; i < bookmarks.size(); i++) bookmarksInterfaces.push_back(bookmarks[i]);
-
-  return bookmarksInterfaces;
-}
-
 void ApplicationModel::clean() {
   for (int i = 0; i < bookmarks.size(); i++) delete bookmarks[i];
   for (int i = 0; i < users.size(); i++) delete users[i];
 }
 
+bool ApplicationModel::authenticate(const QString &email, const QString &password) {
+  UserModel* foundUser = nullptr;
+  bool trovato = false;
+
+  for (int i = 0; i < users.size() && !trovato; i++) {
+    UserModel *user = users[i];
+    if (user && user->getEmail() == email && user->getPassword() == password) {
+      foundUser = user;
+      trovato = true;
+    }
+  }
+
+  if (trovato) currentUser = foundUser;
+
+  return trovato;
+}
+
 ApplicationModel::~ApplicationModel() { clean(); }
+
+QVector<BookmarkInterface*> ApplicationModel::getBookmarks() const {
+  QVector<BookmarkInterface*> items;
+  for (int i = 0; i < bookmarks.size(); i++) items.push_back(bookmarks[i]);
+
+  return items;
+}
+
+QVector<UserInterface*> ApplicationModel::getUsers() const {
+  QVector<UserInterface*> items;
+  for (int i = 0; i < users.size(); i++) items.push_back(users[i]);
+
+  return items;
+}
 
 void ApplicationModel::readFromJSON(const QJsonObject &json) {
   // Pulisco l'oggetto se conteneva dati
@@ -85,6 +108,7 @@ void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   QVector<BookmarkModel*>::iterator it = bookmarks.begin();
   bool trovato = false;
 
+  // TODO: rimpiazzare con indexOf
   for (; it != bookmarks.end() && !trovato; it++) {
     if (*it == bookmark) {
       bookmarks.erase(it);
@@ -128,7 +152,7 @@ void ApplicationModel::registerUser(const QString &name, const QString &surname,
   currentUser = new UserModel(name, surname, email, password);
   users.push_back(currentUser);
 
-  emit loggedIn(currentUser);
+  emit loggedInUser(currentUser);
 }
 
 void ApplicationModel::deleteUser(UserInterface *user) {
@@ -139,6 +163,10 @@ void ApplicationModel::deleteUser(UserInterface *user) {
   if (userIndex == -1) return;
 
   users.remove(userIndex);
+
+  emit deletedUser(user);
+  // Cancella l'utente dal heap dopo il signal
+  delete user;
 
   for (int i = 0; i < users.size(); i++) {
     qDebug() << users[i]->getName() << " " << users[i]->getSurname();
@@ -161,29 +189,23 @@ void ApplicationModel::editUser(UserInterface *user, const QString &name, const 
   emit updatedUser(user);
 }
 
-void ApplicationModel::loginAsGuest() {
-  currentUser = new GuestModel();
-  emit loggedIn(currentUser);
+bool ApplicationModel::loginUser(const QString &email, const QString &password) {
+  bool isSuccessful = authenticate(email, password);
+  if (isSuccessful) emit loggedInUser(currentUser);
+
+  return isSuccessful;
 }
 
-bool ApplicationModel::loginUser(const QString &email, const QString &password) {
-  UserModel* foundUser = nullptr;
-  bool trovato = false;
+bool ApplicationModel::loginAdmin(const QString &email, const QString &password) {
+  bool isSuccessful = authenticate(email, password);
+  if (isSuccessful) emit loggedInAdmin(currentUser);
 
-  for (int i = 0; i < users.size() && !trovato; i++) {
-    UserModel *user = users[i];
-    if (user && user->getEmail() == email && user->getPassword() == password) {
-      foundUser = user;
-      trovato = true;
-    }
-  }
+  return isSuccessful;
+}
 
-  if (trovato) {
-    currentUser = foundUser;
-    emit loggedIn(foundUser);
-  }
-
-  return trovato;
+void ApplicationModel::loginAsGuest() {
+  currentUser = new GuestModel();
+  emit loggedInUser(currentUser);
 }
 
 void ApplicationModel::logout() {

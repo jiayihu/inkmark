@@ -25,6 +25,7 @@ class AuthView: public QWidget {
 
   private slots:
    void handleLoginClicked();
+   void handleAdminClicked();
    void handleRegisterClicked();
    void toggleAreas();
 
@@ -38,6 +39,7 @@ class AuthView: public QWidget {
   void guestClicked();
   void registerClicked(const QString &name, const QString &surname, const QString &email, const QString &password);
   void loginClicked(const QString &email, const QString &password);
+  void adminClicked(const QString &email, const QString &password);
 };
 
 #endif //INKMARK_LOGIN_VIEW_H

@@ -1,10 +1,18 @@
 #include "utilities.h"
 
-QWidget* wrap(QLayout* layout) {
+QWidget* wrapInWidget(QLayout *layout) {
   QWidget* wrapper = new QWidget();
   wrapper->setLayout(layout);
 
   return wrapper;
+}
+
+QLayout *wrapInLayout(QWidget *widget) {
+  QVBoxLayout *layout = new QVBoxLayout();
+  layout->setContentsMargins(0, 0, 0, 0);
+  layout->addWidget(widget);
+
+  return layout;
 }
 
 QWidget* createSpacer() {

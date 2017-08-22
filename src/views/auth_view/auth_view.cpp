@@ -8,11 +8,14 @@ QWidget* AuthView::createLoginBtns() const {
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignHCenter);
 
-  // Bottone Login
-  ButtonWidget *loginButton = new ButtonWidget("Login");
-  loginButton->setSize(1.5);
+  // Bottoni Login
+  ButtonWidget *loginButton = new ButtonWidget("Log into User area");
   QObject::connect(loginButton, SIGNAL(clicked()), this, SLOT(handleLoginClicked()));
   layout->addWidget(loginButton);
+
+  ButtonWidget *adminButton = new ButtonWidget("Log into Admin area");
+  QObject::connect(adminButton, SIGNAL(clicked()), this, SLOT(handleAdminClicked()));
+  layout->addWidget(adminButton);
 
   // Scritta OR
   QLabel *orLabel = new QLabel("OR");
@@ -31,10 +34,9 @@ QWidget* AuthView::createLoginBtns() const {
 
   minorLayout->addWidget(guestButton);
   minorLayout->addWidget(registerButton);
-  layout->addWidget(wrap(minorLayout));
+  layout->addWidget(wrapInWidget(minorLayout));
 
-
-  return wrap(layout);
+  return wrapInWidget(layout);
 }
 
 QWidget* AuthView::createRegisterBtns() const {
@@ -59,7 +61,7 @@ QWidget* AuthView::createRegisterBtns() const {
 
   layout->addWidget(loginButton);
 
-  return wrap(layout);
+  return wrapInWidget(layout);
 }
 
 QWidget* AuthView::createLoginArea() {
@@ -76,10 +78,10 @@ QWidget* AuthView::createLoginArea() {
 
   QWidget *buttons = createLoginBtns();
 
-  layout->addWidget(wrap(formLayout));
+  layout->addWidget(wrapInWidget(formLayout));
   layout->addWidget(buttons);
 
-  return wrap(layout);
+  return wrapInWidget(layout);
 }
 
 QWidget* AuthView::createRegisterArea() {
@@ -100,10 +102,10 @@ QWidget* AuthView::createRegisterArea() {
 
   QWidget *buttons = createRegisterBtns();
 
-  layout->addWidget(wrap(formLayout));
+  layout->addWidget(wrapInWidget(formLayout));
   layout->addWidget(buttons);
 
-  return wrap(layout);
+  return wrapInWidget(layout);
 }
 
 void AuthView::handleLoginClicked() {
@@ -111,6 +113,13 @@ void AuthView::handleLoginClicked() {
   QString password = loginPwdInput->text();
 
   emit loginClicked("mario@rossi.com", "pass");
+}
+
+void AuthView::handleAdminClicked() {
+  QString email = loginEmailInput->text();
+  QString password = loginPwdInput->text();
+
+  emit adminClicked("mario@rossi.com", "pass");
 }
 
 void AuthView::handleRegisterClicked() {

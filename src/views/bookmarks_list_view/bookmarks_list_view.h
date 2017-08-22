@@ -3,8 +3,7 @@
 
 #include <QMap>
 #include <QWidget>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QLayout>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
 #include "views/bookmark_view/bookmark_view.h"
@@ -20,8 +19,8 @@ class BookmarksListView: public QWidget {
 
  private:
   QVector<BookmarkInterface*> model;
-  QHBoxLayout *containerLayout;
-  QVBoxLayout *listLayout;
+  QLayout *containerLayout;
+  QLayout *listLayout;
   EditBookmarkView *editBookmarkView;
   /**
    * Mappa utilizzata per tenere traccia di quali views sono mostrate, ove la chiave
@@ -34,7 +33,6 @@ class BookmarksListView: public QWidget {
   void clean();
 
  private slots:
-  // Cancella la view relativa al bookmark ed emette il signal `clickedDelete`
   void handleDeleteClicked(BookmarkInterface *bookmark);
   void handleEditClicked(BookmarkInterface *bookmark);
   void hideEditView();

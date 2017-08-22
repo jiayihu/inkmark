@@ -8,12 +8,10 @@ QString ApplicationView::getApplicationStyles() const {
 }
 
 QString ApplicationView::getMenuStyle() const {
-  return
-    "QWidget#menu { background-color: #4C5052; }"
-    "ButtonWidget { margin-left: 15px; }";
+  return "ButtonWidget { margin-left: 15px; }";
 }
 
-QVBoxLayout* ApplicationView::createAppLayout() const {
+QLayout* ApplicationView::createAppLayout() const {
   QVBoxLayout *appLayout = new QVBoxLayout();
   // Layout di dimensione sempre al minimo in base al contenuto
   appLayout->setSizeConstraint(QLayout::SetFixedSize);
@@ -24,53 +22,79 @@ QVBoxLayout* ApplicationView::createAppLayout() const {
   return appLayout;
 }
 
-QWidget* ApplicationView::createMenu() const {
+QWidget* ApplicationView::createMenu() {
   QWidget *menuContainer = new QWidget();
   menuContainer->setObjectName("menu");
   menuContainer->setStyleSheet(getMenuStyle());
   menuContainer->setSizePolicy(QSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Fixed));
 
-  QLayout *menuLayout = userApplicationView->createMenu();
-  menuContainer->setLayout(menuLayout);
+  menuLayout = new QVBoxLayout();
+  menuLayout->setContentsMargins(0, 0, 0, 0);
 
+  userMenu = userApplicationView->createMenu();
+  adminMenu = adminApplicationView->createMenu();
+
+  menuLayout->addWidget(userMenu);
+  menuLayout->addWidget(adminMenu);
+
+  menuContainer->setLayout(menuLayout);
   return menuContainer;
 }
 
-QWidget* ApplicationView::createContent() const {
+QWidget* ApplicationView::createContent() {
   QWidget *contentContainer = new QWidget();
   contentContainer->setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
-  QLayout *contentLayout = userApplicationView->createContent();
-  contentContainer->setLayout(contentLayout);
 
+  contentLayout = new QVBoxLayout();
+  contentLayout->setContentsMargins(0, 0, 0, 0);
+
+  userContent = userApplicationView->createContent();
+  adminContent = adminApplicationView->createContent();
+
+  contentLayout->addWidget(userContent);
+  contentLayout->addWidget(adminContent);
+
+  contentContainer->setLayout(contentLayout);
   return contentContainer;
 }
 
-QWidget* ApplicationView::createUserArea() const {
-  QWidget *userArea = new QWidget();
-  QVBoxLayout *userAreaLayout = new QVBoxLayout();
-  userAreaLayout->setContentsMargins(0, 0, 0, 0);
+QWidget* ApplicationView::createContainerArea() {
+  QWidget *containerArea = new QWidget();
+  QVBoxLayout *layout = new QVBoxLayout();
+  layout->setContentsMargins(0, 0, 0, 0);
 
   QWidget *menuContainer = createMenu();
   QWidget *contentContainer = createContent();
-  userAreaLayout->addWidget(menuContainer);
-  userAreaLayout->addWidget(contentContainer);
+  layout->addWidget(menuContainer);
+  layout->addWidget(contentContainer);
 
-  userArea->setLayout(userAreaLayout);
-  return userArea;
+  containerArea->setLayout(layout);
+  return containerArea;
 }
 
-void ApplicationView::resizeToMin() { adjustSize(); }
+void ApplicationView::setUserAreaVisible(bool visible) const {
+  userMenu->setVisible(visible);
+  userContent->setVisible(visible);
+}
+
+void ApplicationView::setAdminAreaVisible(bool visible) const {
+  adminMenu->setVisible(visible);
+  adminContent->setVisible(visible);
+}
 
 ApplicationView::ApplicationView(QWidget *parent)
-  : QWidget(parent), authView(new AuthView()), userApplicationView(new UserApplicationView()) {
+  : QWidget(parent),
+    authView(new AuthView()),
+    userApplicationView(new UserApplicationView()),
+    adminApplicationView(new AdminApplicationView()) {
   setWindowTitle("Inkmark");
   setStyleSheet(getApplicationStyles());
   setMinimumSize(768, 480);
 
   appLayout = createAppLayout();
 
-  userArea = createUserArea();
-  userArea->setVisible(false);
+  containerArea = createContainerArea();
+  containerArea->setVisible(false);
 
   appLayout->addWidget(authView);
   setLayout(appLayout);
@@ -78,6 +102,10 @@ ApplicationView::ApplicationView(QWidget *parent)
 
 AuthView* ApplicationView::getAuthView() const {
   return authView;
+}
+
+AdminApplicationView* ApplicationView::getAdminApplicationView() const {
+  return adminApplicationView;
 }
 
 UserApplicationView* ApplicationView::getUserApplicationView() const {
@@ -89,18 +117,33 @@ void ApplicationView::closeEvent(QCloseEvent *event) {
   event->accept();
 }
 
-void ApplicationView::setUser(UserInterface *user) const {
+void ApplicationView::showUserArea(UserInterface *user) const {
+  setAdminAreaVisible(false);
+  setUserAreaVisible(true);
+
   appLayout->removeWidget(authView);
-  appLayout->addWidget(userArea);
-  userArea->setVisible(true);
+  appLayout->addWidget(containerArea);
+  containerArea->setVisible(true);
 
   userApplicationView->setUser(user);
 }
 
-void ApplicationView::removeUser() const {
-  appLayout->removeWidget(userArea);
+void ApplicationView::showAdminArea(UserInterface *user) const {
+  setUserAreaVisible(false);
+  setAdminAreaVisible(true);
+
+  appLayout->removeWidget(authView);
+  appLayout->addWidget(containerArea);
+  containerArea->setVisible(true);
+
+  adminApplicationView->setUser(user);
+}
+
+void ApplicationView::hideContainerArea() const {
+  appLayout->removeWidget(containerArea);
   appLayout->addWidget(authView);
-  userArea->setVisible(false);
+  containerArea->setVisible(false);
 
   userApplicationView->setUser(nullptr);
+  adminApplicationView->setUser(nullptr);
 }
