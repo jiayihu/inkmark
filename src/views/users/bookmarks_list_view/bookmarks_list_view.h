@@ -33,7 +33,6 @@ class BookmarksListView: public QWidget {
   void clean();
 
  private slots:
-  void handleDeleteClicked(BookmarkInterface *bookmark);
   void handleEditClicked(BookmarkInterface *bookmark);
   void hideEditView();
 
@@ -45,6 +44,7 @@ class BookmarksListView: public QWidget {
  public slots:
   void setModel(QVector<BookmarkInterface *> newModel);
   void addBookmarkView(BookmarkInterface *bookmark);
+  void deleteBookmarkView(BookmarkInterface *bookmark);
   void updateBookmarkView(BookmarkInterface *bookmark);
 
  signals:

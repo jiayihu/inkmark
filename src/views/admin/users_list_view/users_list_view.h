@@ -28,7 +28,6 @@ class UsersListView: public QWidget {
   void clean();
 
  private slots:
-  void handleDeleteClicked(UserInterface *user);
   void handleEditClicked(UserInterface *user);
   void hideEditView();
 
@@ -40,6 +39,7 @@ class UsersListView: public QWidget {
  public slots:
   void setModel(QVector<UserInterface *> newModel);
   void addUserView(UserInterface *user);
+  void deleteUserView(UserInterface *user);
   void updateUserView(UserInterface *user);
   void updateUserRole(UserInterface *oldUser, UserInterface *newUser);
 

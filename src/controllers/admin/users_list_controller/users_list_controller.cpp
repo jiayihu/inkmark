@@ -10,6 +10,7 @@ UsersListController::UsersListController(ApplicationModel *m, UsersListView *v)
   /**
    * Connessioni Model => View
    */
+  QObject::connect(model, SIGNAL(deletedUser(UserInterface*)), view, SLOT(deleteUserView(UserInterface*)));
   QObject::connect(model, SIGNAL(updatedUser(UserInterface*)), view, SLOT(updateUserView(UserInterface*)));
   QObject::connect(
     model,

@@ -21,14 +21,6 @@ void UsersListView::clean() {
   model.clear();
 }
 
-void UsersListView::handleDeleteClicked(UserInterface *user) {
-  listLayout->removeWidget(viewsMap[user]);
-  delete viewsMap[user];
-  viewsMap.remove(user);
-
-  emit clickedDelete(user);
-}
-
 void UsersListView::hideEditView() {
   editUserView->setVisible(false);
 }
@@ -99,10 +91,17 @@ void UsersListView::addUserView(UserInterface *user) {
   UserView *userView = new UserView();
   userView->setModel(user);
   viewsMap[user] = userView;
-  QObject::connect(userView, SIGNAL(clickedDelete(UserInterface*)), this, SLOT(handleDeleteClicked(UserInterface*)));
+  QObject::connect(userView, SIGNAL(clickedDelete(UserInterface*)), this, SIGNAL(clickedDelete(UserInterface*)));
   QObject::connect(userView, SIGNAL(clickedEdit(UserInterface*)), this, SLOT(handleEditClicked(UserInterface*)));
 
   listLayout->addWidget(userView);
+}
+
+void UsersListView::deleteUserView(UserInterface *user) {
+  listLayout->removeWidget(viewsMap[user]);
+  delete viewsMap[user];
+  viewsMap.remove(user);
+  model.remove(model.indexOf(user));
 }
 
 void UsersListView::updateUserView(UserInterface *user) {

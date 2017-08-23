@@ -21,14 +21,6 @@ void BookmarksListView::clean() {
   model.clear();
 }
 
-void BookmarksListView::handleDeleteClicked(BookmarkInterface *bookmark) {
-  listLayout->removeWidget(viewsMap[bookmark]);
-  delete viewsMap[bookmark];
-  viewsMap.remove(bookmark);
-
-  emit clickedDelete(bookmark);
-}
-
 void BookmarksListView::hideEditView() {
   editBookmarkView->setVisible(false);
 }
@@ -98,10 +90,17 @@ void BookmarksListView::addBookmarkView(BookmarkInterface *bookmark) {
   BookmarkView *bookmarkView = new BookmarkView();
   bookmarkView->setModel(bookmark);
   viewsMap[bookmark] = bookmarkView;
-  QObject::connect(bookmarkView, SIGNAL(clickedDelete(BookmarkInterface*)), this, SLOT(handleDeleteClicked(BookmarkInterface*)));
+  QObject::connect(bookmarkView, SIGNAL(clickedDelete(BookmarkInterface*)), this, SIGNAL(clickedDelete(BookmarkInterface*)));
   QObject::connect(bookmarkView, SIGNAL(clickedEdit(BookmarkInterface*)), this, SLOT(handleEditClicked(BookmarkInterface*)));
 
   listLayout->addWidget(bookmarkView);
+}
+
+void BookmarksListView::deleteBookmarkView(BookmarkInterface *bookmark) {
+  listLayout->removeWidget(viewsMap[bookmark]);
+  delete viewsMap[bookmark];
+  viewsMap.remove(bookmark);
+  model.remove(model.indexOf(bookmark));
 }
 
 void BookmarksListView::updateBookmarkView(BookmarkInterface *bookmark) {

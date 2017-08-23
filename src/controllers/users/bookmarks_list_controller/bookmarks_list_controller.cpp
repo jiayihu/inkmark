@@ -11,6 +11,7 @@ BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksL
    * Connessioni Model => View
    */
   QObject::connect(model, SIGNAL(addedBookmark(BookmarkInterface*)), view, SLOT(addBookmarkView(BookmarkInterface*)));
+  QObject::connect(model, SIGNAL(deletedBookmark(BookmarkInterface*)), view, SLOT(deleteBookmarkView(BookmarkInterface*)));
   QObject::connect(model, SIGNAL(updatedBookmark(BookmarkInterface*)), view, SLOT(updateBookmarkView(BookmarkInterface*)));
   QObject::connect(model, SIGNAL(finishedSearch(QVector<BookmarkInterface*>)), this, SLOT(handleFinishedSearch(QVector<BookmarkInterface*>)));
 
