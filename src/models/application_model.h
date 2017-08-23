@@ -27,8 +27,10 @@ class ApplicationModel: public QObject {
 
  private:
   QVector<BookmarkModel*> bookmarks;
+  // Lista di utenti registrati, non ci possono essere GuestModel
   QVector<UserModel*> users;
-  UserModel* currentUser;
+  // Utente loggato, può essere GuestModel, UserModel o AdminModel
+  UserInterface* currentUser;
 
   void clean();
   bool authenticate(const QString &email, const QString &password);

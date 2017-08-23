@@ -6,16 +6,20 @@ QWidget* AdminApplicationView::createMenu() {
   QHBoxLayout *layout = new QHBoxLayout();
   layout->setAlignment(Qt::AlignLeft);
 
-  ButtonWidget *logoutButton = new ButtonWidget("Logout");
-  QObject::connect(logoutButton, SIGNAL(clicked()), this, SIGNAL(logoutClicked()));
+  QLabel *title = new QLabel("Admin area 👮");
+  title->setStyleSheet("background-color: transparent; color: #ffffff; font-size: 18px;");
 
   username = new QLabel();
   username->setStyleSheet("background-color: transparent; color: #ffffff;");
   username->setVisible(false);
 
-  layout->addWidget(logoutButton);
+  ButtonWidget *logoutButton = new ButtonWidget("Logout");
+  QObject::connect(logoutButton, SIGNAL(clicked()), this, SIGNAL(logoutClicked()));
+
+  layout->addWidget(title);
   layout->addWidget(createSpacer());
   layout->addWidget(username);
+  layout->addWidget(logoutButton);
 
   QWidget *wrapper = wrapInWidget(layout);
   wrapper->setStyleSheet("background-color: #A0402A;");

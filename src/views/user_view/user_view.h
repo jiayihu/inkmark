@@ -16,6 +16,7 @@ class UserView: public QWidget {
   UserInterface *model;
   QLabel *fullnameLabel;
   QLabel *emailLabel;
+  QLabel *roleLabel;
   ButtonWidget *deleteButton;
   ButtonWidget *editButton;
 

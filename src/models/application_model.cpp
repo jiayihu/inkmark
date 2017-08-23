@@ -94,9 +94,11 @@ void ApplicationModel::writeToJSON(QJsonObject &json) const {
 }
 
 void ApplicationModel::addBookmark(const QString &name, const QString &link, const QString &description) {
-  if (!currentUser || !currentUser->canAdd()) return;
+  // Bisogna essere almeno UserModel per poter aggiungere bookmarks
+  UserModel *user = dynamic_cast<UserModel *>(currentUser);
+  if (!user || !user->canAdd()) return;
 
-  BookmarkModel *bookmark = new BookmarkModel(currentUser->getId(), link, name, description);
+  BookmarkModel *bookmark = new BookmarkModel(user->getId(), link, name, description);
   bookmarks.push_back(bookmark);
   
   emit addedBookmark(bookmark);
@@ -150,7 +152,7 @@ QVector<BookmarkInterface*> ApplicationModel::search(const QString &searchText) 
 
 void ApplicationModel::registerUser(const QString &name, const QString &surname, const QString &email, const QString &password) {
   currentUser = new UserModel(name, surname, email, password);
-  users.push_back(currentUser);
+  users.push_back(static_cast<UserModel *>(currentUser));
 
   emit loggedInUser(currentUser);
 }

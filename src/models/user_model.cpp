@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "user_model.h"
 
 int UserModel::idCount = 0;
@@ -31,6 +32,7 @@ QString UserModel::getName() const { return name; }
 QString UserModel::getSurname() const { return surname; }
 QString UserModel::getEmail() const { return email; }
 QString UserModel::getPassword() const { return password; }
+QString UserModel::getRole() const { return "user"; }
 void UserModel::editName(const QString &newName) { name = newName; }
 void UserModel::editSurname(const QString &newSurname) { surname = newSurname; }
 void UserModel::editEmail(const QString &newEmail) { email = newEmail; }
@@ -58,7 +60,7 @@ void UserModel::readFromJSON(const QJsonObject &json) {
 
 void UserModel::writeToJSON(QJsonObject &json) const {
   json.insert("id", id);
-  json.insert("role", "user");
+  json.insert("role", getRole());
   json.insert("name", name);
   json.insert("surname", surname);
   json.insert("email", email);
@@ -75,6 +77,8 @@ AdminModel::AdminModel(): UserModel() {}
 AdminModel::AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw)
   : UserModel(n, s, e, pw) {}
 
+QString AdminModel::getRole() const { return "admin"; }
+
 bool AdminModel::canEdit(BookmarkInterface *bookmark) const { return true; }
 
 bool AdminModel::canAdd() const { return true; }
@@ -83,21 +87,26 @@ bool AdminModel::canDelete(BookmarkInterface *bookmark) const { return true; }
 
 bool AdminModel::canAccessAdmin() const { return true; }
 
-void AdminModel::writeToJSON(QJsonObject &json) const {
-  UserModel::writeToJSON(json);
-  // Rimpiazza il ruolo "user" della classe base con "admin"
-  json.insert("role", "admin");
-}
-
 /**
  * GuestModel
  */
 
 QString GuestModel::getName() const { return "Guest"; }
 QString GuestModel::getSurname() const { return "User"; }
+QString GuestModel::getEmail() const {
+  qDebug() << "Guests don't have an email address";
+  return "";
+}
+QString GuestModel::getPassword() const {
+  qDebug() << "Guests don't have a password";
+  return "";
+}
+QString GuestModel::getRole() const { return "guest"; }
 
 bool GuestModel::canEdit(BookmarkInterface *bookmark) const { return false; }
 
 bool GuestModel::canAdd() const { return false; }
 
 bool GuestModel::canDelete(BookmarkInterface *bookmark) const { return false; }
+
+bool GuestModel::canAccessAdmin() const { return false; }

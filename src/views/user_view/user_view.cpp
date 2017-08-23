@@ -6,10 +6,21 @@ QWidget* UserView::createContent() {
   QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
   sizePolicy.setHorizontalStretch(1);
   contentContainer->setSizePolicy(sizePolicy);
-  QVBoxLayout *layout = new QVBoxLayout(contentContainer);
+
+  QHBoxLayout *layout = new QHBoxLayout(contentContainer);
 
   fullnameLabel = new QLabel();
+  emailLabel = new QLabel();
+  emailLabel->setStyleSheet("font-size: 14px; color: #999;");
+  roleLabel = new QLabel();
+  roleLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  roleLabel->setStyleSheet(
+    "background-color: #999; border-radius: 3px; font-size: 14px; color: #fff; padding: 3px;"
+  );
+
   layout->addWidget(fullnameLabel);
+  layout->addWidget(emailLabel);
+  layout->addWidget(roleLabel);
 
   return contentContainer;
 }
@@ -55,4 +66,6 @@ void UserView::setModel(UserInterface *newModel) {
   model = newModel;
 
   fullnameLabel->setText(model->getName() + " " + model->getSurname());
+  emailLabel->setText(model->getEmail());
+  roleLabel->setText(model->getRole());
 }

@@ -15,6 +15,7 @@ class UserInterface {
   virtual QString getSurname() const = 0;
   virtual QString getEmail() const = 0;
   virtual QString getPassword() const = 0;
+  virtual QString getRole() const = 0;
   virtual bool canEdit(BookmarkInterface*) const = 0;
   virtual bool canAdd() const = 0;
   virtual bool canDelete(BookmarkInterface*) const = 0;
@@ -39,6 +40,7 @@ class UserModel: public UserInterface {
   QString getSurname() const override;
   QString getEmail() const override;
   QString getPassword() const override;
+  QString getRole() const override;
   void editName(const QString &newName);
   void editSurname(const QString &newSurname);
   void editEmail(const QString &newEmail);
@@ -62,22 +64,25 @@ class AdminModel: public UserModel {
   AdminModel();
   AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw);
 
+  QString getRole() const override;
   bool canEdit(BookmarkInterface *bookmark) const override;
   bool canAdd() const override;
   bool canDelete(BookmarkInterface *bookmark) const override;
   bool canAccessAdmin() const override;
-
-  void writeToJSON(QJsonObject &json) const override;
 };
 
-class GuestModel: public UserModel {
+class GuestModel: public UserInterface {
  public:
 
   QString getName() const override;
   QString getSurname() const override;
+  QString getEmail() const override;
+  QString getPassword() const override;
+  QString getRole() const override;
   bool canEdit(BookmarkInterface *bookmark) const override;
   bool canAdd() const override;
   bool canDelete(BookmarkInterface *bookmark) const override;
+  bool canAccessAdmin() const override;
 };
 
 #endif //INKMARK_ROLES_MODEL_H
