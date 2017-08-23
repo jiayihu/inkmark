@@ -6,8 +6,8 @@
 #include <QLayout>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
-#include "views/bookmark_view/bookmark_view.h"
-#include "views/edit_bookmark_view/edit_bookmark_view.h"
+#include "views/users/bookmark_view/bookmark_view.h"
+#include "views/users/edit_bookmark_view/edit_bookmark_view.h"
 
 /**
  * Classe view che mostra una lista di bookmarks. E' utilizzata sia per la lista

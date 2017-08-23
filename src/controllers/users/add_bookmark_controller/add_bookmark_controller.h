@@ -3,7 +3,7 @@
 
 #include <QString>
 #include "models/application_model.h"
-#include "views/add_bookmark_view/add_bookmark_view.h"
+#include "views/users/add_bookmark_view/add_bookmark_view.h"
 
 class AddBookmarkController: public QObject {
   Q_OBJECT

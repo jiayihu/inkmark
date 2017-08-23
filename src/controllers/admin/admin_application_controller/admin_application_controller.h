@@ -2,8 +2,8 @@
 #define INKMARK_ADMIN_APPLICATION_CONTROLLER_H
 
 #include "models/application_model.h"
-#include "views/admin_application_view/admin_application_view.h"
-#include "controllers/users_list_controller/users_list_controller.h"
+#include "views/admin/admin_application_view/admin_application_view.h"
+#include "controllers/admin/users_list_controller/users_list_controller.h"
 
 /**
  * Controller generale dell'applicazione admin che crea i controllers delle subviews

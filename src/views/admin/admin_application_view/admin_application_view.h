@@ -6,7 +6,7 @@
 #include <QLabel>
 #include "models/user_model.h"
 #include "widgets/button_widget/button_widget.h"
-#include "views/users_list_view/users_list_view.h"
+#include "views/admin/users_list_view/users_list_view.h"
 
 class AdminApplicationView: public QWidget {
   Q_OBJECT

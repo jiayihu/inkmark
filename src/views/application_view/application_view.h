@@ -9,8 +9,8 @@
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
 #include "views/auth_view/auth_view.h"
-#include "views/user_application_view/user_application_view.h"
-#include "views/admin_application_view/admin_application_view.h"
+#include "views/users/user_application_view/user_application_view.h"
+#include "views/admin/admin_application_view/admin_application_view.h"
 
 /**
  * Classe ApplicationView che si occupa di istanziare e gestire le sotto-views

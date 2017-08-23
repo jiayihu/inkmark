@@ -5,8 +5,8 @@
 #include <QLayout>
 #include <QMap>
 #include "models/user_model.h"
-#include "views/user_view/user_view.h"
-#include "views/edit_user_view/edit_user_view.h"
+#include "views/admin/user_view/user_view.h"
+#include "views/admin/edit_user_view/edit_user_view.h"
 
 class UsersListView: public QWidget {
  Q_OBJECT

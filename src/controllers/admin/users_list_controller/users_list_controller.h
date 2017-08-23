@@ -2,7 +2,7 @@
 #define INKMARK_USERS_LIST_CONTROLLER_H
 
 #include "models/application_model.h"
-#include "views/users_list_view/users_list_view.h"
+#include "views/admin/users_list_view/users_list_view.h"
 
 class UsersListController: public QObject {
  Q_OBJECT

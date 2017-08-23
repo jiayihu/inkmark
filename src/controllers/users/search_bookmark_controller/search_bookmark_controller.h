@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include "models/application_model.h"
-#include "views/search_bookmark_view/search_bookmark_view.h"
+#include "views/users/search_bookmark_view/search_bookmark_view.h"
 
 class SearchBookmarkController: public QObject {
  Q_OBJECT

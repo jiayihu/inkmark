@@ -6,9 +6,9 @@
 #include <QHBoxLayout>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
-#include "views/add_bookmark_view/add_bookmark_view.h"
-#include "views/search_bookmark_view/search_bookmark_view.h"
-#include "views/bookmarks_list_view/bookmarks_list_view.h"
+#include "views/users/add_bookmark_view/add_bookmark_view.h"
+#include "views/users/search_bookmark_view/search_bookmark_view.h"
+#include "views/users/bookmarks_list_view/bookmarks_list_view.h"
 
 class UserApplicationView: public QWidget {
  Q_OBJECT
