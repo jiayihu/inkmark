@@ -177,7 +177,7 @@ void ApplicationModel::deleteUser(UserInterface *user) {
 
 void ApplicationModel::editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password) {
   AdminModel *isAdmin = dynamic_cast<AdminModel*>(currentUser);
-  if (!user || user == currentUser || !isAdmin) return;
+  if (!user || !isAdmin) return;
 
   int userIndex = users.indexOf(static_cast<UserModel*>(user));
   if (userIndex == -1) return;

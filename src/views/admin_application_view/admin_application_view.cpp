@@ -39,6 +39,8 @@ UsersListView* AdminApplicationView::getUsersListView() const { return usersList
 void AdminApplicationView::setUser(UserInterface *u) {
   user = u;
 
+  usersListView->setPrivilegies(user);
+
   if (user) {
     username->setText(user->getName() + " " + user->getSurname());
     username->setVisible(true);

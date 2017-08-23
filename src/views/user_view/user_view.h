@@ -14,6 +14,8 @@ class UserView: public QWidget {
 
  private:
   UserInterface *model;
+  bool isCurrentUser;
+
   QLabel *fullnameLabel;
   QLabel *emailLabel;
   QLabel *roleLabel;
@@ -35,6 +37,7 @@ class UserView: public QWidget {
 
  public slots:
   void setModel(UserInterface *newModel);
+  void setIsCurrentUser(UserInterface *currentUser);
 
   signals:
   void clickedDelete(UserInterface*);

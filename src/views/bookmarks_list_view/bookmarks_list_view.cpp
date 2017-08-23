@@ -78,11 +78,11 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   setLayout(containerLayout);
 }
 
-void BookmarksListView::setPrivilegies(UserInterface* user) const {
+void BookmarksListView::setPrivilegies(UserInterface* currentUser) const {
   for (int i = 0; i < model.size(); i++) {
     BookmarkInterface* bookmark = model[i];
     BookmarkView* bookmarkView = viewsMap[bookmark];
-    if (user) bookmarkView->setPrivilegies(user->canEdit(bookmark), user->canDelete(bookmark));
+    if (currentUser) bookmarkView->setPrivilegies(currentUser->canEdit(bookmark), currentUser->canDelete(bookmark));
     else bookmarkView->setPrivilegies(false, false);
   }
 }

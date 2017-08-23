@@ -77,6 +77,17 @@ UsersListView::UsersListView(QWidget *parent): QWidget(parent) {
 
   setLayout(containerLayout);
 }
+
+void UsersListView::setPrivilegies(UserInterface *currentUser) const {
+  if (!currentUser) return;
+
+  for (int i = 0; i < model.size(); i++) {
+    UserInterface* user = model[i];
+    UserView* userView = viewsMap[user];
+    userView->setIsCurrentUser(currentUser);
+  }
+}
+
 void UsersListView::setModel(QVector<UserInterface *> newModel) {
   if (!model.empty()) clean();
 

@@ -35,6 +35,8 @@ class UsersListView: public QWidget {
  public:
   UsersListView(QWidget *parent = nullptr);
 
+  void setPrivilegies(UserInterface *currentUser) const;
+
  public slots:
   void setModel(QVector<UserInterface *> newModel);
   void addUserView(UserInterface *user);

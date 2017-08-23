@@ -48,7 +48,7 @@ void UserView::handleDeleteClick() { emit clickedDelete(model); }
 
 void UserView::handleEditClick() { emit clickedEdit(model); }
 
-UserView::UserView(QWidget *parent): model(nullptr), QWidget(parent) {
+UserView::UserView(QWidget *parent): model(nullptr), isCurrentUser(false), QWidget(parent) {
   setFixedWidth(640);
   setSizePolicy(QSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed));
 
@@ -56,16 +56,27 @@ UserView::UserView(QWidget *parent): model(nullptr), QWidget(parent) {
 
   QWidget *contentContainer = createContent();
   QWidget *buttonsContainer = createButtons();
+  buttonsContainer->setFixedWidth(180);
 
   layout->addWidget(contentContainer);
   layout->addWidget(buttonsContainer);
 
   setLayout(layout);
 }
+
 void UserView::setModel(UserInterface *newModel) {
   model = newModel;
 
   fullnameLabel->setText(model->getName() + " " + model->getSurname());
   emailLabel->setText(model->getEmail());
   roleLabel->setText(model->getRole());
+}
+
+void UserView::setIsCurrentUser(UserInterface *currentUser) {
+  isCurrentUser = currentUser == model;
+
+  if (isCurrentUser) {
+    fullnameLabel->setText(fullnameLabel->text() + " (you)");
+    deleteButton->setVisible(false);
+  }
 }
