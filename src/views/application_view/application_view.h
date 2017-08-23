@@ -24,6 +24,8 @@ class ApplicationView: public QWidget {
   AdminApplicationView *adminApplicationView;
   UserApplicationView *userApplicationView;
 
+  QWidget *errorBox;
+  QLabel *errorLabel;
   QWidget *containerArea;
   // Layout contenitori dei menu/content delle aree utente e admin
   QLayout *appLayout;
@@ -39,11 +41,16 @@ class ApplicationView: public QWidget {
   QString getApplicationStyles() const;
   QString getMenuStyle() const;
   QLayout *createAppLayout() const;
+  QWidget *createErrorBox();
   QWidget *createMenu();
   QWidget *createContent();
   QWidget *createContainerArea();
+
   void setUserAreaVisible(bool visible) const;
   void setAdminAreaVisible(bool visible) const;
+
+ private slots:
+  void hideErrorBox() const;
 
  public:
   ApplicationView(QWidget *parent = nullptr);
@@ -55,6 +62,7 @@ class ApplicationView: public QWidget {
   void closeEvent(QCloseEvent *event) override;
 
  public slots:
+  void showError(QString message) const;
   void showUserArea(UserInterface *user) const;
   void showAdminArea(UserInterface *user) const;
   void hideContainerArea() const;

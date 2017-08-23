@@ -143,7 +143,6 @@ void AuthView::toggleAreas() {
 
 AuthView::AuthView(QWidget *parent): QWidget(parent) {
   QVBoxLayout *layout = new QVBoxLayout();
-  layout->setContentsMargins(0, 0, 0, 0);
   layout->setAlignment(Qt::AlignCenter);
   setMinimumSize(480, 360);
 

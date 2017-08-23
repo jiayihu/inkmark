@@ -1,7 +1,9 @@
 #include <QSizePolicy>
 #include <QDebug>
 #include <QTimer>
+#include <utilities/utilities.h>
 #include "application_view.h"
+#include "widgets/button_widget/button_widget.h"
 
 QString ApplicationView::getApplicationStyles() const {
   return "background-color: #FCFCFC;";
@@ -12,14 +14,33 @@ QString ApplicationView::getMenuStyle() const {
 }
 
 QLayout* ApplicationView::createAppLayout() const {
-  QVBoxLayout *appLayout = new QVBoxLayout();
+  QVBoxLayout *layout = new QVBoxLayout();
   // Layout di dimensione sempre al minimo in base al contenuto
-  appLayout->setSizeConstraint(QLayout::SetFixedSize);
-  appLayout->setContentsMargins(0, 0, 0, 0);
-  appLayout->setSpacing(0);
-  appLayout->setAlignment(Qt::AlignTop);
+  layout->setSizeConstraint(QLayout::SetFixedSize);
+  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setSpacing(0);
+  layout->setAlignment(Qt::AlignTop);
 
-  return appLayout;
+  return layout;
+}
+
+QWidget * ApplicationView::createErrorBox() {
+  QHBoxLayout *layout= new QHBoxLayout();
+
+  errorLabel = new QLabel();
+
+  ButtonWidget *closeButton = new ButtonWidget("Close");
+  closeButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+  QObject::connect(closeButton, SIGNAL(clicked()), this, SLOT(hideErrorBox()));
+
+  layout->addWidget(errorLabel);
+  layout->addWidget(closeButton);
+
+  errorBox = wrapInWidget(layout);
+  errorBox->setStyleSheet("background-color: #D4411A; color: #fff; margin-bottom: 10px;");
+  errorBox->setVisible(false);
+
+  return errorBox;
 }
 
 QWidget* ApplicationView::createMenu() {
@@ -72,6 +93,11 @@ QWidget* ApplicationView::createContainerArea() {
   return containerArea;
 }
 
+void ApplicationView::hideErrorBox() const {
+  errorLabel->clear();
+  errorBox->setVisible(false);
+}
+
 void ApplicationView::setUserAreaVisible(bool visible) const {
   userMenu->setVisible(visible);
   userContent->setVisible(visible);
@@ -96,6 +122,7 @@ ApplicationView::ApplicationView(QWidget *parent)
   containerArea = createContainerArea();
   containerArea->setVisible(false);
 
+  appLayout->addWidget(createErrorBox());
   appLayout->addWidget(authView);
   setLayout(appLayout);
 }
@@ -117,12 +144,18 @@ void ApplicationView::closeEvent(QCloseEvent *event) {
   event->accept();
 }
 
+void ApplicationView::showError(QString message) const {
+  errorLabel->setText(message);
+  errorBox->setVisible(true);
+}
+
 void ApplicationView::showUserArea(UserInterface *user) const {
   setAdminAreaVisible(false);
   setUserAreaVisible(true);
 
   appLayout->removeWidget(authView);
   appLayout->addWidget(containerArea);
+  authView->setVisible(false);
   containerArea->setVisible(true);
 
   userApplicationView->setUser(user);
@@ -134,6 +167,7 @@ void ApplicationView::showAdminArea(UserInterface *user) const {
 
   appLayout->removeWidget(authView);
   appLayout->addWidget(containerArea);
+  authView->setVisible(false);
   containerArea->setVisible(true);
 
   adminApplicationView->setUser(user);
@@ -142,6 +176,7 @@ void ApplicationView::showAdminArea(UserInterface *user) const {
 void ApplicationView::hideContainerArea() const {
   appLayout->removeWidget(containerArea);
   appLayout->addWidget(authView);
+  authView->setVisible(true);
   containerArea->setVisible(false);
 
   userApplicationView->setUser(nullptr);

@@ -13,6 +13,7 @@ ApplicationController::ApplicationController(ApplicationModel *m, ApplicationVie
   userApplicationController = new UserApplicationController(model, userApplicationView);
 
   // Model => View
+  QObject::connect(model, SIGNAL(hadUserError(QString)), view, SLOT(showError(QString)));
   QObject::connect(model, SIGNAL(loggedInUser(UserInterface*)), view, SLOT(showUserArea(UserInterface*)));
   QObject::connect(model, SIGNAL(loggedInAdmin(UserInterface*)), view, SLOT(showAdminArea(UserInterface*)));
   QObject::connect(model, SIGNAL(loggedOut()), view, SLOT(hideContainerArea()));

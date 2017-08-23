@@ -64,6 +64,8 @@ class ApplicationModel: public QObject {
   void logout();
 
  signals:
+  void hadUserError(QString message) const;
+
   void addedBookmark(BookmarkInterface *bookmark);
   void deletedBookmark(BookmarkInterface *bookmark);
   void updatedBookmark(BookmarkInterface *bookmark);

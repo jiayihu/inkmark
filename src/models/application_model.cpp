@@ -19,6 +19,7 @@ bool ApplicationModel::authenticate(const QString &email, const QString &passwor
   }
 
   if (trovato) currentUser = foundUser;
+  else emit hadUserError("There is no user with provided email and password.");
 
   return trovato;
 }
@@ -98,6 +99,11 @@ void ApplicationModel::addBookmark(const QString &name, const QString &link, con
   UserModel *user = dynamic_cast<UserModel *>(currentUser);
   if (!user || !user->canAdd()) return;
 
+  if (name.isEmpty() || link.isEmpty()) {
+    emit hadUserError("Name and link are required.");
+    return;
+  }
+
   BookmarkModel *bookmark = new BookmarkModel(user->getId(), link, name, description);
   bookmarks.push_back(bookmark);
   
@@ -131,6 +137,11 @@ void ApplicationModel::editBookmark(BookmarkInterface *bookmark, const QString &
 
   if (bookmarkIndex == -1) return;
 
+  if (newName.isEmpty() || newLink.isEmpty()) {
+    emit hadUserError("Name and link are required.");
+    return;
+  }
+
   BookmarkModel *foundBookmark = bookmarks[bookmarkIndex];
   foundBookmark->editName(newName);
   foundBookmark->editLink(newLink);
@@ -146,7 +157,9 @@ QVector<BookmarkInterface*> ApplicationModel::search(const QString &searchText) 
     if (bookmarks[i]->hasText(searchText)) found.push_back(bookmarks[i]);
   }
 
-  emit finishedSearch(found);
+  if (!found.empty()) emit finishedSearch(found);
+  else emit hadUserError("No bookmark found with this text.");
+
   return found;
 }
 
@@ -193,7 +206,12 @@ void ApplicationModel::editUser(UserInterface *user, const QString &name, const 
 
 void ApplicationModel::changeUserRole(UserInterface *user, const QString &newRole) {
   AdminModel *isAdmin = dynamic_cast<AdminModel*>(currentUser);
-  if (!user || !isAdmin || user == currentUser || user->getRole() == newRole) return;
+  if (!user || !isAdmin || user->getRole() == newRole) return;
+
+  if (user == currentUser) {
+    emit hadUserError("You cannot set the role for youself.");
+    return;
+  }
 
   UserModel* userModel = static_cast<UserModel *>(user);
   UserModel *newUser = nullptr;
