@@ -11,6 +11,9 @@ class UsersListController: public QObject {
   ApplicationModel *model;
   UsersListView *view;
 
+ private slots:
+  void setModel() const;
+
  public:
   UsersListController(ApplicationModel *m = nullptr, UsersListView *v = nullptr);
 };

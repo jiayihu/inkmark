@@ -163,10 +163,26 @@ QVector<BookmarkInterface*> ApplicationModel::search(const QString &searchText) 
   return found;
 }
 
-void ApplicationModel::registerUser(const QString &name, const QString &surname, const QString &email, const QString &password) {
+void ApplicationModel::registerUser(
+  const QString &name,
+  const QString &surname,
+  const QString &email,
+  const QString &password,
+  const QString &passwordConfirm) {
+  if (name.isEmpty() || surname.isEmpty() || email.isEmpty() || password.isEmpty()) {
+    emit hadUserError("All fields are required.");
+    return;
+  }
+
+  if (password != passwordConfirm) {
+    emit hadUserError("Passwords do not match");
+    return;
+  }
+
   currentUser = new UserModel(name, surname, email, password);
   users.push_back(static_cast<UserModel *>(currentUser));
 
+  emit registeredUser(currentUser);
   emit loggedInUser(currentUser);
 }
 
@@ -182,10 +198,6 @@ void ApplicationModel::deleteUser(UserInterface *user) {
   emit deletedUser(user);
   // Cancella l'utente dal heap dopo il signal
   delete user;
-
-  for (int i = 0; i < users.size(); i++) {
-    qDebug() << users[i]->getName() << " " << users[i]->getSurname();
-  }
 }
 
 void ApplicationModel::editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password) {

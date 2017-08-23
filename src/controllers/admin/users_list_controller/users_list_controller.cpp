@@ -1,6 +1,10 @@
 #include "users_list_controller.h"
 #include <QString>
 
+void UsersListController::setModel() const {
+  view->setModel(model->getUsers());
+}
+
 UsersListController::UsersListController(ApplicationModel *m, UsersListView *v)
   : model(m), view(v) {
   /**
@@ -13,6 +17,7 @@ UsersListController::UsersListController(ApplicationModel *m, UsersListView *v)
     view,
     SLOT(updateUserRole(UserInterface*, UserInterface*))
   );
+  QObject::connect(model, SIGNAL(registeredUser(UserInterface*)), this, SLOT(setModel()));
 
   /**
    * Connessioni View => Model
@@ -27,5 +32,5 @@ UsersListController::UsersListController(ApplicationModel *m, UsersListView *v)
   QObject::connect(view, SIGNAL(changedUserRole(UserInterface*, QString)), model, SLOT(changeUserRole(UserInterface*, QString)));
 
   // Setta il model iniziale
-  view->setModel(model->getUsers());
+  setModel();
 }

@@ -15,6 +15,7 @@ class AuthView: public QWidget {
   TextInputWidget *registerSurnameInput;
   TextInputWidget *registerEmailInput;
   TextInputWidget *registerPwdInput;
+  TextInputWidget *registerPwdConfirmInput;
   QWidget *loginArea;
   QWidget *registerArea;
 
@@ -37,7 +38,7 @@ class AuthView: public QWidget {
 
  signals:
   void guestClicked();
-  void registerClicked(const QString &name, const QString &surname, const QString &email, const QString &password);
+  void registerClicked(const QString &name, const QString &surname, const QString &email, const QString &password, const QString &passwordConfirm);
   void loginClicked(const QString &email, const QString &password);
   void adminClicked(const QString &email, const QString &password);
 };

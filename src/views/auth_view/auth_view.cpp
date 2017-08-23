@@ -94,11 +94,14 @@ QWidget* AuthView::createRegisterArea() {
   registerEmailInput = new TextInputWidget();
   registerPwdInput = new TextInputWidget();
   registerPwdInput->setEchoMode(QLineEdit::Password);
+  registerPwdConfirmInput = new TextInputWidget();
+  registerPwdConfirmInput->setEchoMode(QLineEdit::Password);
 
-  formLayout->addRow(new QLabel("Name"), registerNameInput);
-  formLayout->addRow(new QLabel("Surname"), registerSurnameInput);
-  formLayout->addRow(new QLabel("Email"), registerEmailInput);
-  formLayout->addRow(new QLabel("Password"), registerPwdInput);
+  formLayout->addRow(new QLabel("Name *"), registerNameInput);
+  formLayout->addRow(new QLabel("Surname *"), registerSurnameInput);
+  formLayout->addRow(new QLabel("Email *"), registerEmailInput);
+  formLayout->addRow(new QLabel("Password *"), registerPwdInput);
+  formLayout->addRow(new QLabel("Confirm password *"), registerPwdConfirmInput);
 
   QWidget *buttons = createRegisterBtns();
 
@@ -127,8 +130,9 @@ void AuthView::handleRegisterClicked() {
   QString surname = registerSurnameInput->text();
   QString email = registerEmailInput->text();
   QString password = registerPwdInput->text();
+  QString passwordConfirm = registerPwdConfirmInput->text();
 
-  emit registerClicked(name, surname, email, password);
+  emit registerClicked(name, surname, email, password, passwordConfirm);
 }
 
 void AuthView::toggleAreas() {
@@ -165,4 +169,6 @@ AuthView::AuthView(QWidget *parent): QWidget(parent) {
 void AuthView::clear() {
   loginEmailInput->clear();
   loginPwdInput->clear();
+  registerArea->setVisible(false);
+  loginArea->setVisible(true);
 }

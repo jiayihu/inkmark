@@ -10,9 +10,9 @@ AuthController::AuthController(ApplicationModel *m, AuthView *v): model(m), view
   QObject::connect(view, SIGNAL(adminClicked(QString, QString)), model, SLOT(loginAdmin(QString, QString)));
   QObject::connect(view, SIGNAL(guestClicked()), model, SLOT(loginAsGuest()));
   QObject::connect(view,
-                   SIGNAL(registerClicked(QString, QString, QString, QString)),
+                   SIGNAL(registerClicked(QString, QString, QString, QString, QString)),
                    model,
-                   SLOT(registerUser(QString, QString, QString, QString)));
+                   SLOT(registerUser(QString, QString, QString, QString, QString)));
 
   // Model => View
   QObject::connect(model, SIGNAL(loggedInUser(UserInterface*)), view, SLOT(clear()));

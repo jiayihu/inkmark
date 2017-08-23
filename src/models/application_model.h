@@ -54,7 +54,7 @@ class ApplicationModel: public QObject {
   void editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc);
   QVector<BookmarkInterface*> search(const QString &searchText) const;
 
-  void registerUser(const QString &name, const QString &surname, const QString &email, const QString &password);
+  void registerUser(const QString &name, const QString &surname, const QString &email, const QString &password, const QString &passwordConfirm);
   void deleteUser(UserInterface *user);
   void editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password);
   void changeUserRole(UserInterface *user, const QString &newRole);
@@ -71,6 +71,7 @@ class ApplicationModel: public QObject {
   void updatedBookmark(BookmarkInterface *bookmark);
   void finishedSearch(QVector<BookmarkInterface*> results) const;
 
+  void registeredUser(UserInterface *user) const;
   void deletedUser(UserInterface *user) const;
   void updatedUser(UserInterface *user) const;
   void changedUserRole(UserInterface *oldUser, UserInterface *newUser) const;
