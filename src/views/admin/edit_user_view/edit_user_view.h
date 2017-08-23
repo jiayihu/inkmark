@@ -2,6 +2,7 @@
 #define INKMARK_EDIT_USER_VIEW_H
 
 #include <QWidget>
+#include <QCheckBox>
 #include "models/user_model.h"
 #include "widgets/text_input_widget/text_input_widget.h"
 #include "widgets/text_area_widget/text_area_widget.h"
@@ -16,8 +17,15 @@ class EditUserView: public QWidget {
   TextInputWidget *emailInput;
   TextInputWidget *passwordInput;
 
+  QCheckBox *isAdmin;
+
+  QWidget* createForm();
+  QWidget* createButtons() const;
+  QWidget* createRoleForm();
+
  private slots:
   void handleEditClick();
+  void handleChangeRole();
 
  public:
   EditUserView(QWidget *parent = nullptr);
@@ -32,6 +40,7 @@ class EditUserView: public QWidget {
     const QString &newSurname,
     const QString &newEmail,
     const QString &newPassword);
+  void changeRoleClicked(UserInterface *model, QString newRole);
   void cancelClicked();
 };
 

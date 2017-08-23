@@ -27,6 +27,8 @@ UserModel& UserModel::operator=(const UserModel &copy) {
   return *this;
 }
 
+void UserModel::setId(int newId) { id = newId; }
+
 int UserModel::getId() const { return id; }
 QString UserModel::getName() const { return name; }
 QString UserModel::getSurname() const { return surname; }
@@ -76,6 +78,15 @@ AdminModel::AdminModel(): UserModel() {}
 
 AdminModel::AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw)
   : UserModel(n, s, e, pw) {}
+
+AdminModel::AdminModel(const UserModel &user)
+  : UserModel(user) {}
+
+AdminModel& AdminModel::operator=(const UserModel &copy) {
+  UserModel::operator=(copy);
+
+  return *this;
+}
 
 QString AdminModel::getRole() const { return "admin"; }
 

@@ -19,7 +19,7 @@ class UsersListView: public QWidget {
 
   /**
    * Mappa utilizzata per tenere traccia di quali views sono mostrate, ove la chiave
-   * è il puntatore al bookmark. Tempi di modifica/delete più efficienti rispetto
+   * è il puntatore al user. Tempi di modifica/delete più efficienti rispetto
    * ad un vector
    */
   QMap<UserInterface*, UserView*> viewsMap;
@@ -28,8 +28,8 @@ class UsersListView: public QWidget {
   void clean();
 
  private slots:
-  void handleDeleteClicked(UserInterface *bookmark);
-  void handleEditClicked(UserInterface *bookmark);
+  void handleDeleteClicked(UserInterface *user);
+  void handleEditClicked(UserInterface *user);
   void hideEditView();
 
  public:
@@ -40,15 +40,17 @@ class UsersListView: public QWidget {
  public slots:
   void setModel(QVector<UserInterface *> newModel);
   void addUserView(UserInterface *user);
-  void updateUserView(UserInterface *bookmark);
+  void updateUserView(UserInterface *user);
+  void updateUserRole(UserInterface *oldUser, UserInterface *newUser);
 
  signals:
-  void clickedDelete(UserInterface *bookmark);
-  void editedUser(UserInterface *bookmark,
+  void clickedDelete(UserInterface *user);
+  void editedUser(UserInterface *user,
                   const QString &newName,
                   const QString &newSurname,
                   const QString &newEmail,
                   const QString &newPwd);
+  void changedUserRole(UserInterface *user, QString newRole);
 };
 
 #endif //INKMARK_USERS_LIST_VIEW_H

@@ -31,10 +31,18 @@ class UserModel: public UserInterface {
   QString password;
 
  public:
+  static int idCount;
+  static void setIdCount(int value);
+
   UserModel();
   UserModel(const QString &n, const QString &s, const QString &e, const QString &pw);
   UserModel(const UserModel &user);
 
+  /**
+   * Setta l'id. Utile per la copia senza cambiare l'id, cosa che avviene con
+   * il costruttore di copia e l'operatore di assegnazione
+   */
+  void setId(int newId);
   int getId() const;
   QString getName() const override;
   QString getSurname() const override;
@@ -54,21 +62,22 @@ class UserModel: public UserInterface {
   virtual void writeToJSON(QJsonObject &json) const;
 
   UserModel& operator=(const UserModel& copy);
-
-  static int idCount;
-  static void setIdCount(int value);
 };
 
 class AdminModel: public UserModel {
  public:
   AdminModel();
   AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw);
+  // E' disponibile la copia da UserModel, AdminModel non ha nessun campo dati in più
+  AdminModel(const UserModel &copy);
+  AdminModel& operator=(const UserModel& copy);
 
   QString getRole() const override;
   bool canEdit(BookmarkInterface *bookmark) const override;
   bool canAdd() const override;
   bool canDelete(BookmarkInterface *bookmark) const override;
   bool canAccessAdmin() const override;
+
 };
 
 class GuestModel: public UserInterface {

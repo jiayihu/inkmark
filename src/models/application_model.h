@@ -57,6 +57,7 @@ class ApplicationModel: public QObject {
   void registerUser(const QString &name, const QString &surname, const QString &email, const QString &password);
   void deleteUser(UserInterface *user);
   void editUser(UserInterface *user, const QString &name, const QString &surname, const QString &email, const QString &password);
+  void changeUserRole(UserInterface *user, const QString &newRole);
   void loginAsGuest();
   bool loginUser(const QString &email, const QString &password);
   bool loginAdmin(const QString &email, const QString &password);
@@ -70,6 +71,7 @@ class ApplicationModel: public QObject {
 
   void deletedUser(UserInterface *user) const;
   void updatedUser(UserInterface *user) const;
+  void changedUserRole(UserInterface *oldUser, UserInterface *newUser) const;
   void loggedInUser(UserInterface *user) const;
   void loggedInAdmin(UserInterface *user) const;
   void loggedOut() const;

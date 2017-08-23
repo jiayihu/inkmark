@@ -16,4 +16,5 @@ AuthController::AuthController(ApplicationModel *m, AuthView *v): model(m), view
 
   // Model => View
   QObject::connect(model, SIGNAL(loggedInUser(UserInterface*)), view, SLOT(clear()));
+  QObject::connect(model, SIGNAL(loggedInAdmin(UserInterface*)), view, SLOT(clear()));
 }

@@ -63,6 +63,7 @@ UsersListView::UsersListView(QWidget *parent): QWidget(parent) {
   editUserView->setVisible(false);
   // Chiudi il widget per la modifica
   QObject::connect(editUserView, SIGNAL(saveClicked(UserInterface*, QString, QString, QString, QString)), this, SLOT(hideEditView()));
+  QObject::connect(editUserView, SIGNAL(changeRoleClicked(UserInterface*, QString)), this, SLOT(hideEditView()));
   QObject::connect(editUserView, SIGNAL(cancelClicked()), this, SLOT(hideEditView()));
   // Propaga il signal all'esterno
   QObject::connect(
@@ -71,6 +72,7 @@ UsersListView::UsersListView(QWidget *parent): QWidget(parent) {
     this,
     SIGNAL(editedUser(UserInterface*, QString, QString, QString, QString))
   );
+  QObject::connect(editUserView, SIGNAL(changeRoleClicked(UserInterface*, QString)), this, SIGNAL(changedUserRole(UserInterface*, QString)));
 
   containerLayout->addWidget(scrollArea);
   containerLayout->addWidget(editUserView);
@@ -106,4 +108,18 @@ void UsersListView::addUserView(UserInterface *user) {
 void UsersListView::updateUserView(UserInterface *user) {
   UserView *userView = viewsMap[user];
   userView->setModel(user);
+}
+
+void UsersListView::updateUserRole(UserInterface *oldUser, UserInterface *newUser) {
+  // Aggiorna la lista nel model
+  int userIndex = model.indexOf(oldUser);
+  model.replace(userIndex, newUser);
+
+  // Aggiorna la view corrispondente
+  UserView *userView = viewsMap[oldUser];
+  userView->setModel(newUser);
+
+  // Aggiorna la mappa
+  viewsMap[newUser] = userView;
+  viewsMap.remove(oldUser);
 }

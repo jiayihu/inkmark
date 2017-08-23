@@ -191,6 +191,29 @@ void ApplicationModel::editUser(UserInterface *user, const QString &name, const 
   emit updatedUser(user);
 }
 
+void ApplicationModel::changeUserRole(UserInterface *user, const QString &newRole) {
+  AdminModel *isAdmin = dynamic_cast<AdminModel*>(currentUser);
+  if (!user || !isAdmin || user == currentUser || user->getRole() == newRole) return;
+
+  UserModel* userModel = static_cast<UserModel *>(user);
+  UserModel *newUser = nullptr;
+
+  // Sostituisci l'utente con un nuovo con ruolo diverso ma stessi campi dati
+  if (newRole == "user") newUser = new UserModel(*userModel);
+  else if (newRole == "admin") newUser = new AdminModel(*userModel);
+
+  newUser->setId(userModel->getId());
+
+  int userIndex = users.indexOf(userModel);
+  if (userIndex == -1) return;
+
+  users.replace(userIndex, newUser);
+
+  emit changedUserRole(user, newUser);
+  // Cancella il vecchio utente dopo il SIGNAL
+  delete user;
+}
+
 bool ApplicationModel::loginUser(const QString &email, const QString &password) {
   bool isSuccessful = authenticate(email, password);
   if (isSuccessful) emit loggedInUser(currentUser);

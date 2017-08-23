@@ -7,6 +7,12 @@ UsersListController::UsersListController(ApplicationModel *m, UsersListView *v)
    * Connessioni Model => View
    */
   QObject::connect(model, SIGNAL(updatedUser(UserInterface*)), view, SLOT(updateUserView(UserInterface*)));
+  QObject::connect(
+    model,
+    SIGNAL(changedUserRole(UserInterface*, UserInterface*)),
+    view,
+    SLOT(updateUserRole(UserInterface*, UserInterface*))
+  );
 
   /**
    * Connessioni View => Model
@@ -18,6 +24,7 @@ UsersListController::UsersListController(ApplicationModel *m, UsersListView *v)
     model,
     SLOT(editUser(UserInterface*, QString, QString, QString, QString))
   );
+  QObject::connect(view, SIGNAL(changedUserRole(UserInterface*, QString)), model, SLOT(changeUserRole(UserInterface*, QString)));
 
   // Setta il model iniziale
   view->setModel(model->getUsers());
