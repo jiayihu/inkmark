@@ -73,6 +73,13 @@ void UserView::setModel(UserInterface *newModel) {
 }
 
 void UserView::setIsCurrentUser(UserInterface *currentUser) {
+  if (!currentUser) {
+    // Al logout ripristina lo stato di default
+    fullnameLabel->setText(model->getName() + " " + model->getSurname());
+    deleteButton->setVisible(true);
+    return;
+  }
+
   isCurrentUser = currentUser == model;
 
   if (isCurrentUser) {
