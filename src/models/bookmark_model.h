@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <QString>
-#include <QDateTime>
+#include <QDate>
 #include <QTime>
 #include <QUrl>
 #include <QVector>
@@ -64,21 +64,17 @@ std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark);
 
 class ArticleModel: public BookmarkModel {
  private:
-  QDateTime publication;
-  QVector<QString> authors;
-  int minRead;
+  QDate publication;
+  QTime minRead;
 
  public:
   static QString format;
 
   ArticleModel();
-  ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr = 0);
+  ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDate &p, QTime mr);
 
-  void addAuthor(const QString &fullname = "");
-  QDateTime getPublication() const;
-  QVector<QString> getAuthors() const;
-  int getMinRead() const;
-  bool hasText(const QString &searchText) const override;
+  QDate getPublication() const;
+  QTime getMinRead() const;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 };

@@ -49,7 +49,15 @@ class ApplicationModel: public QObject {
   void writeToJSON(QJsonObject &json) const;
 
  public slots:
-  void addBookmark(const QString &name, const QString &link, const QString &description);
+  void addBookmark(
+    const QString &name,
+    const QString &link,
+    const QString &description,
+    const QString &type,
+    const QDate &pubblication,
+    const QTime &minRead,
+    const QTime &duration
+  );
   void deleteBookmark(BookmarkInterface *bookmark);
   void editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc);
   QVector<BookmarkInterface*> search(const QString &searchText) const;

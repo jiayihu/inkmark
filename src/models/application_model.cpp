@@ -94,7 +94,14 @@ void ApplicationModel::writeToJSON(QJsonObject &json) const {
   json.insert("users", usersJSON);
 }
 
-void ApplicationModel::addBookmark(const QString &name, const QString &link, const QString &description) {
+void ApplicationModel::addBookmark(
+  const QString &name,
+  const QString &link,
+  const QString &description,
+  const QString &type,
+  const QDate &pubblication,
+  const QTime &minRead,
+  const QTime &duration) {
   // Bisogna essere almeno UserModel per poter aggiungere bookmarks
   UserModel *user = dynamic_cast<UserModel *>(currentUser);
   if (!user || !user->canAdd()) return;
@@ -104,7 +111,18 @@ void ApplicationModel::addBookmark(const QString &name, const QString &link, con
     return;
   }
 
-  BookmarkModel *bookmark = new BookmarkModel(user->getId(), link, name, description);
+  BookmarkModel *bookmark = nullptr;
+
+  if (type == "None") {
+    bookmark = new BookmarkModel(user->getId(), link, name, description);
+  } else if (type == "Article") {
+    bookmark = new ArticleModel(user->getId(), link, name, description, pubblication, minRead);
+  } else if (type == "Video") {
+    bookmark = new VideoModel(user->getId(), link, name, description, duration);
+  } else {
+    qWarning() << "ApplicationModel::addBookmark(): Umknown bookmark type passed";
+  }
+
   bookmarks.push_back(bookmark);
   
   emit addedBookmark(bookmark);

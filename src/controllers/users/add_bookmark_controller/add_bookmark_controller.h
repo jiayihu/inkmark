@@ -12,9 +12,6 @@ class AddBookmarkController: public QObject {
   ApplicationModel *model;
   AddBookmarkView *view;
 
- private slots:
-  void handleSubmitClicked(const QString &name, const QString &link, const QString &description);
-
  public:
   AddBookmarkController(ApplicationModel *m = nullptr, AddBookmarkView *v = nullptr);
 };

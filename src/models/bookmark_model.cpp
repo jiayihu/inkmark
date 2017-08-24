@@ -66,57 +66,28 @@ std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
  * Article
  */
 
-QString ArticleModel::format = "dd MMM yyyy hh:mm:ss";
+QString ArticleModel::format = "dd MMMM yyyy";
 
 ArticleModel::ArticleModel() {}
 
-ArticleModel::ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDateTime &p, int mr)
+ArticleModel::ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDate &p, QTime mr)
     : BookmarkModel(ai, l, n, d), publication(p), minRead(mr) {}
 
-void ArticleModel::addAuthor(const QString &fullname) {
-  authors.push_back(fullname);
-}
+QDate ArticleModel::getPublication() const { return publication; }
 
-QDateTime ArticleModel::getPublication() const { return publication; }
-
-QVector<QString> ArticleModel::getAuthors() const { return authors; }
-
-int ArticleModel::getMinRead() const { return minRead; }
-
-bool ArticleModel::hasText(const QString &searchText) const {
-  bool isInAuthors = false;
-
-  for (int i = 0; i < authors.size() && !isInAuthors; i++) {
-    if (hasInsensitiveText(authors[i], searchText)) isInAuthors = true;
-  }
-
-  return BookmarkModel::hasText(searchText) || isInAuthors;
-}
+QTime ArticleModel::getMinRead() const { return minRead; }
 
 void ArticleModel::readFromJSON(const QJsonObject &json) {
   BookmarkModel::readFromJSON(json);
   QString publicationString = json.value("publication").toString();
-  publication = QDateTime::fromString(publicationString, ArticleModel::format);
-
-  QJsonArray authorsJSON = json.value("authors").toArray();
-  for (int i = 0; i < authorsJSON.size(); i++) {
-    authors.push_back(authorsJSON[i].toString());
-  }
-
-  minRead = json.value("minRead").toInt();
+  publication = QDate::fromString(publicationString, ArticleModel::format);
+  minRead = QTime::fromString(json.value("minRead").toString());
 }
 
 void ArticleModel::writeToJSON(QJsonObject &json) const {
+  BookmarkModel::writeToJSON(json);
   json.insert("publication", publication.toString(ArticleModel::format));
-
-  QJsonArray authorsJSON;
-  for (int i = 0; i < authors.size(); i++) {
-    QJsonValue authorJSON(authors[i]);
-    authorsJSON.append(authorJSON);
-  }
-  json.insert("authors", authorsJSON);
-
-  json.insert("minRead", minRead);
+  json.insert("minRead", minRead.toString());
 }
 
 /**
@@ -145,7 +116,7 @@ QString platformToString(const VideoPlatform &platform) {
     case VideoPlatform::noPlatform :
       return "no platform";
     default:
-      qWarning() << "Could not convert VideoPlatform to string";
+      qWarning() << "platformToString(): Could not convert VideoPlatform to string";
       return "";
   }
 }
@@ -175,6 +146,7 @@ void VideoModel::readFromJSON(const QJsonObject &json) {
 }
 
 void VideoModel::writeToJSON(QJsonObject &json) const {
+  BookmarkModel::writeToJSON(json);
   json.insert("duration", duration.toString(VideoModel::format));
   json.insert("platform", platformToString(platform));
 }

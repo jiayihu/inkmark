@@ -40,7 +40,12 @@ QWidget* UserApplicationView::createContent() {
   addBookmarkView = new AddBookmarkView();
   addBookmarkView->setVisible(false);
   QObject::connect(addBookmarkView, SIGNAL(cancelClicked()), this, SLOT(toggleAddViewVisibility()));
-  QObject::connect(addBookmarkView, SIGNAL(submitClicked(QString, QString, QString)), this, SLOT(toggleAddViewVisibility()));
+  QObject::connect(
+    addBookmarkView,
+    SIGNAL(submitClicked(QString, QString, QString, QString, QDate, QTime, QTime)),
+    this,
+    SLOT(toggleAddViewVisibility())
+  );
 
   searchBookmarkView = new SearchBookmarkView();
   searchBookmarkView->setVisible(false);
