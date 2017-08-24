@@ -2,7 +2,7 @@
 
 UserApplicationController::UserApplicationController(ApplicationModel *m, UserApplicationView *v)
   : model(m), view(v) {
-  AddBookmarkView *addBookmarkView = view->getAddBookmarkView();
+  EditBookmarkView *addBookmarkView = view->getAddBookmarkView();
   addBookmarkController = new AddBookmarkController(model, addBookmarkView);
 
   BookmarksListView *bookmarksListView = view->getBookmarkListView();

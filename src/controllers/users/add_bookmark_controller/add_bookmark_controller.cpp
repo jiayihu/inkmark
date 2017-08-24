@@ -1,6 +1,6 @@
 #include "add_bookmark_controller.h"
 
-AddBookmarkController::AddBookmarkController(ApplicationModel *m, AddBookmarkView *v)
+AddBookmarkController::AddBookmarkController(ApplicationModel *m, EditBookmarkView *v)
   : model(m), view(v) {
   QObject::connect(
     view,

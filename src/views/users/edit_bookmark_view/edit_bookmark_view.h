@@ -10,8 +10,12 @@
 #include "widgets/text_input_widget/text_input_widget.h"
 #include "widgets/text_area_widget/text_area_widget.h"
 
-
-class AddBookmarkView: public QWidget {
+/**
+ * Classe view usata sia per la creazione che modifica di un bookmark, poiché
+ * i campi sono identici in entrambi i casi. L'unica distinzione è che nel secondo
+ * caso la view possiede un model definito, ovvero il bookmark da editare.
+ */
+class EditBookmarkView: public QWidget {
   Q_OBJECT
 
  private:
@@ -38,7 +42,7 @@ class AddBookmarkView: public QWidget {
     void handleSubmitClick();
 
  public:
-  AddBookmarkView(QWidget *parent = nullptr);
+  EditBookmarkView(QWidget *parent = nullptr);
 
  public slots:
   void setModel(BookmarkInterface *newModel);

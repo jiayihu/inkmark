@@ -5,7 +5,7 @@
 #include <QVector>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
-#include "views/users/add_bookmark_view/add_bookmark_view.h"
+#include "views/users/edit_bookmark_view/edit_bookmark_view.h"
 #include "views/users/search_bookmark_view/search_bookmark_view.h"
 #include "views/users/bookmarks_list_view/bookmarks_list_view.h"
 
@@ -13,7 +13,7 @@ class UserApplicationView: public QWidget {
  Q_OBJECT
 
  private:
-  AddBookmarkView *addBookmarkView;
+  EditBookmarkView *addBookmarkView;
   SearchBookmarkView *searchBookmarkView;
   BookmarksListView *bookmarksListView;
   UserInterface *user;
@@ -35,7 +35,7 @@ class UserApplicationView: public QWidget {
   // Ritorna il contenuto dell'area utente
   QWidget *createContent();
 
-  AddBookmarkView* getAddBookmarkView() const;
+  EditBookmarkView* getAddBookmarkView() const;
   SearchBookmarkView* getSearchBookmarkView() const;
   BookmarksListView* getBookmarkListView() const;
 

@@ -7,7 +7,7 @@
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
 #include "views/users/bookmark_view/bookmark_view.h"
-#include "views/users/add_bookmark_view/add_bookmark_view.h"
+#include "views/users/edit_bookmark_view/edit_bookmark_view.h"
 
 /**
  * Classe view che mostra una lista di bookmarks. E' utilizzata sia per la lista
@@ -21,7 +21,7 @@ class BookmarksListView: public QWidget {
   QVector<BookmarkInterface*> model;
   QLayout *containerLayout;
   QLayout *listLayout;
-  AddBookmarkView *editBookmarkView;
+  EditBookmarkView *editBookmarkView;
   /**
    * Mappa utilizzata per tenere traccia di quali views sono mostrate, ove la chiave
    * è il puntatore al bookmark. Tempi di modifica/delete più efficienti rispetto

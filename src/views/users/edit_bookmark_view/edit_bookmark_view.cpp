@@ -2,11 +2,11 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QFormLayout>
-#include "add_bookmark_view.h"
+#include "edit_bookmark_view.h"
 #include "widgets/button_widget/button_widget.h"
 #include "utilities/utilities.h"
 
-QWidget* AddBookmarkView::createTypeSelect() {
+QWidget* EditBookmarkView::createTypeSelect() {
   QFormLayout *layout = new QFormLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setFormAlignment(Qt::AlignLeft);
@@ -36,7 +36,7 @@ QWidget* AddBookmarkView::createTypeSelect() {
   return wrapInWidget(layout);
 }
 
-QWidget* AddBookmarkView::createArticleFields() {
+QWidget* EditBookmarkView::createArticleFields() {
   QFormLayout *layout = new QFormLayout();
   layout->setContentsMargins(0, 0, 0, 0);
   layout->setFormAlignment(Qt::AlignLeft);
@@ -60,7 +60,7 @@ QWidget* AddBookmarkView::createArticleFields() {
   return articleFields;
 }
 
-QWidget* AddBookmarkView::createVideoFields() {
+QWidget* EditBookmarkView::createVideoFields() {
   QFormLayout *layout = new QFormLayout();
   layout->setContentsMargins(0, 10, 0, 10);
   layout->setFormAlignment(Qt::AlignLeft);
@@ -76,7 +76,7 @@ QWidget* AddBookmarkView::createVideoFields() {
   return videoFields;
 }
 
-QWidget* AddBookmarkView::createFields() {
+QWidget* EditBookmarkView::createFields() {
   QVBoxLayout *layout = new QVBoxLayout();
 
   nameInput = new TextInputWidget();
@@ -98,7 +98,7 @@ QWidget* AddBookmarkView::createFields() {
   return wrapInWidget(layout);
 }
 
-QWidget* AddBookmarkView::createButtons() {
+QWidget* EditBookmarkView::createButtons() {
   QHBoxLayout *layout = new QHBoxLayout();
   ButtonWidget *cancelButton = new ButtonWidget("Cancel");
   QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
@@ -110,7 +110,7 @@ QWidget* AddBookmarkView::createButtons() {
   return wrapInWidget(layout);
 }
 
-void AddBookmarkView::handleTypeChange(const QString &typeString) {
+void EditBookmarkView::handleTypeChange(const QString &typeString) {
   BookmarkType type = stringToBookmarkType(typeString);
 
   if (type == BookmarkType::none) {
@@ -123,11 +123,11 @@ void AddBookmarkView::handleTypeChange(const QString &typeString) {
     articleFields->setVisible(false);
     videoFields->setVisible(true);
   } else {
-    qWarning() << "AddBookmarkView::handleTypeChange(): Umknown bookmark type passed";
+    qWarning() << "EditBookmarkView::handleTypeChange(): Umknown bookmark type passed";
   }
 }
 
-void AddBookmarkView::handleSubmitClick() {
+void EditBookmarkView::handleSubmitClick() {
   QString name = nameInput->text();
   QString link = linkInput->text();
   QString description = descriptionTextArea->toPlainText();
@@ -140,7 +140,7 @@ void AddBookmarkView::handleSubmitClick() {
   else emit editClicked(model, name, link, description, type, pubblication, minRead, duration);
 }
 
-AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
+EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
   QVBoxLayout *layout = new QVBoxLayout();
   layout->setAlignment(Qt::AlignLeft);
 
@@ -150,7 +150,7 @@ AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
   setLayout(layout);
 }
 
-void AddBookmarkView::setModel(BookmarkInterface *newModel) {
+void EditBookmarkView::setModel(BookmarkInterface *newModel) {
   model = newModel;
 
   nameInput->setText(model->getName());
@@ -158,7 +158,7 @@ void AddBookmarkView::setModel(BookmarkInterface *newModel) {
   descriptionTextArea->setText(model->getDescription());
 }
 
-void AddBookmarkView::clear() const {
+void EditBookmarkView::clear() const {
   nameInput->clear();
   linkInput->clear();
   descriptionTextArea->clear();

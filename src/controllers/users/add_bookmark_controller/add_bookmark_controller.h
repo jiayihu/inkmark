@@ -3,17 +3,17 @@
 
 #include <QString>
 #include "models/application_model.h"
-#include "views/users/add_bookmark_view/add_bookmark_view.h"
+#include "views/users/edit_bookmark_view/edit_bookmark_view.h"
 
 class AddBookmarkController: public QObject {
   Q_OBJECT
 
  private:
   ApplicationModel *model;
-  AddBookmarkView *view;
+  EditBookmarkView *view;
 
  public:
-  AddBookmarkController(ApplicationModel *m = nullptr, AddBookmarkView *v = nullptr);
+  AddBookmarkController(ApplicationModel *m = nullptr, EditBookmarkView *v = nullptr);
 };
 
 #endif //INKMARK_ADD_BOOKMARK_CONTROLLER_H

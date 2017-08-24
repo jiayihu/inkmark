@@ -38,7 +38,7 @@ QWidget* UserApplicationView::createContent() {
   QHBoxLayout *layout = new QHBoxLayout();
   layout->setContentsMargins(0, 0, 0, 0);
 
-  addBookmarkView = new AddBookmarkView();
+  addBookmarkView = new EditBookmarkView();
   addBookmarkView->setVisible(false);
   QObject::connect(addBookmarkView, SIGNAL(cancelClicked()), this, SLOT(toggleAddViewVisibility()));
   QObject::connect(
@@ -86,7 +86,7 @@ void UserApplicationView::resizeToMin() {
 
 UserApplicationView::UserApplicationView(QWidget *parent): QWidget(parent) {}
 
-AddBookmarkView* UserApplicationView::getAddBookmarkView() const { return addBookmarkView; }
+EditBookmarkView* UserApplicationView::getAddBookmarkView() const { return addBookmarkView; }
 
 BookmarksListView* UserApplicationView::getBookmarkListView() const { return bookmarksListView; }
 
