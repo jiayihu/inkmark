@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QVector>
-#include <QHBoxLayout>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
 #include "views/users/add_bookmark_view/add_bookmark_view.h"

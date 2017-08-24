@@ -3,7 +3,6 @@
 
 #include <QWidget>
 #include <QLabel>
-#include <QVBoxLayout>
 #include "models/bookmark_model.h"
 #include "widgets/link_widget/link_widget.h"
 #include "widgets/button_widget/button_widget.h"

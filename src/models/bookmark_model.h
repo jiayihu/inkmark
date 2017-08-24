@@ -99,6 +99,7 @@ class VideoModel: public BookmarkModel {
 
  public:
   static QString format;
+  static VideoPlatform platformFromLink(const QString &link);
 
   VideoModel();
   VideoModel(

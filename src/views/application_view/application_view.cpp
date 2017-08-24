@@ -1,4 +1,6 @@
 #include <QSizePolicy>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QDebug>
 #include <QTimer>
 #include <utilities/utilities.h>

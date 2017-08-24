@@ -150,6 +150,14 @@ QString platformToString(const VideoPlatform &platform) {
 
 QString VideoModel::format = "hh:mm:ss";
 
+VideoPlatform VideoModel::platformFromLink(const QString &link) {
+  if (link.indexOf("youtube") != -1) return VideoPlatform::youtube;
+  if (link.indexOf("twitch") != -1) return VideoPlatform::twitch;
+  if (link.indexOf("vimeo") != -1) return VideoPlatform::vimeo;
+
+  return VideoPlatform::noPlatform;
+}
+
 VideoModel::VideoModel(): platform(VideoPlatform::noPlatform) {}
 
 VideoModel::VideoModel(int ai, const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p)

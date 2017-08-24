@@ -10,11 +10,11 @@ class Inkmark: public QObject {
   Q_OBJECT
 
  private:
+  static QString modelFilename; // Non è utilizzato all'esterno per il momento
+
   ApplicationModel *appModel;
   ApplicationView *appView;
   ApplicationController *applicationController;
-
-  static QString modelFilename; // Non è utilizzato all'esterno per il momento
 
   bool loadModel();
 

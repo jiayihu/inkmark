@@ -3,9 +3,8 @@
 
 #include <QWidget>
 #include <QVector>
+#include <QLayout>
 #include <QCloseEvent>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 #include "models/bookmark_model.h"
 #include "models/user_model.h"
 #include "views/auth_view/auth_view.h"

@@ -129,7 +129,8 @@ void ApplicationModel::addBookmark(
   } else if (type == BookmarkType::article) {
     bookmark = new ArticleModel(user->getId(), link, name, description, pubblication, minRead);
   } else if (type == BookmarkType::video) {
-    bookmark = new VideoModel(user->getId(), link, name, description, duration);
+    VideoPlatform platform = VideoModel::platformFromLink(link);
+    bookmark = new VideoModel(user->getId(), link, name, description, duration, platform);
   } else {
     qWarning() << "ApplicationModel::addBookmark(): Umknown bookmark type passed";
   }

@@ -1,4 +1,5 @@
 #include <QSizePolicy>
+#include <QHBoxLayout>
 #include <QDebug>
 #include <QTimer>
 #include "user_application_view.h"
