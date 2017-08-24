@@ -43,7 +43,7 @@ QWidget* UserApplicationView::createContent() {
   QObject::connect(addBookmarkView, SIGNAL(cancelClicked()), this, SLOT(toggleAddViewVisibility()));
   QObject::connect(
     addBookmarkView,
-    SIGNAL(submitClicked(QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
+    SIGNAL(addClicked(QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
     this,
     SLOT(toggleAddViewVisibility())
   );

@@ -51,15 +51,20 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   scrollArea->setMinimumWidth(642);
   scrollArea->setFrameShape(QFrame::NoFrame);
 
-  editBookmarkView = new EditBookmarkView();
+  editBookmarkView = new AddBookmarkView();
   editBookmarkView->setVisible(false);
   // Chiudi il widget per la modifica
-  QObject::connect(editBookmarkView, SIGNAL(saveClicked(BookmarkInterface*, QString, QString, QString)), this, SLOT(hideEditView()));
+  QObject::connect(
+    editBookmarkView,
+    SIGNAL(editClicked(BookmarkInterface*, QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
+    this,
+    SLOT(hideEditView())
+  );
   QObject::connect(editBookmarkView, SIGNAL(cancelClicked()), this, SLOT(hideEditView()));
   // Propaga il signal all'esterno
   QObject::connect(
       editBookmarkView,
-      SIGNAL(saveClicked(BookmarkInterface*, QString, QString, QString)),
+      SIGNAL(editClicked(BookmarkInterface*, QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
       this,
       SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString))
   );

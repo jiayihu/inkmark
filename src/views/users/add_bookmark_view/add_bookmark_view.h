@@ -15,6 +15,8 @@ class AddBookmarkView: public QWidget {
   Q_OBJECT
 
  private:
+  BookmarkInterface *model;
+
   TextInputWidget *nameInput;
   TextInputWidget *linkInput;
   TextAreaWidget *descriptionTextArea;
@@ -39,11 +41,22 @@ class AddBookmarkView: public QWidget {
   AddBookmarkView(QWidget *parent = nullptr);
 
  public slots:
+  void setModel(BookmarkInterface *newModel);
   void clear() const;
 
  signals:
   void cancelClicked();
-  void submitClicked(
+  void addClicked(
+    const QString &name,
+    const QString &link,
+    const QString &description,
+    const BookmarkType &type,
+    const QDate &pubblication,
+    const QTime &minRead,
+    const QTime &duration
+  );
+  void editClicked(
+    BookmarkInterface *bookmark,
     const QString &name,
     const QString &link,
     const QString &description,

@@ -4,7 +4,7 @@ AddBookmarkController::AddBookmarkController(ApplicationModel *m, AddBookmarkVie
   : model(m), view(v) {
   QObject::connect(
     view,
-    SIGNAL(submitClicked(QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
+    SIGNAL(addClicked(QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
     model,
     SLOT(addBookmark(QString, QString, QString, BookmarkType, QDate, QTime, QTime))
   );

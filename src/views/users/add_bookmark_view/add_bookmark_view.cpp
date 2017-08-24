@@ -102,7 +102,7 @@ QWidget* AddBookmarkView::createButtons() {
   QHBoxLayout *layout = new QHBoxLayout();
   ButtonWidget *cancelButton = new ButtonWidget("Cancel");
   QObject::connect(cancelButton, SIGNAL(clicked()), this, SIGNAL(cancelClicked()));
-  ButtonWidget *submitButton = new ButtonWidget("Add bookmark");
+  ButtonWidget *submitButton = new ButtonWidget("Save bookmark");
   QObject::connect(submitButton, SIGNAL(clicked()), this, SLOT(handleSubmitClick()));
   layout->addWidget(cancelButton);
   layout->addWidget(submitButton);
@@ -136,7 +136,8 @@ void AddBookmarkView::handleSubmitClick() {
   QTime minRead = minReadInput->time();
   QTime duration = durationInput->time();
 
-  emit submitClicked(name, link, description, type, pubblication, minRead, duration);
+  if (!model) emit addClicked(name, link, description, type, pubblication, minRead, duration);
+  else emit editClicked(model, name, link, description, type, pubblication, minRead, duration);
 }
 
 AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
@@ -147,6 +148,14 @@ AddBookmarkView::AddBookmarkView(QWidget *parent): QWidget(parent) {
   layout->addWidget(createButtons());
 
   setLayout(layout);
+}
+
+void AddBookmarkView::setModel(BookmarkInterface *newModel) {
+  model = newModel;
+
+  nameInput->setText(model->getName());
+  linkInput->setText(model->getLink().toString());
+  descriptionTextArea->setText(model->getDescription());
 }
 
 void AddBookmarkView::clear() const {
