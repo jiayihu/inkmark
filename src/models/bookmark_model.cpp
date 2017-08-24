@@ -94,7 +94,7 @@ std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {
 
 QString ArticleModel::format = "dd MMMM yyyy";
 
-ArticleModel::ArticleModel() {}
+ArticleModel::ArticleModel(): BookmarkInterface() {}
 
 ArticleModel::ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDate &p, QTime mr)
     : BookmarkModel(ai, l, n, d), publication(p), minRead(mr) {}
@@ -158,7 +158,7 @@ VideoPlatform VideoModel::platformFromLink(const QString &link) {
   return VideoPlatform::noPlatform;
 }
 
-VideoModel::VideoModel(): platform(VideoPlatform::noPlatform) {}
+VideoModel::VideoModel(): BookmarkInterface(), platform(VideoPlatform::noPlatform) {}
 
 VideoModel::VideoModel(int ai, const QString &l, const QString &n, const QString &d, const QTime &dur, const VideoPlatform &p)
   : BookmarkModel(ai, l, n, d), duration(dur), platform(p) {}

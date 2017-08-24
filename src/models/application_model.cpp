@@ -143,7 +143,7 @@ void ApplicationModel::addBookmark(
 void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   if (!bookmark || !currentUser || !currentUser->canDelete(bookmark)) return;
 
-  int index = bookmarks.indexOf(static_cast<BookmarkModel*>(bookmark));
+  int index = bookmarks.indexOf(dynamic_cast<BookmarkModel*>(bookmark));
   if (index == -1) return;
   bookmarks.remove(index);
 
@@ -154,7 +154,7 @@ void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
 
 void ApplicationModel::editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc) {
   if (!bookmark || !currentUser || !currentUser->canEdit(bookmark)) return;
-  int bookmarkIndex = bookmarks.indexOf(static_cast<BookmarkModel*>(bookmark));
+  int bookmarkIndex = bookmarks.indexOf(dynamic_cast<BookmarkModel*>(bookmark));
 
   if (bookmarkIndex == -1) return;
 

@@ -32,7 +32,10 @@ class BookmarkInterface {
   virtual bool hasText(const QString &searchText) const = 0;
 };
 
-class BookmarkModel: public BookmarkInterface {
+/**
+ * Vera implementazione della classe BookmarkModel
+ */
+class BookmarkModel: virtual public BookmarkInterface {
  private:
   QUrl link;
   QString name;
@@ -66,10 +69,27 @@ class BookmarkModel: public BookmarkInterface {
   // Conversione a QString per poter usare `qDebug() << bookmark`
   virtual operator QString() const { return name + " " + link.toString() + " " + description; }
 };
-// TODO Anche per classi derivate
+
 std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark);
 
-class ArticleModel: public BookmarkModel {
+
+/**
+ * Bookmarks articoli
+ */
+
+/**
+ * Interfaccia per i bookmarks articoli, da usare nelle views
+ */
+class ArticleInterface: virtual public BookmarkInterface {
+ public:
+  virtual QDate getPublication() const = 0;
+  virtual QTime getMinRead() const = 0;
+};
+
+/**
+ * Vera implementazione della classe ArticleModel
+ */
+class ArticleModel: public BookmarkModel, public ArticleInterface {
  private:
   QDate publication;
   QTime minRead;
@@ -81,18 +101,35 @@ class ArticleModel: public BookmarkModel {
   ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDate &p, QTime mr);
 
   BookmarkType getType() const override;
-  QDate getPublication() const;
-  QTime getMinRead() const;
+  QDate getPublication() const override ;
+  QTime getMinRead() const override ;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 };
+
+
+/**
+ * Bookmarks video
+ */
 
 enum VideoPlatform { youtube, vimeo, twitch, noPlatform };
 
 extern VideoPlatform stringToPlatform(const QString &platform);
 extern QString platformToString(const VideoPlatform &platform);
 
-class VideoModel: public BookmarkModel {
+/**
+ * Interfaccia per i bookmarks video, da usare nelle views
+ */
+class VideoInterface: virtual public BookmarkInterface {
+ public:
+  virtual QTime getDuration() const = 0;
+  virtual VideoPlatform getPlatform() const = 0;
+};
+
+/**
+ * Vera implementazione della classe VideoModel
+ */
+class VideoModel: public BookmarkModel, public VideoInterface {
  private:
   QTime duration;
   VideoPlatform platform;
@@ -112,8 +149,8 @@ class VideoModel: public BookmarkModel {
   );
 
   BookmarkType getType() const override;
-  QTime getDuration() const;
-  VideoPlatform getPlatform() const;
+  QTime getDuration() const override;
+  VideoPlatform getPlatform() const override;
   bool hasText(const QString &searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;

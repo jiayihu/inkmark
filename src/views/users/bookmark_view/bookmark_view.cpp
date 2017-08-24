@@ -1,5 +1,13 @@
+#include <QDebug>
 #include <QHBoxLayout>
 #include "bookmark_view.h"
+#include "utilities/utilities.h"
+
+void BookmarkView::setMetadataStyles(QLabel *label) {
+  label->setStyleSheet("font-size: 14px; color: #999;");
+  label->setVisible(false);
+  label->setAlignment(Qt::AlignRight);
+}
 
 QWidget* BookmarkView::createContent() {
   QWidget *contentContainer = new QWidget();
@@ -18,14 +26,28 @@ QWidget* BookmarkView::createContent() {
   return contentContainer;
 }
 
-QLabel* BookmarkView::createHostLabel() const {
-  QLabel *hostLabel = new QLabel();
-  hostLabel->setStyleSheet("font-size: 14px; color: #999;");
-  QSizePolicy sizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-  sizePolicy.setHorizontalStretch(0);
-  hostLabel->setSizePolicy(sizePolicy);
+QWidget* BookmarkView::createMetadata() {
+  QVBoxLayout *layout = new QVBoxLayout();
+  layout->setSpacing(0);
 
-  return hostLabel;
+  hostLabel = new QLabel();
+  setMetadataStyles(hostLabel);
+  hostLabel->setVisible(true);
+  layout->addWidget(hostLabel);
+
+  // Label specifiche del tipo di bookmark
+  pubblicationLabel = new QLabel();
+  setMetadataStyles(pubblicationLabel);
+  minReadLabel = new QLabel();
+  setMetadataStyles(minReadLabel);
+  durationLabel = new QLabel();
+  setMetadataStyles(durationLabel);
+
+  layout->addWidget(pubblicationLabel);
+  layout->addWidget(minReadLabel);
+  layout->addWidget(durationLabel);
+
+  return wrapInWidget(layout);
 }
 
 QWidget* BookmarkView::createButtons() {
@@ -58,11 +80,10 @@ BookmarkView::BookmarkView(QWidget *parent): model(nullptr), QWidget(parent) {
   QHBoxLayout *layout = new QHBoxLayout();
 
   QWidget *contentContainer = createContent();
-  hostLabel = createHostLabel();
   QWidget *buttonsContainer = createButtons();
 
   layout->addWidget(contentContainer);
-  layout->addWidget(hostLabel);
+  layout->addWidget(createMetadata());
   layout->addWidget(buttonsContainer);
 
   setLayout(layout);
@@ -81,4 +102,18 @@ void BookmarkView::setModel(BookmarkInterface *newModel) {
   nameLink->setUrl(link);
   descriptionLabel->setText(model->getDescription());
   hostLabel->setText(link.host());
+
+  // Campi dati specifici del tipo di bookmark
+  ArticleInterface *articleBookmark = dynamic_cast<ArticleInterface *>(model);
+  VideoInterface *videoBookmark = dynamic_cast<VideoInterface *>(model);
+
+  if (articleBookmark) {
+    pubblicationLabel->setText("📆 " + articleBookmark->getPublication().toString("dd MMMM yyyy"));
+    pubblicationLabel->setVisible(true);
+    minReadLabel->setText("⏱ " + articleBookmark->getMinRead().toString("mm:ss"));
+    minReadLabel->setVisible(true);
+  } else if (videoBookmark) {
+    durationLabel->setText("⏱ " + videoBookmark->getDuration().toString("mm:ss"));
+    durationLabel->setVisible(true);
+  }
 }

@@ -14,15 +14,20 @@ class BookmarkView: public QWidget {
   Q_OBJECT
 
  private:
+  static void setMetadataStyles(QLabel *label);
+
   BookmarkInterface *model;
   LinkWidget *nameLink;
   QLabel *descriptionLabel;
   QLabel *hostLabel;
+  QLabel *pubblicationLabel;
+  QLabel *minReadLabel;
+  QLabel *durationLabel;
   ButtonWidget *deleteButton;
   ButtonWidget *editButton;
 
   QWidget* createContent();
-  QLabel* createHostLabel() const;
+  QWidget* createMetadata();
   QWidget* createButtons();
 
  private slots:
