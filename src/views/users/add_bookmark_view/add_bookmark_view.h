@@ -6,6 +6,7 @@
 #include <QDateEdit>
 #include <QTimeEdit>
 #include <QString>
+#include "models/bookmark_model.h"
 #include "widgets/text_input_widget/text_input_widget.h"
 #include "widgets/text_area_widget/text_area_widget.h"
 
@@ -46,7 +47,7 @@ class AddBookmarkView: public QWidget {
     const QString &name,
     const QString &link,
     const QString &description,
-    const QString &type,
+    const BookmarkType &type,
     const QDate &pubblication,
     const QTime &minRead,
     const QTime &duration

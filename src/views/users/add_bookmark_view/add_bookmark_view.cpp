@@ -12,9 +12,9 @@ QWidget* AddBookmarkView::createTypeSelect() {
   layout->setFormAlignment(Qt::AlignLeft);
 
   typeSelect = new QComboBox();
-  typeSelect->addItem("None");
-  typeSelect->addItem("Article");
-  typeSelect->addItem("Video");
+  typeSelect->addItem(bookmarkTypeToString(BookmarkType::none));
+  typeSelect->addItem(bookmarkTypeToString(BookmarkType::article));
+  typeSelect->addItem(bookmarkTypeToString(BookmarkType::video));
 
   typeSelect->setStyleSheet(
     "QComboBox {"
@@ -110,14 +110,16 @@ QWidget* AddBookmarkView::createButtons() {
   return wrapInWidget(layout);
 }
 
-void AddBookmarkView::handleTypeChange(const QString &type) {
-  if (type == "None") {
+void AddBookmarkView::handleTypeChange(const QString &typeString) {
+  BookmarkType type = stringToBookmarkType(typeString);
+
+  if (type == BookmarkType::none) {
     articleFields->setVisible(false);
     videoFields->setVisible(false);
-  } else if (type == "Article") {
+  } else if (type == BookmarkType::article) {
     articleFields->setVisible(true);
     videoFields->setVisible(false);
-  } else if (type == "Video") {
+  } else if (type == BookmarkType::video) {
     articleFields->setVisible(false);
     videoFields->setVisible(true);
   } else {
@@ -129,7 +131,7 @@ void AddBookmarkView::handleSubmitClick() {
   QString name = nameInput->text();
   QString link = linkInput->text();
   QString description = descriptionTextArea->toPlainText();
-  QString type = typeSelect->currentText();
+  BookmarkType type = stringToBookmarkType(typeSelect->currentText());
   QDate pubblication = pubblicationInput->date();
   QTime minRead = minReadInput->time();
   QTime duration = durationInput->time();
@@ -151,4 +153,7 @@ void AddBookmarkView::clear() const {
   nameInput->clear();
   linkInput->clear();
   descriptionTextArea->clear();
+  pubblicationInput->setDate(QDate::currentDate());
+  minReadInput->setTime(QTime(0, 0, 0, 0));
+  durationInput->setTime(QTime(0, 0, 0, 0));
 }

@@ -47,8 +47,19 @@ void ApplicationModel::readFromJSON(const QJsonObject &json) {
   // Carica la lista di bookmarks dal JSON
   QJsonArray bookmarksJSON = json.value("bookmarks").toArray();
   for (int i = 0; i < bookmarksJSON.size(); i++) {
-    BookmarkModel *bookmark = new BookmarkModel();
-    bookmark->readFromJSON(bookmarksJSON[i].toObject());
+    QJsonObject bookmarkJSON = bookmarksJSON[i].toObject();
+    BookmarkModel *bookmark = nullptr;
+    BookmarkType type = stringToBookmarkType(bookmarkJSON.value("type").toString());
+
+    if (type == BookmarkType::none) bookmark = new BookmarkModel();
+    else if (type == BookmarkType::article) bookmark = new ArticleModel();
+    else if (type == BookmarkType::video) bookmark = new VideoModel();
+    else {
+      qDebug() << "ApplicationModel::readFromJSON(): not supported bookmark type" << type;
+      return;
+    }
+
+    bookmark->readFromJSON(bookmarkJSON);
     bookmarks.push_back(bookmark);
   }
 
@@ -98,7 +109,7 @@ void ApplicationModel::addBookmark(
   const QString &name,
   const QString &link,
   const QString &description,
-  const QString &type,
+  const BookmarkType &type,
   const QDate &pubblication,
   const QTime &minRead,
   const QTime &duration) {
@@ -113,11 +124,11 @@ void ApplicationModel::addBookmark(
 
   BookmarkModel *bookmark = nullptr;
 
-  if (type == "None") {
+  if (type == BookmarkType::none) {
     bookmark = new BookmarkModel(user->getId(), link, name, description);
-  } else if (type == "Article") {
+  } else if (type == BookmarkType::article) {
     bookmark = new ArticleModel(user->getId(), link, name, description, pubblication, minRead);
-  } else if (type == "Video") {
+  } else if (type == BookmarkType::video) {
     bookmark = new VideoModel(user->getId(), link, name, description, duration);
   } else {
     qWarning() << "ApplicationModel::addBookmark(): Umknown bookmark type passed";
@@ -131,18 +142,9 @@ void ApplicationModel::addBookmark(
 void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   if (!bookmark || !currentUser || !currentUser->canDelete(bookmark)) return;
 
-  QVector<BookmarkModel*>::iterator it = bookmarks.begin();
-  bool trovato = false;
-
-  // TODO: rimpiazzare con indexOf
-  for (; it != bookmarks.end() && !trovato; it++) {
-    if (*it == bookmark) {
-      bookmarks.erase(it);
-      trovato = true;
-    }
-  }
-
-  if (!trovato) return;
+  int index = bookmarks.indexOf(static_cast<BookmarkModel*>(bookmark));
+  if (index == -1) return;
+  bookmarks.remove(index);
 
   emit deletedBookmark(bookmark);
   // Cancella il bookmark dal heap dopo il signal

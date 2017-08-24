@@ -53,7 +53,7 @@ class ApplicationModel: public QObject {
     const QString &name,
     const QString &link,
     const QString &description,
-    const QString &type,
+    const BookmarkType &type,
     const QDate &pubblication,
     const QTime &minRead,
     const QTime &duration

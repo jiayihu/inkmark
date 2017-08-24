@@ -10,6 +10,11 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
+enum BookmarkType { none, article, video };
+
+extern BookmarkType stringToBookmarkType(const QString &bookmarkType);
+extern QString bookmarkTypeToString(const BookmarkType &bookmarkType);
+
 /**
  * Interfaccia di Bookmark da usare nelle views e controllers. Contiene solo metodi const,
  * quindi non ammette modifiche
@@ -21,6 +26,7 @@ class BookmarkInterface {
   virtual QString getName() const = 0;
   virtual QString getDescription() const = 0;
   virtual int getAuthorId() const = 0;
+  virtual BookmarkType getType() const = 0;
   virtual bool isLinkValid() const = 0;
   virtual bool getIsImportant() const = 0;
   virtual bool hasText(const QString &searchText) const = 0;
@@ -48,6 +54,7 @@ class BookmarkModel: public BookmarkInterface {
   void editName(const QString &newName);
   void editLink(const QString &newLink);
   void editDescription(const QString &newDescription);
+  BookmarkType getType() const override;
   bool isLinkValid() const override;
   bool getIsImportant() const override;
   void setImportance(bool newValue);
@@ -73,6 +80,7 @@ class ArticleModel: public BookmarkModel {
   ArticleModel();
   ArticleModel(int ai, const QString &l, const QString &n, const QString &d, const QDate &p, QTime mr);
 
+  BookmarkType getType() const override;
   QDate getPublication() const;
   QTime getMinRead() const;
   void readFromJSON(const QJsonObject &json) override;
@@ -102,6 +110,7 @@ class VideoModel: public BookmarkModel {
     const VideoPlatform &p = VideoPlatform::noPlatform
   );
 
+  BookmarkType getType() const override;
   QTime getDuration() const;
   VideoPlatform getPlatform() const;
   bool hasText(const QString &searchText) const override;

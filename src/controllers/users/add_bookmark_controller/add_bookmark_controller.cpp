@@ -4,9 +4,9 @@ AddBookmarkController::AddBookmarkController(ApplicationModel *m, AddBookmarkVie
   : model(m), view(v) {
   QObject::connect(
     view,
-    SIGNAL(submitClicked(QString, QString, QString, QString, QDate, QTime, QTime)),
+    SIGNAL(submitClicked(QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
     model,
-    SLOT(addBookmark(QString, QString, QString, QString, QDate, QTime, QTime))
+    SLOT(addBookmark(QString, QString, QString, BookmarkType, QDate, QTime, QTime))
   );
 
   // Pulire gli input all'aggiunta con successo del bookmark
