@@ -8,13 +8,26 @@
 
 QWidget* AddBookmarkView::createTypeSelect() {
   QFormLayout *layout = new QFormLayout();
-  layout->setContentsMargins(0, 10, 0, 10);
+  layout->setContentsMargins(0, 0, 0, 0);
   layout->setFormAlignment(Qt::AlignLeft);
 
   typeSelect = new QComboBox();
   typeSelect->addItem("None");
   typeSelect->addItem("Article");
   typeSelect->addItem("Video");
+
+  typeSelect->setStyleSheet(
+    "QComboBox {"
+      "border: 1px solid #e3e1e1;"
+      "border-radius: 3px;"
+      "padding: 5px 10px;"
+      "min-width: 60px;"
+      "}"
+    "QComboBox QAbstractItemView {"
+      "line-height: 20px;"
+      "selection-color: #54C0C0;"
+    "}"
+  );
 
   QObject::connect(typeSelect, SIGNAL(currentTextChanged(QString)), this, SLOT(handleTypeChange(QString)));
 
@@ -25,7 +38,7 @@ QWidget* AddBookmarkView::createTypeSelect() {
 
 QWidget* AddBookmarkView::createArticleFields() {
   QFormLayout *layout = new QFormLayout();
-  layout->setContentsMargins(0, 10, 0, 10);
+  layout->setContentsMargins(0, 0, 0, 0);
   layout->setFormAlignment(Qt::AlignLeft);
   layout->setLabelAlignment(Qt::AlignLeft);
 
@@ -33,8 +46,10 @@ QWidget* AddBookmarkView::createArticleFields() {
   pubblicationInput->setCalendarPopup(true);
   pubblicationInput->setDisplayFormat("dd MMMM yyyy");
   pubblicationInput->setMaximumDate(QDate::currentDate());
+  pubblicationInput->setStyleSheet("padding: 5px 10px;");
 
   minReadInput = new QTimeEdit();
+  minReadInput->setStyleSheet("border: 1px solid #e3e1e1; border-radius: 3px; padding: 5px 10px;");
 
   layout->addRow("Pubblication date", pubblicationInput);
   layout->addRow("Min to read", minReadInput);
@@ -52,6 +67,7 @@ QWidget* AddBookmarkView::createVideoFields() {
   layout->setLabelAlignment(Qt::AlignLeft);
 
   durationInput = new QTimeEdit();
+  durationInput->setStyleSheet("border: 1px solid #e3e1e1; border-radius: 3px; padding: 5px 10px;");
   layout->addRow("Duration", durationInput);
 
   videoFields = wrapInWidget(layout);
