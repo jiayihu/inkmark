@@ -1,3 +1,4 @@
+#include <QDebug>
 #include <QJsonDocument>
 #include "inkmark.h"
 
@@ -7,7 +8,7 @@ bool Inkmark::loadModel() {
   QFile loadFile(Inkmark::modelFilename);
 
   if (!loadFile.open(QIODevice::ReadOnly)) {
-    qWarning("Inkmark::loadModel(): Couldn't open JSON file to read the model.");
+    qWarning() << "Inkmark::loadModel(): Couldn't open JSON file to read the model.";
     return false;
   }
 
@@ -27,7 +28,7 @@ void Inkmark::saveModel() const {
   QFile saveFile(Inkmark::modelFilename);
 
   if (!saveFile.open(QIODevice::WriteOnly)) {
-    qWarning("Inkmark::saveModel(): Couldn't open JSON file to save the model.");
+    qWarning() << "Inkmark::saveModel(): Couldn't open JSON file to save the model.";
     return;
   }
 

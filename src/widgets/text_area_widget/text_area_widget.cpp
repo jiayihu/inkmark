@@ -2,7 +2,7 @@
 
 TextAreaWidget::TextAreaWidget(QWidget *parent): QTextEdit(parent) {
   // Disabilita il bordo azzurro del focus
-  setAttribute(Qt::WA_MacShowFocusRect, 0);
+  setAttribute(Qt::WA_MacShowFocusRect, false);
   setStyleSheet(
     "TextAreaWidget {"
       "background-color: #f0f0f0;"

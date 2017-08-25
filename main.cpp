@@ -1,5 +1,4 @@
 #include <QApplication>
-#include <QString>
 #include <QFont>
 #include "inkmark.h"
 

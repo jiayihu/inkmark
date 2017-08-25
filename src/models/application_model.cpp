@@ -274,8 +274,8 @@ void ApplicationModel::changeUserRole(UserInterface *user, const QString &newRol
   UserModel *newUser = nullptr;
 
   // Sostituisci l'utente con un nuovo con ruolo diverso ma stessi campi dati
-  if (newRole == "user") newUser = new UserModel(*userModel);
-  else if (newRole == "admin") newUser = new AdminModel(*userModel);
+  if (newRole == "admin") newUser = new AdminModel(*userModel);
+  else newUser = new UserModel(*userModel);
 
   newUser->setId(userModel->getId());
 

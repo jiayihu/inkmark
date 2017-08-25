@@ -3,7 +3,7 @@
 TextInputWidget::TextInputWidget(QWidget *parent): QLineEdit(parent) {
   setMinimumWidth(150);
   // Disabilita il bordo azzurro del focus
-  setAttribute(Qt::WA_MacShowFocusRect, 0);
+  setAttribute(Qt::WA_MacShowFocusRect, false);
   setStyleSheet(
     "TextInputWidget {"
       "background-color: #f0f0f0;"

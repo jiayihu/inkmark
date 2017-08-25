@@ -1,5 +1,4 @@
 #include "users_list_view.h"
-#include <QString>
 #include <QScrollArea>
 
 QString UsersListView::getStyles() const {

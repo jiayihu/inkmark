@@ -1,5 +1,4 @@
 #include "users_list_controller.h"
-#include <QString>
 
 void UsersListController::setModel() const {
   view->setModel(model->getUsers());

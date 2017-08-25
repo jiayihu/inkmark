@@ -1,11 +1,9 @@
 #include <QSizePolicy>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QDebug>
 #include <QTimer>
 #include <utilities/utilities.h>
 #include "application_view.h"
-#include "widgets/button_widget/button_widget.h"
 
 QString ApplicationView::getApplicationStyles() const {
   return "background-color: #FCFCFC;";

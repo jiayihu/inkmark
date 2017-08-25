@@ -23,7 +23,7 @@ class Inkmark: public QObject {
 
  public:
   Inkmark();
-  ~Inkmark();
+  ~Inkmark() final;
 
   void show() const;
 };

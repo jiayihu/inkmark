@@ -61,7 +61,7 @@ class UserModel: public UserInterface {
   virtual void readFromJSON(const QJsonObject &json);
   virtual void writeToJSON(QJsonObject &json) const;
 
-  UserModel& operator=(const UserModel& copy);
+  virtual UserModel& operator=(const UserModel& copy);
 };
 
 class AdminModel: public UserModel {
@@ -70,7 +70,6 @@ class AdminModel: public UserModel {
   AdminModel(const QString &n, const QString &s, const QString &e, const QString &pw);
   // E' disponibile la copia da UserModel, AdminModel non ha nessun campo dati in più
   AdminModel(const UserModel &copy);
-  AdminModel& operator=(const UserModel& copy);
 
   QString getRole() const override;
   bool canEdit(BookmarkInterface *bookmark) const override;

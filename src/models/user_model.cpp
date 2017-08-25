@@ -82,19 +82,19 @@ AdminModel::AdminModel(const QString &n, const QString &s, const QString &e, con
 AdminModel::AdminModel(const UserModel &user)
   : UserModel(user) {}
 
-AdminModel& AdminModel::operator=(const UserModel &copy) {
-  UserModel::operator=(copy);
-
-  return *this;
-}
-
 QString AdminModel::getRole() const { return "admin"; }
 
-bool AdminModel::canEdit(BookmarkInterface *bookmark) const { return true; }
+bool AdminModel::canEdit(BookmarkInterface *bookmark) const {
+  Q_UNUSED(bookmark);
+  return true;
+}
 
 bool AdminModel::canAdd() const { return true; }
 
-bool AdminModel::canDelete(BookmarkInterface *bookmark) const { return true; }
+bool AdminModel::canDelete(BookmarkInterface *bookmark) const {
+  Q_UNUSED(bookmark);
+  return true;
+}
 
 bool AdminModel::canAccessAdmin() const { return true; }
 
@@ -114,10 +114,16 @@ QString GuestModel::getPassword() const {
 }
 QString GuestModel::getRole() const { return "guest"; }
 
-bool GuestModel::canEdit(BookmarkInterface *bookmark) const { return false; }
+bool GuestModel::canEdit(BookmarkInterface *bookmark) const {
+  Q_UNUSED(bookmark);
+  return false;
+}
 
 bool GuestModel::canAdd() const { return false; }
 
-bool GuestModel::canDelete(BookmarkInterface *bookmark) const { return false; }
+bool GuestModel::canDelete(BookmarkInterface *bookmark) const {
+  Q_UNUSED(bookmark);
+  return false;
+}
 
 bool GuestModel::canAccessAdmin() const { return false; }
