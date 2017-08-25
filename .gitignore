@@ -1,4 +1,7 @@
 cmake-build-debug
+build
+inkmark.app
+Makefile
 
 # Created by https://www.gitignore.io/api/macos
 

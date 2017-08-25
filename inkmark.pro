@@ -4,6 +4,9 @@
 
 TEMPLATE = app
 TARGET = inkmark
+OBJECTS_DIR=build
+MOC_DIR=build
+
 INCLUDEPATH += .
 INCLUDEPATH += ./src
 INCLUDEPATH += ./src/controllers
