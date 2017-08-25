@@ -1,11 +1,12 @@
 #include <QDebug>
 #include <QJsonDocument>
+#include <QDir>
 #include "inkmark.h"
 
-QString Inkmark::modelFilename = "model.json";
+QString Inkmark::modelFilename = "/model.json";
 
 bool Inkmark::loadModel() {
-  QFile loadFile(Inkmark::modelFilename);
+  QFile loadFile(QDir::currentPath() + Inkmark::modelFilename);
 
   if (!loadFile.open(QIODevice::ReadOnly)) {
     qWarning() << "Inkmark::loadModel(): Couldn't open JSON file to read the model.";
@@ -25,7 +26,7 @@ void Inkmark::saveModel() const {
   appModel->writeToJSON(modelJSON);
   QJsonDocument jsonDoc(modelJSON);
 
-  QFile saveFile(Inkmark::modelFilename);
+  QFile saveFile(QDir::currentPath() + Inkmark::modelFilename);
 
   if (!saveFile.open(QIODevice::WriteOnly)) {
     qWarning() << "Inkmark::saveModel(): Couldn't open JSON file to save the model.";

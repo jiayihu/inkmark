@@ -19,6 +19,8 @@ CONFIG += qt
 CONFIG +=C++11
 QT += widgets
 
+RESOURCES = inkmark.qrc
+
 # Input
 HEADERS += src/inkmark.h \
            src/models/application_model.h \

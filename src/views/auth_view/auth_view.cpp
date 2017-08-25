@@ -150,7 +150,7 @@ AuthView::AuthView(QWidget *parent): QWidget(parent) {
   layout->setAlignment(Qt::AlignCenter);
   setMinimumSize(480, 360);
 
-  QPixmap logoImg("images/logo.png");
+  QPixmap logoImg(":/logo.png");
   QLabel *logo = new QLabel();
   logo->setPixmap(logoImg.scaled(136, 104, Qt::KeepAspectRatio));
   logo->setAlignment(Qt::AlignCenter);
