@@ -10,7 +10,7 @@ void UserModel::setIdCount(int value) {
 UserModel::UserModel(): id(++idCount) {}
 
 UserModel::UserModel(const QString &n, const QString &s, const QString &e, const QString &pw)
-  : id(++idCount), name(n), email(e), surname(s), password(pw) {}
+  : id(++idCount), name(n), surname(s), email(e), password(pw) {}
 
 UserModel::UserModel(const UserModel &user)
   : id(++idCount), name(user.name), surname(user.surname), email(user.email), password(user.password) {}

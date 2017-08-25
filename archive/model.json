@@ -1,0 +1,130 @@
+{
+    "bookmarks": [
+        {
+            "authorId": 0,
+            "description": "Bootstrap is the most popular HTML, CSS, and JS framework in the world for building responsive, mobile-first projects on the web.",
+            "isImportant": false,
+            "link": "http://v4-alpha.getbootstrap.com/components/buttons/",
+            "name": "Bootstrap 4 alpha",
+            "type": "none"
+        },
+        {
+            "authorId": 1,
+            "description": "Npm is the package manager for react",
+            "isImportant": false,
+            "link": "https://www.npmjs.com/",
+            "name": "Npm",
+            "type": "none"
+        },
+        {
+            "authorId": 0,
+            "description": "http://doc.qt.io/qt-5/stylesheet-syntax.html",
+            "isImportant": false,
+            "link": "http://doc.qt.io/qt-5/stylesheet-syntax.html",
+            "name": "Qt styles",
+            "type": "none"
+        },
+        {
+            "authorId": 2,
+            "description": "http://doc.qt.io/qt-5/stylesheet-syntax.html",
+            "isImportant": false,
+            "link": "http://doc.qt.io/qt-5/stylesheet-syntax.html",
+            "name": "Qt stylesheet",
+            "type": "none"
+        },
+        {
+            "authorId": 2,
+            "description": "P2 project repository",
+            "isImportant": false,
+            "link": "https://github.com/jiayihu/inkmark",
+            "name": "Inkmark",
+            "type": "none"
+        },
+        {
+            "authorId": 3,
+            "description": "Oni: An IDE powered by Neovim",
+            "isImportant": false,
+            "link": "https://github.com/extr0py/oni",
+            "name": "Onis",
+            "type": "none"
+        },
+        {
+            "authorId": 1,
+            "description": "Node.js Forked Again Over Complaints of Unresponsive Leadership",
+            "isImportant": false,
+            "link": "https://github.com/jiayihu/inkmark/issues/8",
+            "minRead": "03:01:10",
+            "name": "A",
+            "publication": "09 agosto 2017",
+            "type": "article"
+        },
+        {
+            "authorId": 1,
+            "description": "Node.js Forked Again Over Complaints of Unresponsive Leadership",
+            "isImportant": false,
+            "link": "https://stackoverflow.com/questions/22500189/correct-use-of-the-clear-method-on-qdatetimeedit",
+            "minRead": "03:02:00",
+            "name": "C",
+            "publication": "02 agosto 2017",
+            "type": "article"
+        },
+        {
+            "authorId": 1,
+            "description": "",
+            "isImportant": false,
+            "link": "https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url",
+            "name": "Abc",
+            "type": "none"
+        }
+    ],
+    "users": [
+        {
+            "email": "mario@rossi.com",
+            "id": 1,
+            "name": "Mario",
+            "password": "pass",
+            "role": "admin",
+            "surname": "Rossiccio"
+        },
+        {
+            "email": "mario@blu.com",
+            "id": 2,
+            "name": "Mario",
+            "password": "pass",
+            "role": "user",
+            "surname": "Blua"
+        },
+        {
+            "email": "mario@verdi3.com",
+            "id": 3,
+            "name": "Mario",
+            "password": "pass",
+            "role": "admin",
+            "surname": "Verdi"
+        },
+        {
+            "email": "mario@verdi4.com",
+            "id": 4,
+            "name": "Mario",
+            "password": "pass",
+            "role": "admin",
+            "surname": "Verdi"
+        },
+        {
+            "email": "mario@verdi5.com",
+            "id": 5,
+            "name": "Mario",
+            "password": "pass",
+            "role": "admin",
+            "surname": "Verdi"
+        },
+        {
+            "email": "mario@verdi6.com",
+            "id": 6,
+            "name": "Mario",
+            "password": "pass",
+            "role": "admin",
+            "surname": "Verdi"
+        }
+    ]
+}
