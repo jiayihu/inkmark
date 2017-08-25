@@ -42,16 +42,17 @@ QWidget* EditBookmarkView::createArticleFields() {
   layout->setFormAlignment(Qt::AlignLeft);
   layout->setLabelAlignment(Qt::AlignLeft);
 
-  pubblicationInput = new QDateEdit(QDate::currentDate());
-  pubblicationInput->setCalendarPopup(true);
-  pubblicationInput->setDisplayFormat("dd MMMM yyyy");
-  pubblicationInput->setMaximumDate(QDate::currentDate());
-  pubblicationInput->setStyleSheet("padding: 5px 10px;");
+  publicationInput = new QDateEdit(QDate::currentDate());
+  publicationInput->setCalendarPopup(true);
+  publicationInput->setDisplayFormat("dd MMMM yyyy");
+  publicationInput->setMaximumDate(QDate::currentDate());
+  publicationInput->setStyleSheet("padding: 5px 10px;");
 
   minReadInput = new QTimeEdit();
+  minReadInput->setDisplayFormat("mm:ss");
   minReadInput->setStyleSheet("border: 1px solid #e3e1e1; border-radius: 3px; padding: 5px 10px;");
 
-  layout->addRow("Pubblication date", pubblicationInput);
+  layout->addRow("Pubblication date", publicationInput);
   layout->addRow("Min to read", minReadInput);
 
   articleFields = wrapInWidget(layout);
@@ -67,6 +68,7 @@ QWidget* EditBookmarkView::createVideoFields() {
   layout->setLabelAlignment(Qt::AlignLeft);
 
   durationInput = new QTimeEdit();
+  durationInput->setDisplayFormat("mm:ss");
   durationInput->setStyleSheet("border: 1px solid #e3e1e1; border-radius: 3px; padding: 5px 10px;");
   layout->addRow("Duration", durationInput);
 
@@ -91,7 +93,8 @@ QWidget* EditBookmarkView::createFields() {
   layout->addWidget(new QLabel("Description"));
   layout->addWidget(descriptionTextArea);
 
-  layout->addWidget(createTypeSelect());
+  typeField = createTypeSelect();
+  layout->addWidget(typeField);
   layout->addWidget(createArticleFields());
   layout->addWidget(createVideoFields());
 
@@ -132,12 +135,12 @@ void EditBookmarkView::handleSubmitClick() {
   QString link = linkInput->text();
   QString description = descriptionTextArea->toPlainText();
   BookmarkType type = stringToBookmarkType(typeSelect->currentText());
-  QDate pubblication = pubblicationInput->date();
+  QDate pubblication = publicationInput->date();
   QTime minRead = minReadInput->time();
   QTime duration = durationInput->time();
 
   if (!model) emit addClicked(name, link, description, type, pubblication, minRead, duration);
-  else emit editClicked(model, name, link, description, type, pubblication, minRead, duration);
+  else emit editClicked(model, name, link, description, pubblication, minRead, duration);
 }
 
 EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
@@ -156,13 +159,26 @@ void EditBookmarkView::setModel(BookmarkInterface *newModel) {
   nameInput->setText(model->getName());
   linkInput->setText(model->getLink().toString());
   descriptionTextArea->setText(model->getDescription());
+
+  typeField->setVisible(false);
+  typeSelect->setCurrentText(bookmarkTypeToString(newModel->getType()));
+
+  ArticleInterface *article = dynamic_cast<ArticleInterface*>(newModel);
+  VideoInterface *video = dynamic_cast<VideoInterface*>(newModel);
+
+  if (article) {
+    publicationInput->setDate(article->getPublication());
+    minReadInput->setTime(article->getMinRead());
+  } else if (video) {
+    durationInput->setTime(video->getDuration());
+  }
 }
 
 void EditBookmarkView::clear() const {
   nameInput->clear();
   linkInput->clear();
   descriptionTextArea->clear();
-  pubblicationInput->setDate(QDate::currentDate());
+  publicationInput->setDate(QDate::currentDate());
   minReadInput->setTime(QTime(0, 0, 0, 0));
   durationInput->setTime(QTime(0, 0, 0, 0));
 }

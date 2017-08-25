@@ -36,14 +36,14 @@ QWidget* BookmarkView::createMetadata() {
   layout->addWidget(hostLabel);
 
   // Label specifiche del tipo di bookmark
-  pubblicationLabel = new QLabel();
-  setMetadataStyles(pubblicationLabel);
+  publicationLabel = new QLabel();
+  setMetadataStyles(publicationLabel);
   minReadLabel = new QLabel();
   setMetadataStyles(minReadLabel);
   durationLabel = new QLabel();
   setMetadataStyles(durationLabel);
 
-  layout->addWidget(pubblicationLabel);
+  layout->addWidget(publicationLabel);
   layout->addWidget(minReadLabel);
   layout->addWidget(durationLabel);
 
@@ -108,8 +108,8 @@ void BookmarkView::setModel(BookmarkInterface *newModel) {
   VideoInterface *videoBookmark = dynamic_cast<VideoInterface *>(model);
 
   if (articleBookmark) {
-    pubblicationLabel->setText("📆 " + articleBookmark->getPublication().toString("dd MMMM yyyy"));
-    pubblicationLabel->setVisible(true);
+    publicationLabel->setText("📆 " + articleBookmark->getPublication().toString("dd MMMM yyyy"));
+    publicationLabel->setVisible(true);
     minReadLabel->setText("⏱ " + articleBookmark->getMinRead().toString("mm:ss"));
     minReadLabel->setVisible(true);
   } else if (videoBookmark) {

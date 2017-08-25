@@ -105,6 +105,14 @@ QDate ArticleModel::getPublication() const { return publication; }
 
 QTime ArticleModel::getMinRead() const { return minRead; }
 
+void ArticleModel::editPublication(const QDate &newPublication) {
+  publication = newPublication;
+}
+
+void ArticleModel::editMinRead(const QTime &newMinRead) {
+  minRead = newMinRead;
+}
+
 void ArticleModel::readFromJSON(const QJsonObject &json) {
   BookmarkModel::readFromJSON(json);
   QString publicationString = json.value("publication").toString();
@@ -168,6 +176,14 @@ BookmarkType VideoModel::getType() const { return BookmarkType::video; }
 QTime VideoModel::getDuration() const { return duration; }
 
 VideoPlatform VideoModel::getPlatform() const { return platform; }
+
+void VideoModel::editDuration(const QTime &newDuration) {
+  duration = newDuration;
+}
+
+void VideoModel::editPlatform(const VideoPlatform &newPlatform) {
+  platform = newPlatform;
+}
 
 bool VideoModel::hasText(const QString &searchText) const {
   bool isInPlatform = hasInsensitiveText(platformToString(platform), searchText);

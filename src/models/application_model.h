@@ -54,12 +54,20 @@ class ApplicationModel: public QObject {
     const QString &link,
     const QString &description,
     const BookmarkType &type,
-    const QDate &pubblication,
+    const QDate &publication,
     const QTime &minRead,
     const QTime &duration
   );
   void deleteBookmark(BookmarkInterface *bookmark);
-  void editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc);
+  void editBookmark(
+    BookmarkInterface *bookmark,
+    const QString &name,
+    const QString &link,
+    const QString &description,
+    const QDate &publication,
+    const QTime &minRead,
+    const QTime &duration
+  );
   QVector<BookmarkInterface*> search(const QString &searchText) const;
 
   void registerUser(const QString &name, const QString &surname, const QString &email, const QString &password, const QString &passwordConfirm);

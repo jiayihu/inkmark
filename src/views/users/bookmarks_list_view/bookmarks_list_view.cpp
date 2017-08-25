@@ -56,7 +56,7 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   // Chiudi il widget per la modifica
   QObject::connect(
     editBookmarkView,
-    SIGNAL(editClicked(BookmarkInterface*, QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
+    SIGNAL(editClicked(BookmarkInterface*, QString, QString, QString, QDate, QTime, QTime)),
     this,
     SLOT(hideEditView())
   );
@@ -64,9 +64,9 @@ BookmarksListView::BookmarksListView(QWidget *parent): QWidget(parent) {
   // Propaga il signal all'esterno
   QObject::connect(
       editBookmarkView,
-      SIGNAL(editClicked(BookmarkInterface*, QString, QString, QString, BookmarkType, QDate, QTime, QTime)),
+      SIGNAL(editClicked(BookmarkInterface*, QString, QString, QString, QDate, QTime, QTime)),
       this,
-      SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString))
+      SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString, QDate, QTime, QTime))
   );
 
   containerLayout->addWidget(scrollArea);

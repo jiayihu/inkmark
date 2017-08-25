@@ -21,9 +21,9 @@ BookmarksListController::BookmarksListController(ApplicationModel *m, BookmarksL
   QObject::connect(view, SIGNAL(clickedDelete(BookmarkInterface*)), model, SLOT(deleteBookmark(BookmarkInterface*)));
   QObject::connect(
       view,
-      SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString)),
+      SIGNAL(editedBookmark(BookmarkInterface*, QString, QString, QString, QDate, QTime, QTime)),
       model,
-      SLOT(editBookmark(BookmarkInterface*, QString, QString, QString))
+      SLOT(editBookmark(BookmarkInterface*, QString, QString, QString, QDate, QTime, QTime))
   );
 
   // Setta il model iniziale

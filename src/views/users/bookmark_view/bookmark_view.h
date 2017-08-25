@@ -20,7 +20,7 @@ class BookmarkView: public QWidget {
   LinkWidget *nameLink;
   QLabel *descriptionLabel;
   QLabel *hostLabel;
-  QLabel *pubblicationLabel;
+  QLabel *publicationLabel;
   QLabel *minReadLabel;
   QLabel *durationLabel;
   ButtonWidget *deleteButton;

@@ -103,6 +103,8 @@ class ArticleModel: public BookmarkModel, public ArticleInterface {
   BookmarkType getType() const override;
   QDate getPublication() const override ;
   QTime getMinRead() const override ;
+  void editPublication(const QDate &newPublication);
+  void editMinRead(const QTime &newMinRead);
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;
 };
@@ -151,6 +153,8 @@ class VideoModel: public BookmarkModel, public VideoInterface {
   BookmarkType getType() const override;
   QTime getDuration() const override;
   VideoPlatform getPlatform() const override;
+  void editDuration(const QTime &newDuration);
+  void editPlatform(const VideoPlatform &newPlatform);
   bool hasText(const QString &searchText) const override;
   void readFromJSON(const QJsonObject &json) override;
   void writeToJSON(QJsonObject &json) const override;

@@ -26,10 +26,12 @@ class EditBookmarkView: public QWidget {
   TextAreaWidget *descriptionTextArea;
   QComboBox *typeSelect;
   QWidget *articleFields;
-  QDateEdit *pubblicationInput;
+  QDateEdit *publicationInput;
   QTimeEdit *minReadInput;
   QWidget *videoFields;
   QTimeEdit *durationInput;
+
+  QWidget *typeField;
 
   QWidget* createTypeSelect();
   QWidget* createArticleFields();
@@ -55,7 +57,7 @@ class EditBookmarkView: public QWidget {
     const QString &link,
     const QString &description,
     const BookmarkType &type,
-    const QDate &pubblication,
+    const QDate &publication,
     const QTime &minRead,
     const QTime &duration
   );
@@ -64,8 +66,7 @@ class EditBookmarkView: public QWidget {
     const QString &name,
     const QString &link,
     const QString &description,
-    const BookmarkType &type,
-    const QDate &pubblication,
+    const QDate &publication,
     const QTime &minRead,
     const QTime &duration
   );

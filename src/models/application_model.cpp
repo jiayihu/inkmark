@@ -152,7 +152,15 @@ void ApplicationModel::deleteBookmark(BookmarkInterface *bookmark) {
   delete bookmark;
 }
 
-void ApplicationModel::editBookmark(BookmarkInterface *bookmark, const QString &newName, const QString &newLink, const QString &newDesc) {
+void ApplicationModel::editBookmark(
+  BookmarkInterface *bookmark,
+  const QString &newName,
+  const QString &newLink,
+  const QString &newDesc,
+  const QDate &newPublication,
+  const QTime &newMinRead,
+  const QTime &newDuration
+) {
   if (!bookmark || !currentUser || !currentUser->canEdit(bookmark)) return;
   int bookmarkIndex = bookmarks.indexOf(dynamic_cast<BookmarkModel*>(bookmark));
 
@@ -167,6 +175,18 @@ void ApplicationModel::editBookmark(BookmarkInterface *bookmark, const QString &
   foundBookmark->editName(newName);
   foundBookmark->editLink(newLink);
   foundBookmark->editDescription(newDesc);
+
+  ArticleModel *article = dynamic_cast<ArticleModel*>(bookmark);
+  VideoModel *video = dynamic_cast<VideoModel*>(bookmark);
+
+  if (article) {
+    article->editPublication(newPublication);
+    article->editMinRead(newMinRead);
+  } else if (video) {
+    VideoPlatform platform = VideoModel::platformFromLink(newLink);
+    video->editPlatform(platform);
+    video->editDuration(newDuration);
+  }
 
   emit updatedBookmark(bookmark);
 }

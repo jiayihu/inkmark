@@ -49,7 +49,15 @@ class BookmarksListView: public QWidget {
 
  signals:
   void clickedDelete(BookmarkInterface *bookmark);
-  void editedBookmark(BookmarkInterface *bookmark, QString newName, QString newLink, QString newDesc);
+  void editedBookmark(
+    BookmarkInterface *bookmark,
+    const QString &name,
+    const QString &link,
+    const QString &description,
+    const QDate &publication,
+    const QTime &minRead,
+    const QTime &duration
+  );
 };
 
 #endif //INKMARK_BOOKMARKS_LIST_VIEW_H
