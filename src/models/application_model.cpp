@@ -126,6 +126,10 @@ void ApplicationModel::addBookmark(
 
   if (type == BookmarkType::none) {
     bookmark = new BookmarkModel(user->getId(), link, name, description);
+    if (!bookmark->isLinkValid()) {
+      emit hadUserError("The provided link is not valid");
+      return;
+    }
   } else if (type == BookmarkType::article) {
     bookmark = new ArticleModel(user->getId(), link, name, description, pubblication, minRead);
   } else if (type == BookmarkType::video) {

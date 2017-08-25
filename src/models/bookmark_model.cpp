@@ -31,8 +31,10 @@ bool BookmarkModel::hasInsensitiveText(const QString &text, const QString &query
 
 BookmarkModel::BookmarkModel() {}
 
-BookmarkModel::BookmarkModel(int ai, const QString &l, const QString &n, const QString &d):
-    link(QUrl::fromUserInput(l)), name(n), description(d), authorId(ai), isImportant(false) {}
+BookmarkModel::BookmarkModel(int ai, const QString &l, const QString &n, const QString &d): name(n), description(d), authorId(ai), isImportant(false) {
+  // In StrictMode controlla se l'URL è valido e la validità è ottenibile poi con .isValid()
+  link.setUrl(l, QUrl::StrictMode);
+}
 
 QUrl BookmarkModel::getLink() const { return link; }
 
@@ -50,9 +52,15 @@ void BookmarkModel::editName(const QString &newName) { name = newName; }
 
 void BookmarkModel::editDescription(const QString &newDescription) { description = newDescription; }
 
-bool BookmarkModel::isLinkValid() const { return link.isValid(); }
-
-bool BookmarkModel::getIsImportant() const { return isImportant; }
+bool BookmarkModel::isLinkValid() const {
+  /**
+   * Custom RegEx molto semplice per testare che l'URL sia valido. Non è un controllo
+   * serio ma evita valori sicuramente errati come "abc", che tuttavia per QUrl
+   * sono validi anche in strict mode
+   */
+  QRegExp urlPattern("https?://.+");
+  return link.isValid() && urlPattern.indexIn(link.toString()) != -1;
+}
 
 void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
 

@@ -28,7 +28,6 @@ class BookmarkInterface {
   virtual int getAuthorId() const = 0;
   virtual BookmarkType getType() const = 0;
   virtual bool isLinkValid() const = 0;
-  virtual bool getIsImportant() const = 0;
   virtual bool hasText(const QString &searchText) const = 0;
 };
 
@@ -59,7 +58,6 @@ class BookmarkModel: virtual public BookmarkInterface {
   void editDescription(const QString &newDescription);
   BookmarkType getType() const override;
   bool isLinkValid() const override;
-  bool getIsImportant() const override;
   void setImportance(bool newValue);
 
   bool hasText(const QString &searchText) const override;
