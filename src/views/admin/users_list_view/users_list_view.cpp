@@ -101,7 +101,10 @@ void UsersListView::deleteUserView(UserInterface *user) {
   listLayout->removeWidget(viewsMap[user]);
   delete viewsMap[user];
   viewsMap.remove(user);
-  model.remove(model.indexOf(user));
+
+  int index = model.indexOf(user);
+  if (index == -1) return;
+  model.remove(index);
 }
 
 void UsersListView::updateUserView(UserInterface *user) {

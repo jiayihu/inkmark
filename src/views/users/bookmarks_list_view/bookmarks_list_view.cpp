@@ -105,7 +105,10 @@ void BookmarksListView::deleteBookmarkView(BookmarkInterface *bookmark) {
   listLayout->removeWidget(viewsMap[bookmark]);
   delete viewsMap[bookmark];
   viewsMap.remove(bookmark);
-  model.remove(model.indexOf(bookmark));
+
+  int index = model.indexOf(bookmark);
+  if (index == -1) return;
+  model.remove(index);
 }
 
 void BookmarksListView::updateBookmarkView(BookmarkInterface *bookmark) {
