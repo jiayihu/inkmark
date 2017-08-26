@@ -17,14 +17,14 @@ int main(int argc, char* argv[]) {
    * non è quella da cui si lancia l'app, ma bensì quella dell'eseguibile effettivo
    * che è qualche livello più annidato.
    */
-//  QDir bin(QCoreApplication::applicationDirPath());
-//
-//  #if defined(Q_OS_DARWIN)
-//    bin.cdUp();
-//    bin.cdUp();
-//    bin.cdUp();
-//  #endif
-//  QDir::setCurrent(bin.absolutePath());
+  QDir bin(QCoreApplication::applicationDirPath());
+
+  #if defined(Q_OS_DARWIN)
+    bin.cdUp();
+    bin.cdUp();
+    bin.cdUp();
+  #endif
+  QDir::setCurrent(bin.absolutePath());
 
   /** Fine fix per Mac */
 

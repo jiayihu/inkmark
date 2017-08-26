@@ -3,6 +3,7 @@ build
 inkmark.app
 Makefile
 qrc_inkmark.cpp
+consegna
 
 # Created by https://www.gitignore.io/api/macos
 
