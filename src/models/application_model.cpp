@@ -6,22 +6,24 @@ void ApplicationModel::clean() {
   for (int i = 0; i < users.size(); i++) delete users[i];
 }
 
-bool ApplicationModel::authenticate(const QString &email, const QString &password) {
+bool ApplicationModel::authenticate(const QString &email, const QString &password, bool mustBeAdmin) {
   UserModel* foundUser = nullptr;
-  bool trovato = false;
+  bool found = false;
 
-  for (int i = 0; i < users.size() && !trovato; i++) {
+  for (int i = 0; i < users.size() && !found; i++) {
     UserModel *user = users[i];
     if (user && user->getEmail() == email && user->getPassword() == password) {
+      if (mustBeAdmin && !dynamic_cast<AdminModel*>(user)) continue;
+
       foundUser = user;
-      trovato = true;
+      found = true;
     }
   }
 
-  if (trovato) currentUser = foundUser;
-  else emit hadUserError("There is no user with provided email and password.");
+  if (found) currentUser = foundUser;
+  else emit hadUserError("There is no account with provided email and password for this area.");
 
-  return trovato;
+  return found;
 }
 
 ApplicationModel::~ApplicationModel() { clean(); }
@@ -290,14 +292,14 @@ void ApplicationModel::changeUserRole(UserInterface *user, const QString &newRol
 }
 
 bool ApplicationModel::loginUser(const QString &email, const QString &password) {
-  bool isSuccessful = authenticate(email, password);
+  bool isSuccessful = authenticate(email, password, false);
   if (isSuccessful) emit loggedInUser(currentUser);
 
   return isSuccessful;
 }
 
 bool ApplicationModel::loginAdmin(const QString &email, const QString &password) {
-  bool isSuccessful = authenticate(email, password);
+  bool isSuccessful = authenticate(email, password, true);
   if (isSuccessful) emit loggedInAdmin(currentUser);
 
   return isSuccessful;

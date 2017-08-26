@@ -31,7 +31,7 @@ bool BookmarkModel::hasInsensitiveText(const QString &text, const QString &query
 
 BookmarkModel::BookmarkModel() {}
 
-BookmarkModel::BookmarkModel(int ai, const QString &l, const QString &n, const QString &d): name(n), description(d), authorId(ai), isImportant(false) {
+BookmarkModel::BookmarkModel(int ai, const QString &l, const QString &n, const QString &d): name(n), description(d), authorId(ai) {
   // In StrictMode controlla se l'URL è valido e la validità è ottenibile poi con .isValid()
   link.setUrl(l, QUrl::StrictMode);
 }
@@ -62,8 +62,6 @@ bool BookmarkModel::isLinkValid() const {
   return link.isValid() && urlPattern.indexIn(link.toString()) != -1;
 }
 
-void BookmarkModel::setImportance(bool newValue) { isImportant = newValue; }
-
 bool BookmarkModel::hasText(const QString &searchText) const {
   bool isInName = hasInsensitiveText(name, searchText);
   bool isInLink = hasInsensitiveText(link.toString(), searchText);
@@ -77,7 +75,6 @@ void BookmarkModel::readFromJSON(const QJsonObject &json) {
   name = json.value("name").toString();
   link = QUrl(json.value("link").toString());
   description = json.value("description").toString();
-  isImportant = json.value("isImportant").toBool();
 }
 
 void BookmarkModel::writeToJSON(QJsonObject &json) const {
@@ -86,7 +83,6 @@ void BookmarkModel::writeToJSON(QJsonObject &json) const {
   json.insert("link", link.toString());
   json.insert("name", name);
   json.insert("description", description);
-  json.insert("isImportant", isImportant);
 }
 
 std::ostream& operator<<(std::ostream &os, const BookmarkModel &bookmark) {

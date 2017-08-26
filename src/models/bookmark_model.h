@@ -40,7 +40,6 @@ class BookmarkModel: virtual public BookmarkInterface {
   QString name;
   QString description;
   int authorId;
-  bool isImportant;
 
  protected:
   bool hasInsensitiveText(const QString &text, const QString &query) const;
@@ -58,7 +57,6 @@ class BookmarkModel: virtual public BookmarkInterface {
   void editDescription(const QString &newDescription);
   BookmarkType getType() const override;
   bool isLinkValid() const override;
-  void setImportance(bool newValue);
 
   bool hasText(const QString &searchText) const override;
   virtual void readFromJSON(const QJsonObject &json);

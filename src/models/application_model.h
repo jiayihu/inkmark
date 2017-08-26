@@ -33,7 +33,7 @@ class ApplicationModel: public QObject {
   UserInterface* currentUser;
 
   void clean();
-  bool authenticate(const QString &email, const QString &password);
+  bool authenticate(const QString &email, const QString &password, bool mustBeAdmin);
 
  public:
   // Solo il distruttore è necessario per ora, non è previsto l'uso di costruttore
