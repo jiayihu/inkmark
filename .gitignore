@@ -2,6 +2,7 @@ cmake-build-debug
 build
 inkmark.app
 Makefile
+qrc_inkmark.cpp
 
 # Created by https://www.gitignore.io/api/macos
 

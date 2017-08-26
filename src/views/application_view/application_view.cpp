@@ -111,8 +111,8 @@ void ApplicationView::setAdminAreaVisible(bool visible) const {
 ApplicationView::ApplicationView(QWidget *parent)
   : QWidget(parent),
     authView(new AuthView()),
-    userApplicationView(new UserApplicationView()),
-    adminApplicationView(new AdminApplicationView()) {
+    adminApplicationView(new AdminApplicationView()),
+    userApplicationView(new UserApplicationView()){
   setWindowTitle("Inkmark");
   setStyleSheet(getApplicationStyles());
   setMinimumSize(768, 480);

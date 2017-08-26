@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
   /** Fine fix per Mac */
 
-  app.setStyleSheet(getAppStyles());
+//  app.setStyleSheet(getAppStyles());
   app.setFont(QFont("Helvetica", 14));
 
   Inkmark inkmark;
