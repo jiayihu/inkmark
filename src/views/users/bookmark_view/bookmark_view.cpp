@@ -98,7 +98,7 @@ void BookmarkView::setModel(BookmarkInterface *newModel) {
   model = newModel;
 
   QUrl link = model->getLink();
-  nameLink->setText(model->getName());
+  nameLink->setText("🔗 " + model->getName());
   nameLink->setUrl(link);
   descriptionLabel->setText(model->getDescription());
   hostLabel->setText(link.host());
@@ -108,11 +108,13 @@ void BookmarkView::setModel(BookmarkInterface *newModel) {
   VideoInterface *videoBookmark = dynamic_cast<VideoInterface *>(model);
 
   if (articleBookmark) {
+    nameLink->setText("📖 " + model->getName());
     publicationLabel->setText("📆 " + articleBookmark->getPublication().toString("dd MMMM yyyy"));
     publicationLabel->setVisible(true);
     minReadLabel->setText("⏱ " + articleBookmark->getMinRead().toString("mm:ss"));
     minReadLabel->setVisible(true);
   } else if (videoBookmark) {
+    nameLink->setText("🖥 " + model->getName());
     durationLabel->setText("⏱ " + videoBookmark->getDuration().toString("mm:ss"));
     durationLabel->setVisible(true);
   }
