@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QHBoxLayout>
+#include <QScrollArea>
 #include "bookmark_view.h"
 #include "utilities/utilities.h"
 
@@ -11,17 +12,23 @@ void BookmarkView::setMetadataStyles(QLabel *label) {
 
 QWidget* BookmarkView::createContent() {
   QWidget *contentContainer = new QWidget();
-  QSizePolicy sizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-  sizePolicy.setHorizontalStretch(1);
-  contentContainer->setSizePolicy(sizePolicy);
+  QSizePolicy contentSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
+  contentSizePolicy.setHorizontalStretch(1);
+  contentContainer->setSizePolicy(contentSizePolicy);
   QVBoxLayout *layout = new QVBoxLayout(contentContainer);
 
   nameLink = new LinkWidget();
   nameLink->setStyleSheet("font-size: 18px;");
-  descriptionLabel = new QLabel();
-  descriptionLabel->setWordWrap(true);
   layout->addWidget(nameLink);
-  layout->addWidget(descriptionLabel);
+
+  descriptionLabel = new QLabel();
+  descriptionLabel->setContentsMargins(0, 0, 10, 0);
+  descriptionLabel->setWordWrap(true);
+  QScrollArea *scrollArea = new QScrollArea();
+  scrollArea->setWidget(descriptionLabel);
+  scrollArea->setWidgetResizable(true);
+  scrollArea->setFrameShape(QFrame::NoFrame);
+  layout->addWidget(scrollArea);
 
   return contentContainer;
 }
