@@ -17,6 +17,7 @@ class BookmarkView: public QWidget {
   static void setMetadataStyles(QLabel *label);
 
   BookmarkInterface *model;
+
   LinkWidget *nameLink;
   QLabel *descriptionLabel;
   QLabel *hostLabel;

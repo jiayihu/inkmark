@@ -14,6 +14,7 @@ class UserView: public QWidget {
 
  private:
   UserInterface *model;
+
   bool isCurrentUser;
 
   QLabel *fullnameLabel;

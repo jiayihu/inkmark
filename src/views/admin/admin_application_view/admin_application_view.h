@@ -12,8 +12,9 @@ class AdminApplicationView: public QWidget {
   Q_OBJECT
 
  private:
-  UsersListView *usersListView;
   UserInterface *user;
+
+  UsersListView *usersListView;
   QLabel *username;
 
  public:

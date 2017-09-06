@@ -37,7 +37,7 @@ QWidget * ApplicationView::createErrorBox() {
   layout->addWidget(closeButton);
 
   errorBox = wrapInWidget(layout);
-  errorBox->setStyleSheet("background-color: #D4411A; color: #fff; margin-bottom: 10px;");
+  errorBox->setStyleSheet("background-color: #D4411A; color: #fff;");
   errorBox->setVisible(false);
 
   return errorBox;

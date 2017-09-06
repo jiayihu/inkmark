@@ -13,10 +13,11 @@ class UserApplicationView: public QWidget {
  Q_OBJECT
 
  private:
+  UserInterface *user;
+
   EditBookmarkView *addBookmarkView;
   SearchBookmarkView *searchBookmarkView;
   BookmarksListView *bookmarksListView;
-  UserInterface *user;
   QLabel *username;
 
   ButtonWidget *addBookmarkButton;

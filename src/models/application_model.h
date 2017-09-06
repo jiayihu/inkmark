@@ -36,6 +36,7 @@ class ApplicationModel: public QObject {
   bool authenticate(const QString &email, const QString &password, bool mustBeAdmin);
 
  public:
+  ApplicationModel();
   // Solo il distruttore è necessario per ora, non è previsto l'uso di costruttore
   // di copia o operatore di assegnazione per l'ApplicationModel perché è unico
   ~ApplicationModel() final;

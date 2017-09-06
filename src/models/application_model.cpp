@@ -26,6 +26,8 @@ bool ApplicationModel::authenticate(const QString &email, const QString &passwor
   return found;
 }
 
+ApplicationModel::ApplicationModel(): currentUser(nullptr) {}
+
 ApplicationModel::~ApplicationModel() { clean(); }
 
 QVector<BookmarkInterface*> ApplicationModel::getBookmarks() const {

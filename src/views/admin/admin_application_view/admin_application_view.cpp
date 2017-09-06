@@ -32,7 +32,7 @@ QWidget* AdminApplicationView::createContent() {
   return usersListView;
 }
 
-AdminApplicationView::AdminApplicationView(QWidget *parent): QWidget(parent) {}
+AdminApplicationView::AdminApplicationView(QWidget *parent): QWidget(parent), user(nullptr) {}
 
 UsersListView* AdminApplicationView::getUsersListView() const { return usersListView; }
 

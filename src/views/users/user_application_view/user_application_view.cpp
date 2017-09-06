@@ -84,7 +84,7 @@ void UserApplicationView::resizeToMin() {
   });
 }
 
-UserApplicationView::UserApplicationView(QWidget *parent): QWidget(parent) {}
+UserApplicationView::UserApplicationView(QWidget *parent): QWidget(parent), user(nullptr) {}
 
 EditBookmarkView* UserApplicationView::getAddBookmarkView() const { return addBookmarkView; }
 

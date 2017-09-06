@@ -126,7 +126,7 @@ void EditBookmarkView::handleTypeChange(const QString &typeString) {
     articleFields->setVisible(false);
     videoFields->setVisible(true);
   } else {
-    qWarning() << "EditBookmarkView::handleTypeChange(): Umknown bookmark type passed";
+    qWarning() << "EditBookmarkView::handleTypeChange(): Unknown bookmark type passed";
   }
 }
 
@@ -143,7 +143,7 @@ void EditBookmarkView::handleSubmitClick() {
   else emit editClicked(model, name, link, description, pubblication, minRead, duration);
 }
 
-EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent) {
+EditBookmarkView::EditBookmarkView(QWidget *parent): QWidget(parent), model(nullptr) {
   QVBoxLayout *layout = new QVBoxLayout();
   layout->setAlignment(Qt::AlignLeft);
 

@@ -63,7 +63,7 @@ void EditUserView::handleChangeRole() {
   emit changeRoleClicked(model, newRole);
 }
 
-EditUserView::EditUserView(QWidget *parent): QWidget(parent) {
+EditUserView::EditUserView(QWidget *parent): QWidget(parent), model(nullptr) {
   QVBoxLayout *layout = new QVBoxLayout();
 
   layout->addWidget(createForm());

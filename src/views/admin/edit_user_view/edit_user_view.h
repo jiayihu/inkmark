@@ -12,6 +12,7 @@ class EditUserView: public QWidget {
 
  private:
   UserInterface *model;
+
   TextInputWidget *nameInput;
   TextInputWidget *surnameInput;
   TextInputWidget *emailInput;

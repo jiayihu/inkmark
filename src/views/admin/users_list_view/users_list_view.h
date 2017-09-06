@@ -13,6 +13,7 @@ class UsersListView: public QWidget {
 
  private:
   QVector<UserInterface*> model;
+
   QLayout *containerLayout;
   QLayout *listLayout;
   EditUserView *editUserView;
